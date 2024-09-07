@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Stock</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"
+        defer></script>
+</head>
+
+<body>
+
+    <nav id="sidebar" class="bg-dark text-white p-3">
+        <h3 class="text-center">Panel de administrador</h3>
+        <ul class="nav flex-row mt-4">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="marca.html"><i class="fas fa-tags me-2"></i>Marcas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="modelo.html"><i class="fas fa-cubes me-2"></i>Modelos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="categoria.html"><i class="fas fa-list-alt me-2"></i>Categorías</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="productos.html"><i class="fas fa-box-open me-2"></i>Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="stock.html"><i class="fas fa-warehouse me-2"></i>Stock</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="combos.html"><i class="fas fa-gift me-2"></i>Combos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="descuentos.html"><i class="fas fa-percent me-2"></i>Descuentos</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Stock -->
+    <div id="stock" class="container mt-5">
+        <h2>Gestión de Stock</h2>
+        <button class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#manageStockModal">
+            <i class="fas fa-plus"></i> Gestionar Stock
+        </button>
+
+        <!-- Tabla de stock de productos -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Producto</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Categoría</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Datos de ejemplo -->
+                <tr>
+                    <td>1</td>
+                    <td>Producto Ejemplo</td>
+                    <td>Marca Ejemplo</td>
+                    <td>Modelo Ejemplo</td>
+                    <td>Categoría Ejemplo</td>
+                    <td>100</td>
+                    <td>
+                        <button class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Añadir Stock</button>
+                        <button class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Descontar Stock</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal para gestionar stock -->
+    <div class="modal fade" id="manageStockModal" tabindex="-1" aria-labelledby="manageStockModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="manageStockModalLabel">Gestionar Stock</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="stockProduct" class="form-label">Producto</label>
+                            <select class="form-select" id="stockProduct" required>
+                                <option selected disabled>Selecciona un producto</option>
+                                <option value="1">Producto Ejemplo 1</option>
+                                <option value="2">Producto Ejemplo 2</option>
+                                <!-- Opciones dinámicas -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="stockQuantity" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="stockQuantity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="stockAction" class="form-label">Acción</label>
+                            <select class="form-select" id="stockAction" required>
+                                <option selected disabled>Selecciona una acción</option>
+                                <option value="add">Añadir Stock</option>
+                                <option value="subtract">Descontar Stock</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
