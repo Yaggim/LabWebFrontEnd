@@ -1,5 +1,4 @@
-import { marca as getBrands } from "./conexion.js";
-import { modelo as getModels } from "./conexion.js";
+import { marca as getBrands, modelo as getModels } from "./conexion.js";
 
 let brands = [];
 let models = [];

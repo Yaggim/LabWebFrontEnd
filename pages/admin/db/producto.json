@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "brand": {
+      "id": 1,
+      "name": "Marca Ejemplo"
+    },
+    "model": {
+      "id": 1,
+      "name": "Modelo Ejemplo"
+    },
+    "category": {
+      "id": 1,
+      "name": "Categoría Ejemplo"
+    },
+    "priceARS": 1000,
+    "priceUSD": 10,
+    "enabled": true,
+    "image": "https://ejemplo.com/imagen_producto.jpg",
+    "description": "Descripción del producto"
+  },  {
+    "id": 2,
+    "brand": {
+      "id": 1,
+      "name": "Marca Ejemplo2"
+    },
+    "model": {
+      "id": 1,
+      "name": "Modelo Ejemplo2"
+    },
+    "category": {
+      "id": 1,
+      "name": "Categoría Ejemplo2"
+    },
+    "priceARS": 2000,
+    "priceUSD": 20,
+    "enabled": false,
+    "image": "https://ejemplo.com/imagen_producto.jpg",
+    "description": "Descripción del producto"
+  }
+]
