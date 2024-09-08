@@ -16,6 +16,7 @@
     "priceARS": 1000,
     "priceUSD": 10,
     "enabled": true,
+    "stock": 0,
     "image": "https://ejemplo.com/imagen_producto.jpg",
     "description": "Descripción del producto"
   },  {
@@ -35,6 +36,7 @@
     "priceARS": 2000,
     "priceUSD": 20,
     "enabled": false,
+    "stock": 0,
     "image": "https://ejemplo.com/imagen_producto.jpg",
     "description": "Descripción del producto"
   }
