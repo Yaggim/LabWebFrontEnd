@@ -96,37 +96,53 @@
         </div>
     </div>
 
-    <!-- Modal para Editar Modelo -->
-    <div class="modal fade" id="editModelModal" tabindex="-1" aria-labelledby="editModelModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="editModelForm">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModelModalLabel">Editar Marca</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <!-- Modal para Editar Combo -->
+<div class="modal fade" id="editComboModal" tabindex="-1" aria-labelledby="editComboModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="editComboForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editComboModalLabel">Editar Combo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editComboName" class="form-label">Nombre del Combo</label>
+                        <input type="text" class="form-control" id="editComboName" required>
+                        <input type="hidden" id="editComboId">
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="editModelName" class="form-label">Nombre del Modelo</label>
-                            <input type="text" class="form-control" id="editModelName" required>
-                            <input type="hidden" id="editModelId">
-                        </div>
+                    <div class="mb-3">
+                        <label for="editProductCategory" class="form-label">Categoría de Producto</label>
+                        <select class="form-select" id="editProductCategory" required>
+                        </select>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="editModelSelect" class="form-label">Selecciona una marca</label>
-                            <select class="form-select" id="editBrandSelect" required>
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label for="editComboProducts" class="form-label">Productos en el Combo</label>
+                        <select multiple class="form-select" id="editComboProducts">
+                        </select>
+                        <button type="button" id="addProductToEditCombo" class="btn btn-primary mt-2">Añadir Producto</button>
+                        <div id="warningMessageEdit" class="alert alert-warning mt-2 d-none">Debes seleccionar al menos un producto.</div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                    </div>
-                </form>
-            </div>
+                    <table class="table table-striped mt-3" id="selectedProductsTableEdit">
+                        <thead>
+                            <tr>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Categoría</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
     <!-- Modal para Eliminar Modelo -->
     <div class="modal fade" id="deleteModelModal" tabindex="-1" aria-labelledby="deleteModelModalLabel" aria-hidden="true">
