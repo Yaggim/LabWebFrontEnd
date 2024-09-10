@@ -13,7 +13,7 @@ function deleteBrand(id) {
             } else {
                 reject(new Error('Marca no encontrada'));
             }
-        }, 1000); // Simula un retraso de 1 segundo
+        }, 1000); 
     });
 }
 
@@ -27,7 +27,7 @@ function editBrand(id, name) {
             } else {
                 reject(new Error('Marca no encontrada'));
             }
-        }, 1000); // Simula un retraso de 1 segundo
+        }, 1000); 
     });
 }
 
@@ -37,7 +37,7 @@ function addBrand(name) {
             const newId = brands.length ? brands[brands.length - 1].id + 1 : 1;
             brands.push({ id: newId, name });
             resolve();
-        }, 1000); // Simula un retraso de 1 segundo
+        }, 1000); 
     });
 }
 
@@ -54,6 +54,8 @@ async function loadBrands() {
 function updateBrandsTable() {
     const tbody = document.querySelector('#brandsTable tbody');
     tbody.innerHTML = ''; 
+
+    /*
     brands.forEach(brand => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -66,7 +68,59 @@ function updateBrandsTable() {
         `;
         tbody.appendChild(row);
     });
+    */
 
+    brands.forEach(brand => {
+        // Crear una nueva fila
+        const row = document.createElement('tr');
+
+        // Crear las celdas de la tabla (td) para id y name
+        const idCell = document.createElement('td');
+        idCell.textContent = brand.id;
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = brand.name;
+
+        // Crear la celda de acciones
+        const actionsCell = document.createElement('td');
+
+        // Crear el botón de editar
+        const editButton = document.createElement('button');
+        editButton.classList.add('btn', 'btn-warning', 'btn-sm', 'edit-btn');
+        editButton.setAttribute('data-id', brand.id);
+        editButton.setAttribute('data-bs-toggle', 'modal');
+        editButton.setAttribute('data-bs-target', '#editBrandModal');
+        
+         // Crear el ícono dentro del botón de editar
+         const editIcon = document.createElement('i');
+         editIcon.classList.add('fas', 'fa-edit');
+         editButton.appendChild(editIcon);
+         editButton.appendChild(document.createTextNode(' Editar'));
+
+        // Crear el botón de eliminar
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('btn', 'btn-danger', 'btn-sm', 'delete-btn');
+        deleteButton.setAttribute('data-id', brand.id);
+        deleteButton.setAttribute('data-bs-toggle', 'modal');
+        deleteButton.setAttribute('data-bs-target', '#deleteBrandModal');
+        
+        const deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('fas', 'fa-trash');
+        deleteButton.appendChild(deleteIcon);
+        deleteButton.innerHTML = ' Borrar';
+        
+        // Añadir los botones a la celda de acciones
+        actionsCell.appendChild(editButton);
+        actionsCell.appendChild(deleteButton);
+
+        // Añadir las celdas a la fila
+        row.appendChild(idCell);
+        row.appendChild(nameCell);
+        row.appendChild(actionsCell);
+
+        // Añadir la fila al tbody
+        tbody.appendChild(row);
+    });
     
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', () => loadBrandForEdit(btn.getAttribute('data-id')));
