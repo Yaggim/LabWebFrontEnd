@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HardTech</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="../css/nav.css">
+        <link rel="stylesheet" href="../css/footer.css">
+        <link rel="stylesheet" href="../css/register.css">
+    </head>
+
+    <body>
+        <header class="bg-dark text-white text-center py-3">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container">
+                    <div class="d-flex justify-content-center">
+                        <a class="navbar-brand" href="#">
+                            <img src="../images/logo2.webp" alt="logo de HardTech" srcset="" class="img-fluid shadow logo-tienda">
+                        </a>
+                    </div>
+                    <ul class="navbar-nav justify-content-end">
+                        <li class="nav-item lead"><a href="#" class="nav-link">Inicio</a></li>
+                        <li class="nav-item lead"><a href="#" class="nav-link">Productos</a></li>
+                        <li class="nav-item lead"><a href="#" class="nav-link">Novedades</a></li>
+                        <li class="nav-item lead"><a href="#" class="nav-link">Contacto</a></li>
+                        <li class="nav-item lead"><a href="#" class="nav-link">Iniciar Sesión</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main class="container mt-5 mb-5">
+            <div class="row justify-content-center">
+                <div class="card col-md-8 text-white tarjeta-registro">
+                    <section class="card-body">
+                        <h2 class="text-center mb-4">Crea tu cuenta</h2>
+                        <p class="text-center">Por favor, completa el siguiente formulario para crear una cuenta en nuestra tienda.</p>
+
+                        <form action="" method="" class="formulario-registro">
+
+                            <!-- Información personal -->
+                            <fieldset class="mb-4">
+                                <legend>Información Personal</legend>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="nombre" class="form-label">Nombre:</label>
+                                        <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Martín">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="apellido" class="form-label">Apellido:</label>
+                                        <input type="text" id="apellido" name="apellido" class="form-control" required placeholder="Lutero">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="dni" class="form-label">Número de DNI o CUIT:</label>
+                                        <input type="number" id="dni" name="dni" class="form-control" required placeholder="99.999.999" min="1000000" max="999000000">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="telefono" class="form-label">Número de Teléfono:</label>
+                                        <input type="tel" id="telefono" name="telefono" class="form-control" required placeholder="123-456-7890">
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <!-- Información de la cuenta -->
+                            <fieldset class="mb-4">
+                                <legend>Información de la Cuenta</legend>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Nombre de Usuario:</label>
+                                    <input type="text" id="username" name="username" class="form-control" required placeholder="usuario123">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Correo Electrónico:</label>
+                                    <input type="email" id="email" name="email" class="form-control" required placeholder="correo@ejemplo.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Contraseña:</label>
+                                    <input type="password" id="password" name="password" class="form-control" required placeholder="********" minlength="8">
+                                    <p>La contraseña debe tener al menos 8 caracteres.</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm_password" class="form-label">Confirmar Contraseña:</label>
+                                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" required placeholder="********" minlength="8">
+                                    <p>La contraseña debe tener al menos 8 caracteres.</p>
+                                </div>
+                            </fieldset>
+
+                            <!-- Dirección de envío -->
+                            <!--<fieldset class="mb-4">
+                                <legend>Dirección de Envío</legend>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="pais" class="form-label">País:</label>
+                                        <select id="pais" name="pais" class="form-control" required>
+                                            <option value="">Selecciona tu país</option>
+                                            <option value="AR">Argentina</option>
+                                            <option value="CO">Colombia</option>
+                                            <option value="ES">España</option>
+                                            <option value="MX">México</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="provincia" class="form-label">Estado/Provincia:</label>
+                                        <input type="text" id="provincia" name="provincia" class="form-control" required placeholder="Buenos Aires">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="ciudad" class="form-label">Ciudad:</label>
+                                        <input type="text" id="ciudad" name="ciudad" class="form-control" required placeholder="San Antonio de Areco">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="codigo_postal" class="form-label">Código Postal:</label>
+                                        <input type="text" id="codigo_postal" name="codigo_postal" class="form-control" required placeholder="12345">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="direccion" class="form-label">Dirección:</label>
+                                        <input type="text" id="direccion" name="direccion" class="form-control" required placeholder="Calle Falsa">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="direccion" class="form-label">Número:</label>
+                                        <input type="text" id="direccion" name="direccion" class="form-control" required placeholder="123">
+                                    </div>
+                                </div>
+                            </fieldset>-->
+
+                            <!-- Términos y condiciones -->
+                            <div class="mb-2 form-check position-relative">
+                                <div class="position-absolute top-50 start-50 translate-middle">
+                                    <input type="checkbox" id="terminos" name="terminos" class="form-check-input" required>
+                                    <label for="terminos">He leído y acepto los <a href="#">Términos y Condiciones</a>.</label>
+                                </div>
+                            </div>
+
+                            <!-- Botón de envío -->
+                            <div class="mb-4 pt-4 text-center">
+                                <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+                            </div>
+                        </form>
+
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-dark text-white pt-4">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>Atención al cliente</h5>
+                        <ul class="list-unstyled lead fs-6">
+                            <li>Lunes a viernes de 9 a 18hs.</li>
+                            <li>
+                                <i class="bi bi-whatsapp"> </i>
+                                <a href="https://api.whatsapp.com/send/?phone=5491123456789" target="_blank" class="fw-medium"> +54 11 2345-6789 </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h5>Enlaces</h5>
+                        <ul class="list-unstyled">
+                          <li><a href="#" class="text-white lead text-decoration-none fs-6">Inicio</a></li>
+                          <li><a href="#" class="text-white lead text-decoration-none fs-6">Productos</a></li>
+                          <li><a href="#" class="text-white lead text-decoration-none fs-6">Novedades</a></li>
+                          <li><a href="#" class="text-white lead text-decoration-none fs-6">Mi Cuenta</a></li>
+                        </ul>
+                      </div>
+
+                      <div class="col-md-4">
+                        <h5>Contacto</h5>
+                        <ul class="list-unstyled lead fs-6">
+                          <li>
+                            <i class="bi bi-envelope"></i>
+                            <a href="mailto:consultas@hardtech.com.ar" class="fw-medium">consultas@hardtech.com.ar</a>
+                        </li>
+                          <li><i class="bi bi-telephone"></i> +54 3456 7890</li>
+                          <li><i class="bi bi-geo-alt"></i> Somewhere, Nowhere</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- Línea divisoria -->
+                    <hr class="my-4">
+
+                    <!-- Sección de derechos reservados -->
+                    <div class="text-center py-3 lead fs-6">
+                        <p>&copy; 2024 HardTech. Todos los derechos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+
+</html>
