@@ -1,9 +1,8 @@
 .barra_main{
-	background-color: rgba(43,42,48,255);
+	background-color: rgba(43,42,48,255)!important;
 	height: 18vh;
 	border-bottom: 2px solid #8d8ae1;
-	justify-content: space-around;
-
+	/*justify-content: space-around;*/
 }
 
 .nv-ht{
@@ -11,7 +10,7 @@
 	font-weight: bold;
 	color: #6fe0f3  !important;
 	font-size: 1.5rem !important;
-	border-color: ;
+	text-align: center;
 }
 
 .drop-custom{
@@ -22,6 +21,12 @@
 	border-radius: 10px;
 	background-color: #fda05b;
 	font-family: sans-serif;
+
+}
+
+.carrusel{
+	height: auto !important;
+	margin-top: 50px;
 }
 
 
@@ -62,13 +67,13 @@ footer{
 	background-color: rgba(43,42,48,255);
 	height: 24vh;
 	border-top: 2px solid #8d8ae1;
-	justify-content: space-around;
-	margin-top: 20px;
+	/*justify-content: space-around;*/
+	margin-top: 30px;
 }
 
 
-.email,.footer{
-	margin-top: 10px;
+.email{
+	margin-top: 55px;
 	text-align: center;
 }
 
@@ -80,4 +85,20 @@ footer{
 .derechos{
     padding-top: 10px;
 	text-align: center;
+	color:goldenrod;
+}
+
+#card{
+	width: 15rem;
+
+}
+
+#destacados{
+	margin-top: 30px;
+	text-align: center;
+}
+
+.productos{
+	margin-top: 35px;
+
 }
