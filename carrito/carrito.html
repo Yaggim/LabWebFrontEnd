@@ -13,13 +13,33 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="my-3">Carrito de compras</h2>
-                    <div id="carrito" class="bg-light p-3">
-                    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/index.html">
+                <img src="/images/Webp.net-resizeimage(1).jpg" alt="Logo">
+                <span class="ms-3">Carrito de compras</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <form class="d-flex ms-lg-auto">
+                    <input class="form-control me-2" type="search" placeholder="Buscar Producto" aria-label="Search">
+                    <button class="btn-custom" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div id="carrito" class="bg-light p-3">
+                    <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
+                    <button class="btn-eliminar" id="eliminar">Eliminar</button>
+                    <button id="finalizar-compra" class="btn btn-success mt-3">Finalizar compra</button>
                 </div>
             </div>
         </div>

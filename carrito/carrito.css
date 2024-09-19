@@ -3,4 +3,11 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+    margin-top: 20px;
+}
+
+.btn-custom{
+	border-radius: 10px;
+	background-color: #fda05b;
+	font-family: sans-serif;
 }

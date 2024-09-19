@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         carrito.innerHTML += elementoHTML;
 
         // Agrego un evento de clic al botón de eliminar
-        document.getElementById('elemento-' + elemento.id).getElementsByClassName('eliminar')[0].addEventListener('click', function () {
+        document.getElementById('elemento-' + elemento.id).getElementsById('eliminar')[0].addEventListener('click', function () {
             eliminarElementoDelCarrito(elemento.id);
         });
     }
@@ -25,4 +25,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Agrego un elemento al carrito
     agregarElementoAlCarrito(elemento);
+
+    document.getElementById('finalizar-compra').addEventListener('click', function () {
+        finalizarCompra();
+    });
+
+    // Función para finalizar la compra
+    function finalizarCompra() {
+        window.location.href = 'compra.html';  
+    }
 });
