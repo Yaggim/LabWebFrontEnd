@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/producto.css">
+    <script type="text/javascript" src="producto.js" defer></script>
+
+
+    <!--Bootstrap cdn-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!----------->
+    <title>Visualización del producto</title>
+</head>
+
+<body id="body">
+    <div class="container p-2 my-2 rounded">
+        <div class="row">
+            <!--DIV mitad izquierda-->
+            <div class="col-6 h-100 p-2">
+                <!--Carrusel-->
+                <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                    </div>
+
+                    <div class="carousel-inner rounded">
+                        <div class="carousel-item active">
+                            <img src="memoria1.jpg" alt="Imagen 1 producto"
+                                class="d-block w-100 h-100 object-fit-cover">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="memoria2.jpg" alt="Imagen 2 producto"
+                                class="d-block w-100 h-100 object-fit-cover">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="memoria3.jpg" alt="NImagen 3 producto"
+                                class="d-block w-100 h-100 object-fit-cover">
+                        </div>
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+                <!--Fin carrusel-->
+                <div id="divDescripcion" class="p-2 my-2 border rounded">
+                    <h3>Descripción del producto</h3>
+                    <p>{description} {description} {description} {description} {description} {description} {description}
+                        {description} {description} {description} {description} {description} {description}
+                        {description} {description} {description} {description} {description}</p>
+                </div>
+            </div>
+            <!--Fin DIV mitad izquierda-->
+
+            <!--DIV mitad derecha-->
+            <div class="col-6 h-100 p-2">
+                <div id="divData" class="p-2 rounded">
+                    <p class="idProducto">Código de identificación de producto: {id}
+                    <p>
+                    <h1>Marca producto {brand} + modelo {model}</h1>
+                    <h6>Categoría {category}</h6>
+                    <h2>$Precio {price ars}</h2>
+                </div>
+                <div class="row">
+                    <div id="divStock" class="col-6 p-2 my-2 border text-center rounded">
+                        RECUADRO DE STOCK ALTO O BAJO SEGÚN {stock} y cambio de color
+                    </div>
+                    <div class="col-6 p-2 my-2 border text-center rounded">
+                        <p class="cantidad">Seleccione la cantidad</p>
+                        <div class="d-flex align-items-center justify-content-center rounded">
+                            <!-- Botón para disminuir la cantidad -->
+                            <button id="decrement" class="btn btn-secondary">-</button>
+                            <!-- Campo de texto para la cantidad elegida -->
+                            <input id="quantity" type="text" value="1" class="form-control text-center mx-2" readonly>
+                            <!-- Botón para aumentar la cantidad -->
+                            <button id="increment" class="btn btn-secondary">+</button>
+                        </div>
+                    </div>
+                    <!--Boton de compra-->
+                    <div class="col-12 p-2 text-center rounded">
+                        <button id="btnCompra" type="button" class="btn btn-success btn-lg">Realizar compra <i
+                                class="bi bi-credit-card"></i></button>
+                    </div>
+                    <!--Envio-->
+                    <div class="col-6 p-2 text-center rounded">
+                        <button id="btnCarrito" type="button" class="btn btn-info">Envío a domicilio <i
+                                class="bi bi-truck"></i></button>
+                    </div>
+                    <!--Carrito-->
+                    <div class="col-6 p-2 text-center rounded">
+                        <button id="btnCarrito" type="button" class="btn btn-primary">Agregar al carrito <i
+                                class="bi bi-cart-plus"></i></button>
+                    </div>
+                </div>
+                <div class="p-2 my-4 rounded">
+                    <h3>Espacio destinado a</h3>
+                    <p>Este espacio está destinado a la incorporación de los medios de pago aceptados o quizás la
+                        información relevante del local o alguna otra info relevante que quiera dejarse fijada a todas
+                        las visualizaciones de productos
+                    </p>
+                </div>
+            </div>
+            <!--Fin DIV mitad derecha-->
+        </div>
+        <!--Fin DIV row-->
+    </div>
+    <!--Fin container-->
+
+</body>
+
+</html>
