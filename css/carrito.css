@@ -8,6 +8,9 @@
 
 .btn-custom{
 	border-radius: 10px;
-	background-color: #fda05b;
 	font-family: sans-serif;
+}
+
+.container-carrito {
+    margin-top: 100px; /* Ajusta este valor según tus necesidades */
 }
