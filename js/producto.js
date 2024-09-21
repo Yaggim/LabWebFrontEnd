@@ -1,21 +1,62 @@
-//Insertar imagenes del producto producto.json "image"
+const productos = [
+    {
+        "id": 1,
+        "brand": {
+            "id": 1,
+            "name": "Kingston"
+        },
+        "model": {
+            "id": 1,
+            "name": "HyperX Fury DDR4"
+        },
+        "category": {
+            "id": 1,
+            "name": "Memorias"
+        },
+        "priceARS": 1000,
+        "priceUSD": 10,
+        "enabled": true,
+        "stock": 10,
+        "image": [
+            "../images/memoria1.jpg",
+            "../images/memoria2.jpg",
+            "../images/memoria3.jpg"
+        ],
+        "description": "Si tu computadora funciona con lentitud, si un programa no responde o no se carga, lo más probable es que se trate de un problema de memoria. Estos son posibles indicios de un rendimiento defectuoso en el día a día de tus tareas. Por ello, contar con una memoria Kingston -sinónimo de trayectoria y excelencia- mejorará la productividad de tu equipo: las páginas se cargarán más rápido y la ejecución de nuevas aplicaciones resultará más ágil y simple."
+    }
+];
 
-//Insertar HTML de descripción del producto producto.json "description"
+// Función para buscar un producto por su ID y cargar los datos al HTML
+function cargarProductoPorID(idProducto) {
+    // Buscar el producto por su ID
+    const producto = productos.find(prod => prod.id === idProducto);
+    let divStock = document.getElementById("divStock");
 
-//Insertar HTML del ID del producto producto.json "id"
+    if (producto) {
+        document.getElementById("producto-id").textContent = "Código de identificación de producto: " + producto.id;
+        document.getElementById("producto-brand-model").textContent = producto.brand.name + " " + producto.model.name;
+        document.getElementById("producto-category").textContent = "Categoría: " + producto.category.name;
+        document.getElementById("producto-priceARS").textContent = "Precio ARS: $" + producto.priceARS; //+ " / USD: $" + producto.priceUSD;
+        //document.getElementById("producto-stock").textContent = "Stock: " + producto.stock + " unidades";
+        document.getElementById("producto-image1").src = producto.image[0];
+        document.getElementById("producto-image2").src = producto.image[1];
+        document.getElementById("producto-image3").src = producto.image[2];
+        document.getElementById("producto-description").textContent = producto.description;
+        if(producto.stock < 10){
+            document.querySelector("#divStock h2").innerHTML = "BAJO"
+            divStock.style.backgroundColor = "#e72c2c"
+        }
+        if(producto.stock >= 10){
+            document.querySelector("#divStock h2").innerHTML = "ALTO"
+            divStock.style.backgroundColor = "#7ac94c"
+        }
+    } else {
+        console.error("Producto no encontrado.");
+    }
+}
 
-//Insertar HTML de la marca + modelo producto.json "brand" "model"
-
-//Insertar HTML de categoría producto.json "category"
-
-//Insertar HTML de precio producto.json "priceARS"
-
-//Manejo de clase de divStock según el stock producto.json "stock"
-/*
-stock bajo #e72c2c
-stock intermedio #eeee1e
-stock alto #7ac94c
-*/
+// Llamada a la función con el ID del producto
+cargarProductoPorID(1);
 
 //Comprar
 document.getElementById("btnCompra").addEventListener("click", realizarCompra);
@@ -24,9 +65,9 @@ function realizarCompra() {
     alert("Se redirige a la pasarela de pago.");
 }
 
-document.getElementById("formEnvio").addEventListener("submit", function(event) {
+document.getElementById("formEnvio").addEventListener("submit", function (event) {
     event.preventDefault();
-    
+
     let calle = document.getElementById("envioCalle").value;
     let altura = document.getElementById("envioAltura").value;
     let postal = document.getElementById("envioPostal").value;
@@ -44,7 +85,7 @@ function envioDomicilio() {
     envioModal.show();
 }
 
-//Agregar al carrito
+//Agregar al carrito FALTA QUE AGREGUE AL MODAL LA LEYENDA DE BRAND + MODEL
 document.getElementById("btnCarrito").addEventListener("click", agregarAlCarrito);
 function agregarAlCarrito() {
     let carritoModal = new bootstrap.Modal(document.getElementById("modalCarrito"));
