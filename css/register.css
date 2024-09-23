@@ -35,11 +35,11 @@ input[type="number"] {
 
 input:invalid:not(:placeholder-shown):not([type="checkbox"]):not([id="search-bar"]) {
     border-color: red;
-    background-image: url(/images/uncheck.png);
+    background-image: url(../images/uncheck.png);
 }
 
 input:valid:not(:placeholder-shown):not([type="checkbox"]):not([id="search-bar"]) {
-    background-image: url(/images/check.png);
+    background-image: url(../images/check.png);
 }
 
 input:invalid:not(:placeholder-shown):not([type="checkbox"]),
