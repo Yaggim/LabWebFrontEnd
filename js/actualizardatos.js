@@ -14,7 +14,7 @@ function actualizarDatos(event) {
     ////////////////////////////////////////////////////////////////////////
     event.preventDefault()
     if(validarFormulario()){
-        alert("FORMULARIO VALIDADO OK!")//HAY QUE CAMBIARLO POR UN MODAL
+        mostrarModal()
         formulario.reset();
     }
     else{alert("ERROR AL ENVIAR FORMULARIO")/*QUITAR EL ELSE LUEGO, SOLO ES PARA CONTROL*/}
@@ -25,12 +25,12 @@ function validarFormulario(){
     //VALIDAR NUM TELEFÓNICO
     let tel = document.getElementById("telefono").value
     let errorTel = document.getElementById("errorTel");
-    if (isNaN(tel)){
+    if (tel != "" & isNaN(tel)){
         errorTel.innerHTML = "Formato de teléfono inválido.";
         document.getElementById("telefono").classList.add('is-invalid');
         return false;
     }
-    if (tel.length < 6 || tel.length > 14){
+    if (tel!="" & tel.length < 6 || tel.length > 14){
         errorTel.innerHTML = "El teléfono debe tener entre 6 y 14 números";
         document.getElementById("telefono").classList.add('is-invalid');
         return false;
@@ -40,7 +40,7 @@ function validarFormulario(){
     let email = document.getElementById("email").value
     let exRegular = /^[A-Za-z0-9@._-]+$/;
     let errorEmail = document.getElementById("errorEmail")
-    if (!exRegular.test(email)) {
+    if (email!="" & !exRegular.test(email)) {
         errorEmail.innerHTML = "Formato de Email inválido.";
         document.getElementById("email").classList.add('is-invalid');
         return false;
@@ -49,7 +49,7 @@ function validarFormulario(){
     //VALIDAR NUEVA CONTRASEÑA
     let newPass = document.getElementById("password").value
     let errorPassword = document.getElementById("errorPassword")
-    if(newPass.length < 8 || newPass.length > 20){
+    if(newPass!="" & newPass.length < 8 || newPass.length > 20){
         errorPassword.innerHTML = "La contraseña debe tener entre 8 y 20 caracteres"
         document.getElementById("password").classList.add('is-invalid');
         return false;
@@ -66,6 +66,12 @@ function validarFormulario(){
     
     //VALIDAR VIEJA CONTRASEÑA
     //CUANDO HAYA UN BACKEND HECHO
+    //SE PUEDE CONSIDERAR VALIDAR QUE LA NUEVA CONTRASEÑA DEBE SER DIFERENTE A LA ANTERIOR
     
     return true
+}
+
+function mostrarModal() {
+    let miModal = new bootstrap.Modal(document.getElementById("modal"));
+    miModal.show();
 }
