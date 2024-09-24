@@ -232,7 +232,7 @@ const productos = [
 ];
 
 // Llamada a la función principal con el ID del producto
-window.onload = cargarProductoPorID(2);
+window.onload = cargarProductoPorID(1);
 
 function cargarProductoPorID(idProducto) {
     // Buscar el producto por el ID
