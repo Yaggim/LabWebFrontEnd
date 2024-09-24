@@ -1,0 +1,16 @@
+#carrito {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 20px;
+}
+
+.btn-custom{
+	border-radius: 10px;
+	font-family: sans-serif;
+}
+
+.container-carrito {
+    margin-top: 100px; /* Ajusta este valor según tus necesidades */
+}

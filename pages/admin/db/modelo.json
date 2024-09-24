@@ -1,0 +1,12 @@
+[
+    { 
+    "id": 1, 
+    "name": "Modelo Ejemplo 1",
+    "brand": "Marca Ejemplo 1"
+    },
+    { 
+    "id": 2,
+    "name": "Modelo Ejemplo 2",
+    "brand": "Marca Ejemplo 2"
+    }
+]
