@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/register.css">
+    <script src="../js/busquedaProducto.js"></script>
 </head>
 
 <body>
@@ -77,14 +78,18 @@
                     <div class="col-12 col-md-4 d-none d-lg-block d-flex justify-content-center align-items-center ">
                         <form name="formBusqueda" action="" method="" id="formBusqueda" role="search" class="justify-content-center">
                             <div class="form-group">
-                                <div class="input-group me-2">
-                                    <input type="text" class="form-control" id="search-bar" placeholder="Buscar Producto" aria-label="Search">
+                                <div class="input-group me-3">
+                                    <div class="col-10">
+                                        <input type="text" class="form-control" id="search-bar"
+                                            placeholder="Buscar Producto" aria-label="Search">       
+                                    </div>
                                     <button class="btn btn-custom" type="submit">
                                         <span class="input-group-addon">
                                             <i class="fa fa-search"></i>
                                         </span>
                                     </button>
                                 </div>
+                                <div id="resultados-busqueda" class="bg-light text-dark overflow-auto"></div>
                             </div>
                         </form>
                     </div>
