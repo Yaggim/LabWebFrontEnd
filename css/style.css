@@ -83,3 +83,9 @@ footer{
 }
 
 
+/*Buscador*/
+
+#resultados-busqueda {
+    border-radius: 10px;
+    width: 83%;
+}
