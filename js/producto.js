@@ -285,9 +285,34 @@ function cargarProductoPorID(idProducto) {
         document.getElementById("btnCompra").addEventListener("click", realizarCompra);
         function realizarCompra() {
             if (producto.stock > 0) {
-                //HAY QUE DESCONTAR EL STOCK DESPUÉS DE QUE CONFIRME LA COMPRA DESDE EL MODAL
-                producto.stock -= cantidad.value;
-                console.log("Stock actual del producto: " + producto.stock)
+                document.getElementById("retiroLocal").addEventListener("change", function () {
+                    let esRetiroLocal = this.checked;
+                    let camposEnvio = document.getElementById("camposEnvio");
+                    let infoLocal = document.getElementById("infoLocal");
+
+                    // Mostrar u ocultar campos de envío
+                    if (esRetiroLocal) {
+                        // Ocultar los campos de envío y hacerlos no requeridos
+                        camposEnvio.classList.add("d-none");
+                        document.getElementById("envioTitular").required = false;
+                        document.getElementById("envioCalle").required = false;
+                        document.getElementById("envioAltura").required = false;
+                        document.getElementById("envioPostal").required = false;
+
+                        // Mostrar la dirección y horario del local
+                        infoLocal.classList.replace("d-none", "d-block");
+                    } else {
+                        // Mostrar los campos de envío y hacerlos requeridos
+                        camposEnvio.classList.replace("d-none", "d-block");
+                        document.getElementById("envioTitular").required = true;
+                        document.getElementById("envioCalle").required = true;
+                        document.getElementById("envioAltura").required = true;
+                        document.getElementById("envioPostal").required = true;
+
+                        // Ocultar la dirección y horario del local
+                        infoLocal.classList.replace("d-block", "d-none");
+                    }
+                });
                 let compraModal = new bootstrap.Modal(document.getElementById("modalCompra"));
                 compraModal.show();
             }
@@ -299,14 +324,19 @@ function cargarProductoPorID(idProducto) {
         }
 
         // Formulario de datos del modal envío a domicilio
-        document.getElementById("formEnvio").addEventListener("submit", function (event) {
+        // FALTARÍA VALIDAR LOS DATOS EL FORMULARIO
+        document.getElementById("formCompra").addEventListener("submit", function (event) {
             event.preventDefault();
+            //Descuenta stock al producto
+            producto.stock -= cantidad.value;
+            console.log("Stock actual del producto: " + producto.stock)
+            let titular = document.getElementById("envioTitular").value;
             let calle = document.getElementById("envioCalle").value;
             let altura = document.getElementById("envioAltura").value;
             let postal = document.getElementById("envioPostal").value;
             let nota = document.getElementById("envioNota").value;
-            console.log("Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota);
-            alert("Envío cargado satisfactoriamente!");
+            console.log("Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota);
+            alert("Compra realizada exitosamente!");
             let compraModal = bootstrap.Modal.getInstance(document.getElementById("modalCompra"));
             compraModal.hide();
         });
