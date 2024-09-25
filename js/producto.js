@@ -232,41 +232,21 @@ const productos = [
 ];
 
 // Llamada a la función principal con el ID del producto
-window.onload = cargarProductoPorID(1);
+window.onload = cargarProductoPorID(6);
 
 function cargarProductoPorID(idProducto) {
     // Buscar el producto por el ID
     const producto = productos.find(prod => prod.id === idProducto);
-
-    // Cargar los datos en la página 
     if (producto) {
-        document.getElementById("producto-id").textContent = "Código de identificación de producto: " + producto.id;
-        document.getElementById("producto-brand-model").textContent = producto.brand.name + " " + producto.model.name;
-        document.getElementById("producto-category").textContent = "Categoría: " + producto.category.name;
-        document.getElementById("producto-priceARS").textContent = "Precio: $" + producto.priceARS + ".-"; //+ " / USD: $" + producto.priceUSD;
-        document.getElementById("producto-image1").src = producto.image[0];
-        document.getElementById("producto-image2").src = producto.image[1];
-        document.getElementById("producto-description").textContent = producto.description;
-        let divStock = document.getElementById("divStock");
-        if (producto.stock >= 10) {
-            document.querySelector("#divStock h2").innerHTML = "ALTO"
-            divStock.style.backgroundColor = "#7ac94c"
-        }
-        if (producto.stock < 10) {
-            document.querySelector("#divStock h2").innerHTML = "BAJO"
-            divStock.style.backgroundColor = "#e72c2c"
-        }
-        if (producto.stock == 0 || producto.enabled == false) {
-            document.querySelector("#divStock h2").innerHTML = "SIN STOCK"
-            divStock.style.backgroundColor = "#e72c2c"
-            document.getElementById("btnCompra").disabled = true
-            document.getElementById("btnCarrito").disabled = true
-        }
+        // Cargar todos los datos del producto a la página
+        completarDatosPagina(idProducto)
+        // Completa el recuadro de "Stock en la web" según el stock disponible de este producto
+        completarRecuadroStock(idProducto)
 
         // Incremento y decremento de cantidad seleccionada del producto
         const decrement = document.getElementById('btnDecrement');
         const increment = document.getElementById('btnIncrement');
-        const cantidad = document.getElementById('quantity');
+        let cantidad = document.getElementById('quantity');
         decrement.addEventListener('click', function decrementar() {
             let valorActual = parseInt(cantidad.value);
             if (valorActual > 1) {
@@ -281,64 +261,37 @@ function cargarProductoPorID(idProducto) {
         });
 
         // Comprar producto
-        // INCOMPLETO
-        document.getElementById("btnCompra").addEventListener("click", realizarCompra);
-        function realizarCompra() {
-            if (producto.stock > 0) {
-                document.getElementById("retiroLocal").addEventListener("change", function () {
-                    let esRetiroLocal = this.checked;
-                    let camposEnvio = document.getElementById("camposEnvio");
-                    let infoLocal = document.getElementById("infoLocal");
-
-                    // Mostrar u ocultar campos de envío
-                    if (esRetiroLocal) {
-                        // Ocultar los campos de envío y hacerlos no requeridos
-                        camposEnvio.classList.add("d-none");
-                        document.getElementById("envioTitular").required = false;
-                        document.getElementById("envioCalle").required = false;
-                        document.getElementById("envioAltura").required = false;
-                        document.getElementById("envioPostal").required = false;
-
-                        // Mostrar la dirección y horario del local
-                        infoLocal.classList.replace("d-none", "d-block");
-                    } else {
-                        // Mostrar los campos de envío y hacerlos requeridos
-                        camposEnvio.classList.replace("d-none", "d-block");
-                        document.getElementById("envioTitular").required = true;
-                        document.getElementById("envioCalle").required = true;
-                        document.getElementById("envioAltura").required = true;
-                        document.getElementById("envioPostal").required = true;
-
-                        // Ocultar la dirección y horario del local
-                        infoLocal.classList.replace("d-block", "d-none");
-                    }
-                });
-                let compraModal = new bootstrap.Modal(document.getElementById("modalCompra"));
-                compraModal.show();
-            }
-            else {
-                document.getElementById("btnCompra").disabled = true
-                document.getElementById("btnCarrito").disabled = true
-            }
-
-        }
+        document.getElementById("btnCompra").addEventListener("click", function () {
+            // Vuelvo a completar el recuadro de stock, por si bajaron las unidades en stock
+            document.getElementById("pagoTotal").innerHTML = "Cant: " + cantidad.value + "<br>Total a abonar $" + cantidad.value*(producto.priceARS);
+            realizarCompra(idProducto);
+        });
 
         // Formulario de datos del modal envío a domicilio
-        // FALTARÍA VALIDAR LOS DATOS EL FORMULARIO
+        // FALTARÍA VALIDAR TAMBIÉN POR ACÁ LOS DATOS DEL FORMULARIO
         document.getElementById("formCompra").addEventListener("submit", function (event) {
             event.preventDefault();
-            //Descuenta stock al producto
+            // Descuenta stock al producto
             producto.stock -= cantidad.value;
+            // Solo para control de los campos ////////////////////////////////////////////////
             console.log("Stock actual del producto: " + producto.stock)
             let titular = document.getElementById("envioTitular").value;
             let calle = document.getElementById("envioCalle").value;
             let altura = document.getElementById("envioAltura").value;
             let postal = document.getElementById("envioPostal").value;
             let nota = document.getElementById("envioNota").value;
-            console.log("Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota);
-            alert("Compra realizada exitosamente!");
+            let pago = document.getElementById("tarjeta").value;
+            let articulo = [producto.brand, producto.model, producto.id];
+            console.log("Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota, "Pago efectuado:", pago, "Prod:", articulo, "Cantidad:", cantidad.value);
+            ////////////////////////////////////////////////////////////////////////////////////
+            // Setea de nuevo la cantidad a elegir para que comience en 1
+            cantidad.value = 1;
             let compraModal = bootstrap.Modal.getInstance(document.getElementById("modalCompra"));
             compraModal.hide();
+            let finCompraModal = new bootstrap.Modal(document.getElementById("modalFinCompra"));
+            finCompraModal.show();
+            // Vuelvo a evaluar el stock para completar el recuadro de "Stock en la web"
+            completarRecuadroStock(idProducto)
         });
 
         // Agregar al carrito
@@ -354,6 +307,78 @@ function cargarProductoPorID(idProducto) {
 
     } else {
         console.error("ID del producto no encontrado.");
+    }
+}
+
+function completarDatosPagina(idProducto) {
+    const producto = productos.find(prod => prod.id === idProducto);
+    document.getElementById("producto-id").textContent = "Código de identificación de producto: " + producto.id;
+    document.getElementById("producto-brand-model").textContent = producto.brand.name + " " + producto.model.name;
+    document.getElementById("producto-category").textContent = "Categoría: " + producto.category.name;
+    document.getElementById("producto-priceARS").textContent = "Precio: $" + producto.priceARS + ".-"; //+ " / USD: $" + producto.priceUSD;
+    document.getElementById("producto-image1").src = producto.image[0];
+    document.getElementById("producto-image2").src = producto.image[1];
+    document.getElementById("producto-description").textContent = producto.description;
+}
+
+function completarRecuadroStock(idProducto) {
+    const producto = productos.find(prod => prod.id === idProducto);
+    let divStock = document.getElementById("divStock");
+    if (producto.stock >= 10) {
+        document.querySelector("#divStock h2").innerHTML = "ALTO"
+        divStock.style.backgroundColor = "#7ac94c"
+    }
+    if (producto.stock < 10) {
+        document.querySelector("#divStock h2").innerHTML = "BAJO"
+        divStock.style.backgroundColor = "#e72c2c"
+    }
+    if (producto.stock == 0 || producto.enabled == false) {
+        document.querySelector("#divStock h2").innerHTML = "SIN STOCK"
+        divStock.style.backgroundColor = "#e72c2c"
+        document.getElementById("btnCompra").disabled = true
+        document.getElementById("btnCarrito").disabled = true
+    }
+}
+
+function realizarCompra(idProducto) {
+    const producto = productos.find(prod => prod.id === idProducto);
+    if (producto.stock > 0) {
+        // Funcion para la logica de envío a domicilio o retiro por el local
+        document.getElementById("retiroLocal").addEventListener("change", function () {
+            let esRetiroLocal = this.checked;
+            let camposEnvio = document.getElementById("camposEnvio");
+            let infoLocal = document.getElementById("infoLocal");
+
+            // Mostrar u ocultar campos de envío
+            if (esRetiroLocal) {
+                // Ocultar los campos de envío y hacerlos no requeridos
+                camposEnvio.classList.add("d-none");
+                document.getElementById("envioTitular").required = false;
+                document.getElementById("envioCalle").required = false;
+                document.getElementById("envioAltura").required = false;
+                document.getElementById("envioPostal").required = false;
+                // Mostrar la dirección y horario del local
+                infoLocal.classList.replace("d-none", "d-block");
+            } else {
+                // Mostrar los campos de envío y hacerlos requeridos
+                camposEnvio.classList.replace("d-none", "d-block");
+                document.getElementById("envioTitular").required = true;
+                document.getElementById("envioCalle").required = true;
+                document.getElementById("envioAltura").required = true;
+                document.getElementById("envioPostal").required = true;
+                // Ocultar la dirección y horario del local
+                infoLocal.classList.replace("d-block", "d-none");
+            }
+        });
+        let compraModal = new bootstrap.Modal(document.getElementById("modalCompra"));
+        compraModal.show();
+    }
+    else {
+        // Deshabilitar los botones de compra y carrito si no hay stock
+        document.querySelector("#divStock h2").innerHTML = "SIN STOCK"
+        divStock.style.backgroundColor = "#e72c2c"
+        document.getElementById("btnCompra").disabled = true
+        document.getElementById("btnCarrito").disabled = true
     }
 }
 
