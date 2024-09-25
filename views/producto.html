@@ -300,45 +300,57 @@
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" name="retiroLocal" id="retiroLocal">
                             <label class="form-check-label" for="retiroLocal">
-                                <h6 class="modal-title fs-5"><i class="bi bi-geo-alt"></i> ¡Quiero retirarlo por su local!</h6>
+                                <h6 class="modal-title fs-5"><i class="bi bi-geo-alt"></i> ¡Quiero retirarlo por su
+                                    local!</h6>
                             </label>
                         </div>
                         <!-- Dirección y horario del local (oculto por defecto) -->
                         <div class="mb-3 d-none" id="infoLocal">
                             <p><strong>Dirección:</strong><br>Malabia 355 - Capital Federal</p>
                             <p><strong>Horarios:</strong><br> Lunes a viernes de 9:00 a 19:00</p>
-                            <p>Importante: Deberá decirnos el número de pedido, que le figurará luego de que finalice la compra.</p>
+                            <p>Importante: Deberá decirnos el número de pedido, que le figurará luego de que finalice la
+                                compra.</p>
                         </div>
-                
+
                         <!-- Campos de envío a domicilio -->
                         <div id="camposEnvio">
-                            <h6 class="modal-title fs-5"><i class="bi bi-truck"></i> Prefiero que lo envíen a domicilio:</h6>
+                            <h6 class="modal-title fs-5"><i class="bi bi-truck"></i> Prefiero que lo envíen a domicilio:
+                            </h6>
                             <div class="mb-3">
                                 <label for="envioTitular" class="col-form-label">Ingrese su nombre y apellido:</label>
-                                <input type="text" class="form-control" name="envioTitular" id="envioTitular" placeholder="Máximo Cozzetti"
-                                    pattern="^[A-Za-záéíóúÁÉÍÓÚ ]+$" minlength="3" maxlength="50" required>
+                                <input type="text" class="form-control" name="envioTitular" id="envioTitular"
+                                    placeholder="Máximo Cozzetti" pattern="^[A-Za-záéíóúÁÉÍÓÚ ]+$" minlength="3"
+                                    maxlength="50" required>
                             </div>
                             <div class="mb-3">
                                 <label for="envioCalle" class="col-form-label">Ingrese nombre de calle:</label>
-                                <input type="text" class="form-control" name="envioCalle" id="envioCalle" placeholder="Manuel Belgrano"
-                                    pattern="^[A-Za-z0-9.áéíóúÁÉÍÓÚ ]+$" minlength="3" maxlength="30" required>
+                                <input type="text" class="form-control" name="envioCalle" id="envioCalle"
+                                    placeholder="Manuel Belgrano" pattern="^[A-Za-z0-9.áéíóúÁÉÍÓÚ ]+$" minlength="3"
+                                    maxlength="30" required>
                             </div>
                             <div class="mb-3">
                                 <label for="envioAltura" class="col-form-label">Ingrese altura:</label>
-                                <input type="number" class="form-control" name="envioAltura" id="envioAltura" placeholder="1027" min="1"
-                                    max="99999" required>
+                                <input type="number" class="form-control" name="envioAltura" id="envioAltura"
+                                    placeholder="1027" min="1" max="99999" required>
                             </div>
                             <div class="mb-3">
                                 <label for="envioPostal" class="col-form-label">Código Postal:</label>
-                                <input type="number" class="form-control" name="envioPostal" id="envioPostal" placeholder="1838" min="1000"
-                                    max="9999" required>
+                                <input type="number" class="form-control" name="envioPostal" id="envioPostal"
+                                    placeholder="1838" min="1000" max="9999" required>
                             </div>
                             <div class="mb-3">
                                 <label for="envioNota" class="col-form-label">Notas adicionales:</label>
                                 <textarea class="form-control" name="envioNota" id="envioNota"
-                                    placeholder="Agregue, de ser necesario, instrucciones para el repartidor."
+                                    placeholder="Agregue, de ser necesario, número de departamento o instrucciones para el repartidor."
                                     maxlength="200"></textarea>
                             </div>
+                        </div>
+                        <h6 class="modal-title fs-5"><i class="bi bi-credit-card-2-back"></i> Concretar el pago</h6>
+                        <div class="mb-3">
+                            <label for="tarjeta" class="col-form-label">Ingrese el número de su tarjeta registrada en MercadoPago:</label>
+                            <input type="number" class="form-control" name="tarjeta" id="tarjeta"
+                                placeholder="1234 5678 8765 4321" min="100010001000" max="999999999999" required>
+                                <p id="pagoTotal"></p>
                         </div>
                     </form>
                 </div>
