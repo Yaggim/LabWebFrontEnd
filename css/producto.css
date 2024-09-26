@@ -18,6 +18,10 @@ body {
     background-size: cover;
 }
 
+div.container{
+    background-color: rgba(0, 0, 0, 0.300);
+}
+
 #divData {
     color: #dfe7ef
 }
@@ -26,7 +30,7 @@ body {
     color: #dfe7ef
 }
 
-#divDescripcion {
+div.p-2.my-2.border.rounded {
     background-color: #dfe7ef;
     border-color: #233663;
 }
