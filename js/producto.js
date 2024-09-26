@@ -231,8 +231,16 @@ const productos = [
     }
 ];
 
-// Llamada a la función principal con el ID del producto
-window.onload = cargarProductoPorID(6);
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = parseInt(urlParams.get('id'));
+
+    if (productId) {
+        cargarProductoPorID(productId);
+    } else {
+        console.error("ID del producto no encontrado en la URL.");
+    }
+});
 
 function cargarProductoPorID(idProducto) {
     // Buscar el producto por el ID

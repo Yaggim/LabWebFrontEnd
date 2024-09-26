@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="card-text">${truncatedDescription}</p>
                         <p class="card-text">Precio: $${product.priceARS} / $${product.priceUSD} USD</p>
                         <p class="card-text">Stock: ${product.stock}</p>
-                        <button class="btn btn-primary">Seleccionar</button>
+                        <a href="producto.html?id=${product.id}" class="btn btn-primary">Seleccionar</a>
                     </div>
                 </div>
             `;
