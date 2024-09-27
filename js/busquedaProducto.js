@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         const img = document.createElement('img');
                         
-                        img.src = producto.image;
+                        img.src = producto.image[0];
                         img.alt = producto.brand.name + ' ' + producto.model.name;
                         img.classList.add('mr-3');
                         img.style.height = '20px'; 
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
                          // Agregar un evento de clic al div
                          div.addEventListener('click', function () {
                             // Redirigir a la página del producto
-                            window.location.href = '../views/producto.html/' + producto.id;
+                            window.location.href = `../views/producto.html?id=${producto.id}`;
                         });
 
                         resultadosBusqueda.appendChild(div);
