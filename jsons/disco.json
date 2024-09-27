@@ -1,0 +1,65 @@
+[
+  {
+    "categoria": "disco",
+    "id": 1,
+    "descripcion": "Disco SSD Patriot 120GB Burst Elite SATA3",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/X8Iw0R6J3hIhtOEQhgMP/miniatura",
+    "valor": 17999.00
+  },
+  {
+    "categoria": "disco",
+    "id": 2,
+    "descripcion": "Disco SSD Patriot 120GB Burst Elite SATA3",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/8SzjuHIQa92QpuF7izxr/miniatura",
+    "valor": 17999.00
+  },
+  {
+    "categoria": "disco",
+    "id": 3,
+    "descripcion": "Disco SSD Patriot 120GB Burst Elite SATA3",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/5fwhjskSiBGFpwTWh9CI/miniatura",
+    "valor": 19999.00
+  },
+  {
+    "categoria": "disco",
+    "id": 4,
+    "descripcion": "Disco SSD WD Green 240Gb SATA3",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/Q30xFeyd4K6Uh3EdxCHc/miniatura",
+    "valor": 29999.00
+  },
+  {
+    "categoria": "disco",
+    "id": 5,
+    "descripcion": "Disco SSD WD Green 240Gb SATA3",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/5fwGP0kc9WwoujexEQpG/miniatura",
+    "valor": 25999.00
+  },
+    {
+    "categoria": "disco",
+    "id": 6,
+    "descripcion": "Disco SSD WD Green 240Gb SATA3",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/EiZIvhXFPn5r6QQrfhfP/miniatura",
+    "valor": 26999.00
+  },
+    {
+    "categoria": "disco",
+    "id": 7,
+    "descripcion": "Disco SSD M2 WD Green 240Gb SN350 NVME",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/A9dd05ZODR6aMb5ZptNf/miniatura",
+    "valor": 36999.00
+  },
+    {
+    "categoria": "disco",
+    "id": 8,
+    "descripcion": "Disco SSD M2 WD Green 240Gb SN350 NVME",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/zkiFj40hV3xF5yFC2cXd/miniatura",
+    "valor": 49999.00
+  },
+    {
+    "categoria": "disco",
+    "id": 9,
+    "descripcion": "Disco SSD M2 WD Green 240Gb SN350 NVME",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/CEPRPwE6uftEudcJv8Be/miniatura",
+    "valor": 52999.00
+  }
+]

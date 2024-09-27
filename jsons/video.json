@@ -1,0 +1,65 @@
+[
+  {
+    "categoria": "video",
+    "id": 1,
+    "descripcion": "Placa de Video Palit NVIDIA GeForce GT 710 2GB GDDR3",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/7M5uNV5QjGEMIeEnRIDw/miniatura",
+    "valor": 414999.00
+  },
+  {
+    "categoria": "video",
+    "id": 2,
+    "descripcion": "Placa de Video Palit NVIDIA GeForce GT 710 2GB GDDR3",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/wcDrCZgs0hQayvyvm6oa/miniatura",
+    "valor": 214999.00
+  },
+  {
+    "categoria": "video",
+    "id": 3,
+    "descripcion": "Placa de Video Palit NVIDIA GeForce GT 710 2GB GDDR3",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/xbbmTuMSDuiqEOHdSSuN/miniatura",
+    "valor": 219999.00
+  },
+  {
+    "categoria": "video",
+    "id": 4,
+    "descripcion": "Placa de Video Gigabyte Radeon RX 6400 EAGLE 4Gb GDDR6",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/DNvSEm9o9X9GSO8SISok/miniatura",
+    "valor": 329999.00
+  },
+  {
+    "categoria": "video",
+    "id": 5,
+    "descripcion": "Placa de Video Gigabyte Radeon RX 6400 EAGLE 4Gb GDDR6",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/jg32GPGyYUBDekx9aT7u/miniatura",
+    "valor": 215999.00
+  },
+    {
+    "categoria": "video",
+    "id": 6,
+    "descripcion": "Placa de Video Gigabyte Radeon RX 6400 EAGLE 4Gb GDDR6",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/4iB3dqmedqsa8ZOr7pDK/miniatura",
+    "valor": 216999.00
+  },
+    {
+    "categoria": "video",
+    "id": 7,
+    "descripcion": "Placa de Video Palit NVIDIA GeForce RTX 2060 SUPER DUAL 8GB GDDR6",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/zf3E3cukFzMO9UTgPSmJ/miniatura",
+    "valor": 316999.00
+  },
+    {
+    "categoria": "video",
+    "id": 8,
+    "descripcion": "Placa de Video Palit NVIDIA GeForce RTX 2060 SUPER DUAL 8GB GDDR6",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/nd6208dUO7wPzrZBSfPa/miniatura",
+    "valor": 429999.00
+  },
+    {
+    "categoria": "video",
+    "id": 9,
+    "descripcion": "Placa de Video Palit NVIDIA GeForce RTX 2060 SUPER DUAL 8GB GDDR6",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/i6Y8pZHRQ3HSzRcd80JI/miniatura",
+    "valor": 532999.00
+  }
+]
