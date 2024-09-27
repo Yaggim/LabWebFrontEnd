@@ -43,19 +43,8 @@
     border: none; 
     padding: 2px 20px; 
     cursor: pointer; 
-    margin-bottom: 10px; 
-    border-radius: 5px;
-}
-
-.imagenProducto{
-    height: auto;
-    width: 50px;
-    margin-right: 10px;
-}
-
-.total {
-    color: #fff;
-    font-size: 20px; 
-    font-weight: bold; 
-    margin-left: 60px; 
+    display: block; 
+    float: right; 
+    margin-left: 15px;
+    border-radius: 3px;
 }
