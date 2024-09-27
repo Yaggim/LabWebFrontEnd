@@ -284,6 +284,7 @@ function cargarProductoPorID(idProducto) {
             producto.stock -= cantidad.value;
             // Solo para control de los campos ////////////////////////////////////////////////
             console.log("Stock actual del producto: " + producto.stock)
+            let dni = document.getElementById("envioTitular").value;
             let titular = document.getElementById("envioTitular").value;
             let calle = document.getElementById("envioCalle").value;
             let altura = document.getElementById("envioAltura").value;
@@ -291,7 +292,7 @@ function cargarProductoPorID(idProducto) {
             let nota = document.getElementById("envioNota").value;
             let pago = document.getElementById("tarjeta").value;
             let articulo = [producto.brand, producto.model, producto.id];
-            console.log("Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota, "Pago efectuado:", pago, "Prod:", articulo, "Cantidad:", cantidad.value);
+            console.log("DNI: ". dni, "Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota, "Pago efectuado:", pago, "Prod:", articulo, "Cantidad:", cantidad.value);
             ////////////////////////////////////////////////////////////////////////////////////
             // Setea de nuevo la cantidad a elegir para que comience en 1
             cantidad.value = 1;
