@@ -255,6 +255,7 @@ function cargarProductoPorID(idProducto) {
         const decrement = document.getElementById('btnDecrement');
         const increment = document.getElementById('btnIncrement');
         let cantidad = document.getElementById('quantity');
+        
         decrement.addEventListener('click', function decrementar() {
             let valorActual = parseInt(cantidad.value);
             if (valorActual > 1) {
@@ -268,10 +269,12 @@ function cargarProductoPorID(idProducto) {
             }
         });
 
+        localStorage.setItem('cantidad', cantidad.value);
+
         // Comprar producto
         document.getElementById("btnCompra").addEventListener("click", function () {
             // Vuelvo a completar el recuadro de stock, por si bajaron las unidades en stock
-            document.getElementById("pagoTotal").innerHTML = "Cant: " + cantidad.value + "<br>Total a abonar $" + cantidad.value*(producto.priceARS);
+            document.getElementById("pagoTotal").innerHTML = "Cant: " + cantidad.value + "<br>Total a abonar $" + cantidad.value * (producto.priceARS);
             realizarCompra(idProducto);
         });
 
@@ -303,7 +306,6 @@ function cargarProductoPorID(idProducto) {
         });
 
         // Agregar al carrito
-        // FALTA CONECTARLO CON EL CARRITO
         document.getElementById("btnCarrito").addEventListener("click", agregarAlCarrito);
         function agregarAlCarrito() {
             let carritoModal = new bootstrap.Modal(document.getElementById("modalCarrito"));
@@ -311,6 +313,15 @@ function cargarProductoPorID(idProducto) {
             carrito.querySelector(".modal-body").innerHTML = "Se ha añadido al carrito exitosamente: <br>" + producto.brand.name + " " + producto.model.name
             carrito.querySelector("div.cantidadCarrito").textContent = "Cantidad: " + cantidad.value
             carritoModal.show();
+
+            // Obtén el carrito de localStorage
+            let productoACarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+            // Agrega el producto al carrito
+            productoACarrito.push(producto);
+
+            // Guarda el carrito en localStorage
+            localStorage.setItem('carrito', JSON.stringify(productoACarrito));
         }
 
     } else {
