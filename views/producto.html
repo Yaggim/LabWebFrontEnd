@@ -87,7 +87,10 @@
                         <form name="formBusqueda" action="" method="" id="formBusqueda" role="search" class="justify-content-center">
                             <div class="form-group">
                                 <div class="input-group me-3">
-                                    <input type="text" class="form-control" id="search-bar" placeholder="Buscar Producto" aria-label="Search">
+                                    <div class="col-10">
+                                        <input type="text" class="form-control" id="search-bar"
+                                            placeholder="Buscar Producto" aria-label="Search">
+                                    </div>
                                     <button class="btn btn-custom" type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
@@ -189,10 +192,12 @@
 
                     <div class="carousel-inner rounded">
                         <div class="carousel-item active">
-                            <img id="producto-image1" src="" alt="Imagen 1 producto">
+                            <img id="producto-image1" src="" alt="Imagen 1 producto "
+                                class="d-block w-100 h-100 object-fit-cover">
                         </div>
                         <div class="carousel-item">
-                            <img id="producto-image2" src="" alt="Imagen 2 producto">
+                            <img id="producto-image2" src="" alt="Imagen 2 producto"
+                                class="d-block w-100 h-100 object-fit-cover">
                         </div>
                     </div>
 
@@ -289,7 +294,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Finalizar la compra:</h1>
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Finalizar la compra:</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -355,12 +359,35 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" form="formCompra" class="btn btn-primary">Confirmar</button>
-                    <button type="submit" form="formCompra" class="btn btn-primary">Confirmar</button>
                 </div>
             </div>
         </div>
     </div>
     <!--Fin Modal "Comprar"-->
+
+    <!--Modal "Compra exitosa"-->
+    <div class="modal fade" id="modalFinCompra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Compra exitosa!</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- Body -->
+                <div class="modal-body">
+                    El número de pedido es #123456
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div class="cantidadCarrito"></div>
+                    <button type="button" id="botonModal" class="btn btn-warning"
+                        data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fin Modal "Compra exitosa"-->
 
     <!--Modal "Compra exitosa"-->
     <div class="modal fade" id="modalFinCompra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
