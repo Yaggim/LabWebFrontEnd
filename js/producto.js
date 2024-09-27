@@ -255,7 +255,7 @@ function cargarProductoPorID(idProducto) {
         const decrement = document.getElementById('btnDecrement');
         const increment = document.getElementById('btnIncrement');
         let cantidad = document.getElementById('quantity');
-        
+
         decrement.addEventListener('click', function decrementar() {
             let valorActual = parseInt(cantidad.value);
             if (valorActual > 1) {
@@ -268,8 +268,6 @@ function cargarProductoPorID(idProducto) {
                 cantidad.value = valorActual + 1;
             }
         });
-
-        localStorage.setItem('cantidad', cantidad.value);
 
         // Comprar producto
         document.getElementById("btnCompra").addEventListener("click", function () {
@@ -314,14 +312,25 @@ function cargarProductoPorID(idProducto) {
             carrito.querySelector("div.cantidadCarrito").textContent = "Cantidad: " + cantidad.value
             carritoModal.show();
 
-            // Obtén el carrito de localStorage
+
+            // Almaceno la cantidad que seleccionó a una clave "cantidad:"
+            localStorage.setItem('cantidad', cantidad.value);
+
+            // Obtener el carrito de localStorage
             let productoACarrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-            // Agrega el producto al carrito
-            productoACarrito.push(producto);
+            // Crear un objeto que incluya el producto y la cantidad
+            const productoConCantidad = {
+                ...producto, // Copia todas las propiedades del objeto producto
+                cantidad: parseInt(cantidad.value) // Agrega la cantidad seleccionada
+            };
 
-            // Guarda el carrito en localStorage
+            // Agregar el producto con la cantidad al carrito
+            productoACarrito.push(productoConCantidad);
+
+            // Guardar el carrito en localStorage
             localStorage.setItem('carrito', JSON.stringify(productoACarrito));
+
         }
 
     } else {

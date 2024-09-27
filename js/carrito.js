@@ -1,15 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Obtén el div del carrito
     let carritoDiv = document.getElementById('carrito');
-;
-    let cantidadSeleccionada = localStorage.getItem('cantidad'); 
-
-    // Obtén el carrito de localStorage
+    
+    // Carrito de localStorage
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-    // Obtén los botones de eliminar y finalizar compra
+    // Botones de eliminar y finalizar compra
     let eliminarButtons = document.getElementsByClassName('eliminar');
     let finalizarCompraButton = document.getElementById('finalizar-compra');
+    let cancelarButton = document.getElementById('cancelar-compra');
+
+    // Cancelar regresa a la página anterior
+    cancelarButton.addEventListener('click', function () {
+        window.history.back(); 
+    });
 
     // Oculta los botones de eliminar y finalizar compra inicialmente
     for (let button of eliminarButtons) {
@@ -17,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     finalizarCompraButton.style.display = 'none';
 
-    // Para cada producto en el carrito
     // Para cada producto en el carrito
     for (let producto of carrito) {
         // Crea un nuevo div para el producto
@@ -31,9 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
         // Establece el contenido del div del producto
         productoDiv.innerHTML = `
         <img src="${producto.image[0]}" alt="${brandName} ${modelName}" style="width: 100px;"> 
-        <p>${brandName} ${modelName} Cantidad: ${cantidadSeleccionada}  
-        Precio: $${producto.priceARS} </p>  
+        <p>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
+        | Precio unitario: $${producto.priceARS} </p>  
         `;
+        
         // Agrega el div del producto al div del carrito
         carritoDiv.appendChild(productoDiv);
 
@@ -45,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
             eliminarButton.textContent = 'Eliminar';
             productoDiv.appendChild(eliminarButton);
 
-            // Agrega un controlador de eventos al botón de eliminar
             eliminarButton.addEventListener('click', function () {
                 eliminarElementoDelCarrito(producto.id);
             });
@@ -75,22 +77,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Recarga la página para actualizar la lista de productos en el carrito
         location.reload();
-
-
     }
-
 
     // Si no hay más productos en el carrito, oculta el botón de finalizar compra
     if (carrito.length === 0) {
-        finalizarCompraButton.style.display = 'none'
+        finalizarCompraButton.style.display = 'none';
         carritoDiv.style.alignItems = 'center';
-        carritoDiv.innerHTML = `<p>No hay elementos agregados al carrito</p>`
+        carritoDiv.innerHTML = `<p>No hay elementos agregados al carrito</p>`;
     }
+
     // Función para finalizar la compra
     function finalizarCompra() {
         window.location.href = 'compra.html';
     }
 
-    // Agrega un controlador de eventos al botón de finalizar compra
     finalizarCompraButton.addEventListener('click', finalizarCompra);
 });
