@@ -1,9 +1,9 @@
 #carrito {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    margin-top: 20px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-right: 50px; /* Ajusta este valor a tu gusto */
 }
 
 .btn-custom{
@@ -13,4 +13,31 @@
 
 .container-carrito {
     margin-top: 100px; /* Ajusta este valor según tus necesidades */
+}
+
+#finalizar-compra {
+    display: block; 
+    margin-left: auto;
+    margin-right: 20px; 
+    align-self: flex-end;
+}
+
+.producto {
+    display: flex;
+    align-items: center;
+    font-size: 20px; /* Establece el tamaño de la fuente a 50px */
+    font-weight: bold; /* Hace que el texto esté en negrita */
+    margin-bottom: 20px; /* Agrega un margen en la parte inferior para separar los productos */
+}
+
+.eliminar {
+    color: #fff; /* Establece el color del texto a blanco */
+    background-color: #dc3545; /* Establece el color de fondo a rojo (similar al .btn-danger de Bootstrap) */
+    border: none; /* Elimina el borde */
+    padding: 2px 20px; /* Agrega un poco de padding */
+    cursor: pointer; /* Cambia el cursor a un puntero cuando se pasa el mouse sobre el botón */
+    display: block; /* Hace que el botón se muestre en línea con el texto del producto */
+    float: right; /* Alinea el botón a la derecha del div del producto */
+    margin-left: 15px;
+    border-radius: 3px;
 }
