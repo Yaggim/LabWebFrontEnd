@@ -43,3 +43,18 @@ div.p-2.my-2.border.rounded {
     stock alto #7ac94c
     */
 }
+
+.carousel-inner {
+    display: flex;
+    height: 500px; 
+    width: 100%; 
+    background-color: white;
+    align-items: center;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
