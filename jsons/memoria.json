@@ -1,0 +1,65 @@
+[
+  {
+    "categoria": "memoria",
+    "id": 1,
+    "descripcion": "Memoria RAM Patriot 8GB DDR4 3600Mhz Viper Elite PVE248G360C0",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/N5EdWGWoNrx7c42Ic8DY/miniatura",
+    "valor": 14999.00
+  },
+  {
+    "categoria": "memoria",
+    "id": 2,
+    "descripcion": "Memoria RAM Patriot 8GB DDR4 3600Mhz Viper Elite PVE248G360C0",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/oSUqVhoCIOHuDzvTBIxb/miniatura",
+    "valor": 14999.00
+  },
+  {
+    "categoria": "memoria",
+    "id": 3,
+    "descripcion": "Memoria RAM Patriot 8GB DDR4 3600Mhz Viper Elite PVE248G360C0",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/hSNAD9RYIj6xZZz9OHcY/miniatura",
+    "valor": 19999.00
+  },
+  {
+    "categoria": "memoria",
+    "id": 4,
+    "descripcion": "Memoria RAM Patriot/Markvision 4GB DDR4 2666Mhz",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/DNvSEm9o9X9GSO8SISok/miniatura",
+    "valor": 29999.00
+  },
+  {
+    "categoria": "memoria",
+    "id": 5,
+    "descripcion": "Memoria RAM Patriot/Markvision 4GB DDR4 2666Mhz",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/OOUZh6303jjMQ3N8i5s4/miniatura",
+    "valor": 15999.00
+  },
+    {
+    "categoria": "memoria",
+    "id": 6,
+    "descripcion": "Memoria RAM Patriot/Markvision 4GB DDR4 2666Mhz",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/N5EdWGWoNrx7c42Ic8DY/miniatura",
+    "valor": 16999.00
+  },
+    {
+    "categoria": "memoria",
+    "id": 7,
+    "descripcion": "Memoria RAM Patriot/Markvision 4GB DDR4 2666Mhz",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/zf3E3cukFzMO9UTgPSmJ/miniatura",
+    "valor": 16999.00
+  },
+    {
+    "categoria": "mother",
+    "id": 8,
+    "descripcion": "Memoria RAM Patriot/Markvision 4GB DDR4 2666Mhz",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/67oqR3mIRqCCFEJSGR4w/miniatura",
+    "valor": 29999.00
+  },
+    {
+    "categoria": "mother",
+    "id": 9,
+    "descripcion": "Memoria RAM Patriot/Markvision 4GB DDR4 2666Mhz",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/VurzI0DthDbxkvOVPDRC/miniatura",
+    "valor": 32999.00
+  }
+]

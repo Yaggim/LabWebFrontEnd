@@ -1,0 +1,65 @@
+[
+  {
+    "categoria": "cooler",
+    "id": 1,
+    "descripcion": "Cooler CPU Aerocool Air Frost 2 FRGB Intel/AMD",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/bDc5t7ICXmIFa6X4svaW/miniatura",
+    "valor": 15999.00
+  },
+  {
+    "categoria": "cooler",
+    "id": 2,
+    "descripcion": "Cooler CPU Aerocool Air Frost 4 FRGB Intel/AMD",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/E7G334xZJeOXIM3I3etj/miniatura",
+    "valor": 18999.00
+  },
+  {
+    "categoria": "cooler",
+    "id": 3,
+    "descripcion": "Cooler CPU Thermaltake UX100 RGB LGA1200/AM4",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/J228Jq52zKAojT3VPUVc/miniatura",
+    "valor": 19999.00
+  },
+  {
+    "categoria": "cooler",
+    "id": 4,
+    "descripcion": "Cooler CPU Cooler Master Hyper T200 92mm Intel/AMD",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/63OeTNSOEOUo7EOXNic0/miniatura",
+    "valor": 299999.00
+  },
+  {
+    "categoria": "cooler",
+    "id": 5,
+    "descripcion": "Cooler CPU Gamdias Boreas E1-410 Lite FRGB",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/BkkpDAnJIwy84JH3j2Zd/miniatura",
+    "valor": 29999.00
+  },
+    {
+    "categoria": "cooler",
+    "id": 6,
+    "descripcion": "Cooler CPU Gamdias Boreas E1-410 White ARGB",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/BHh6iR5inYtGxSzNv3Dy/miniatura",
+    "valor": 34999.00
+  },
+    {
+    "categoria": "cooler",
+    "id": 7,
+    "descripcion": "Cooler CPU Cooler Master Hyper H411R White LED LGA1200/AM4",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/aEpcJ4ArsKsNI0yr7VIj/miniatura",
+    "valor": 35999.00
+  },
+    {
+    "categoria": "cooler",
+    "id": 8,
+    "descripcion": "Cooler CPU Water Cooling Gamdias Aura GL120 RGB",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/5JsVNt37fVaU7Dzoztso/miniatura",
+    "valor": 59999.00
+  },
+    {
+    "categoria": "cooler",
+    "id": 9,
+    "descripcion": "Cooler CPU Water Cooling Gamdias Aura GL120 V2 ARGB AMD/Intel",
+    "ruta_imagen": "https://s3-sa-east-1.amazonaws.com/saasargentina/waVaKiBKwUcqRvBXEuM6/miniatura",
+    "valor": 62999.00
+  }
+]
