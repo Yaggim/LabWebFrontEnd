@@ -1,8 +1,57 @@
-.barra_main{
-    background-color: rgba(43,42,48,255);
+.barra_main {
+    background-color: rgba(43, 42, 48, 255);
     border-bottom: 2px solid #8d8ae1;
     justify-content: center;
+    position: relative; /* Necesario para que el dropdown esté relativo a la barra */
 }
+
+/* Estilo del contenedor de resultados */
+#resultados-busqueda {
+    position: absolute;
+    top: 100%; /* Mostrar resultados justo debajo del input de búsqueda */
+    left: 0;
+    right: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    padding: 0;
+}
+
+#formBusqueda {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo de los ítems de la lista de resultados */
+#resultados-busqueda li {
+    list-style: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#resultados-busqueda li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilo del botón de búsqueda */
+.btn-custom {
+    border-radius: 30px;
+}
+
+.btn-custom:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.input-group {
+    position: relative; /* Hace que los resultados de búsqueda se alineen con el input */
+    width: 100%;
+}
+
 
 .svg-logo {
     width: 14.5rem;
