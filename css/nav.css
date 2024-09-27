@@ -37,9 +37,16 @@
 
 #navbarNav > ul > li > a,
 .navbar-nav > li {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-header-footer);
     font-weight: 400;
-    font-size: 1.1rem;
+    color: whitesmoke;
+    border-radius: 10px;
+}
+
+#navbarNav > ul > li > a:hover:not(.arma-pc-nav) {
+    color: #5273FF !important;
+    text-shadow: 2px 2px 5px rgb(21, 21, 21);
+    transition: 0.3s ease;
 }
 
 #cat-burger > li > a {
@@ -75,8 +82,15 @@
     padding-top: .5rem;
 }
 
-.arma-pc {
-    background-color: #7ac94c;
-    color: black;
-    border-radius: 5%;
+.arma-pc-nav {
+    transition: .5s ease-in-out;
+    color: #7ac94c !important;
+    font-size: 1.1rem;
+}
+
+.arma-pc-nav:hover {
+    background-color: #5273FF;
+    color: whitesmoke !important;
+    box-shadow: 0 0 5px 5px #7ac94c;
+    text-shadow: 2px 2px 5px black;
 }
