@@ -22,20 +22,7 @@ body {
     background-repeat: no-repeat;
 }
 
-.tarjeta-registro button {
-    font-family: monospace;
-    border: 1px solid var(--contrast-green-color);
-    font-weight: bold;
-}
-
-.tarjeta-registro button:hover {
-    border: 1px solid var(--logo-green-color);
-}
-
-.tarjeta-registro h2 {
-    font-family: var(--font-family-mono);
-}
-
+/*
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -47,7 +34,8 @@ input[type="number"] {
     -moz-appearance:textfield;
 }
 
-input:invalid:not(:placeholder-shown, [type="checkbox"], .search-bar) {
+
+input:invalid:not(:placeholder-shown):not([type="checkbox"]):not([id="search-bar"]) {
     border-color: red;
     background-image: url(../images/uncheck.png);
 }
@@ -62,7 +50,7 @@ input:valid:not(:placeholder-shown, [type="checkbox"]) {
     background-repeat: no-repeat;
     background-position: calc(100% - 10px);
 }
-
+*/
 input[type="password"] + p {
     display: block;
     display: none;
