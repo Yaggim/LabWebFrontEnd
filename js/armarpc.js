@@ -44,7 +44,7 @@ function mockProducto(data) {
 
     let fila;
 
-    // Iterar sobre cada producto en el array data
+   
     data.forEach((producto, index) => {
         // Crear una nueva fila cada tres productos
         if (index % 3 === 0) {
@@ -56,7 +56,7 @@ function mockProducto(data) {
         let col = document.createElement("div");
         col.className = "col-md-4 mb-4"; // Clase Bootstrap para columnas
         
-        // Crear la tarjeta
+        
         let card = document.createElement("div");
         card.className = "card m-2";
         card.style     = "width: 22rem;"
