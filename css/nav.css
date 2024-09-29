@@ -2,65 +2,101 @@
     background-color: rgba(43, 42, 48, 255);
     border-bottom: 2px solid #8d8ae1;
     justify-content: center;
-    position: relative; /* Necesario para que el dropdown esté relativo a la barra */
 }
 
 /* Estilo del contenedor de resultados */
-#resultados-busqueda {
+.resultados-busqueda {
     position: absolute;
     top: 100%; /* Mostrar resultados justo debajo del input de búsqueda */
     left: 0;
     right: 0;
     max-height: 300px;
-    overflow-y: auto;
     z-index: 1000;
     background-color: white;
-    border: 1px solid #ccc;
-    border-top: none;
     padding: 0;
+    border-radius: 10px !important;
+    width: 84.4%;
 }
 
-#formBusqueda {
+.resultados-busqueda::-webkit-scrollbar {
+    width: var(--sb-size);
+}
+
+.resultados-busqueda::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 3px;
+}
+
+.resultados-busqueda::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 3px;
+}
+
+#formBusqueda,
+#formBusquedaModal {
     display: flex;
     align-items: center;
 }
 
 /* Estilo de los ítems de la lista de resultados */
-#resultados-busqueda li {
+.resultados-busqueda div {
     list-style: none;
     padding: 0.5rem;
     cursor: pointer;
     border-bottom: 1px solid #e5e5e5;
 }
 
-#resultados-busqueda li:hover {
+.resultados-busqueda div:hover {
     background-color: #f1f1f1;
 }
 
 /* Estilo del botón de búsqueda */
-.btn-custom {
-    border-radius: 30px;
+.btn-custom-search {
+    border-radius: 0 10px 10px 0 !important;
+    background-color: var(--logo-green-color);
 }
 
-.btn-custom:focus {
+.btn-custom-search:hover {
+    background-color: var(--contrast-green-color);
+}
+
+.btn-custom-search:focus {
     outline: none;
     box-shadow: none;
 }
 
-.input-group {
-    position: relative; /* Hace que los resultados de búsqueda se alineen con el input */
-    width: 100%;
+.modal-custom {
+    max-width: 346px;
 }
-
 
 .svg-logo {
     width: 14.5rem;
     height: auto;
 }
 
-@media (max-width: 390px) {
+@media (max-width: 991px) {
+    .barra_main {
+        border-bottom: 3px solid #8d8ae1;
+    }
+}
+
+@media (max-width: 912px) {
     .svg-logo {
-        width: 13.4rem;
+        width: 12.4rem;
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .svg-logo {
+        width: 10.4rem;
+        height: auto;
+    }
+}
+
+@media (max-width: 430px) {
+    .svg-logo {
+        width: 7.4rem;
         height: auto;
     }
 }
@@ -86,9 +122,34 @@
 
 #navbarNav > ul > li > a,
 .navbar-nav > li {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-family-mono);
     font-weight: 400;
-    font-size: 1.1rem;
+    color: whitesmoke;
+    border-radius: 10px;
+    padding: 3.5px;
+}
+
+#navbarNav > ul > li > a {
+    position: relative;
+}
+
+#navbarNav > ul > li > a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background-color: #4371ff;
+    bottom: 0;
+    left: 0;
+    border-radius: 4px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .3s ease-in-out;
+}
+
+#navbarNav > ul > li > a:hover::before {
+    transform-origin: left;
+    transform: scaleX(1);
 }
 
 #cat-burger > li > a {
@@ -124,8 +185,37 @@
     padding-top: .5rem;
 }
 
-.arma-pc {
-    background-color: #7ac94c;
-    color: black;
-    border-radius: 5%;
+.dropdown-toggle::after {
+    display: none;
+}
+
+.arma-pc-offcanvas,
+.arma-pc-nav {
+    transition: .5s ease-in-out;
+    color: var(--logo-green-color) !important;
+    font-size: 1.1rem;
+}
+
+.arma-pc-nav:hover {
+    color: whitesmoke !important;
+    text-shadow: 2px 2px 15px var(--logo-green-color);
+}
+
+.arma-pc-offcanvas:hover {
+    color: var(--logo-blue-color) !important;
+    text-shadow: 2px 2px 15px var(--logo-green-color);    
+}
+
+.modal-title,
+.login-title {
+    font-family: var(--font-family-mono);
+}
+
+.modal-content,
+.form-login {
+    background-color: rgb(238, 236, 236);
+}
+
+.form-login button:hover {
+    color: #f1f1f1;
 }

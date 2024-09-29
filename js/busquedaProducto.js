@@ -3,13 +3,34 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             const productos = data;
-            const buscador = document.getElementById('search-bar');
-            const resultadosBusqueda = document.getElementById('resultados-busqueda');
-            const botonBusqueda = document.querySelector('.btn-custom');  
+            let resultadosBusqueda,
+                botonBusqueda,
+                buscador;
 
-            buscador.addEventListener('keyup', function () {
+            function seleccionarElementoVisible(elementos) {
+                let elementoVisible = null;
+                elementos.forEach(function(elemento) {
+                    if (elemento.offsetParent !== null) {
+                        elementoVisible = elemento;
+                    }
+                });
+                return elementoVisible;
+            }
+            
+            function agregarEventoBusqueda() {
+                const buscadores = document.querySelectorAll('.search-bar');
+                buscador = seleccionarElementoVisible(buscadores);
+
+                if (buscador) {
+                    buscador.addEventListener('keyup', capturarBusqueda);
+                }
+            }
+
+            function capturarBusqueda() {
                 const valorBusqueda = this.value.toLowerCase();
+                const resultadosBusquedas = document.querySelectorAll('.resultados-busqueda');
 
+                resultadosBusqueda = seleccionarElementoVisible(resultadosBusquedas);
                 resultadosBusqueda.innerHTML = '';
 
                 if (valorBusqueda.trim() === '') {
@@ -22,7 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         producto.category.name.toLowerCase().includes(valorBusqueda);
                 });
 
-                // Si se encuentran productos, actualizar la interfaz de usuario con los detalles de los productos
+                generarResultados(productosCoincidentes);
+            }
+
+            function generarResultados(productosCoincidentes) {
                 if (productosCoincidentes.length > 0) {
                     productosCoincidentes.forEach(producto => {
                         const div = document.createElement('div');
@@ -41,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         div.appendChild(img);
                         div.appendChild(span);
 
-                         // Agregar un evento de clic al div
-                         div.addEventListener('click', function () {
+                        // Agregar un evento de clic al div
+                        div.addEventListener('click', function () {
                             // Redirigir a la página del producto
                             window.location.href = `../views/producto.html?id=${producto.id}`;
                         });
@@ -50,19 +74,40 @@ document.addEventListener('DOMContentLoaded', function () {
                         resultadosBusqueda.appendChild(div);
                     });
                 }
-            });
+            }
+            
+            function agregarEventoBotonBusqueda() {
+                const botonesBusqueda = document.querySelectorAll('.btn-custom-search');
+                botonBusqueda = seleccionarElementoVisible(botonesBusqueda);
 
-            botonBusqueda.addEventListener('click', function (event) {
-                event.preventDefault(); 
+                if (botonBusqueda) {
+                    botonBusqueda.addEventListener('click', function (event) {
+                        event.preventDefault();
 
-                const valorBusqueda = buscador.value.toLowerCase();
+                        const valorBusqueda = buscador.value.toLowerCase();
 
-                if (valorBusqueda.trim() === '') {
-                    return;
+                        if (valorBusqueda.trim() === '') {
+                            return;
+                        }
+
+                        window.location.href = '../views/producto.html?query=' + encodeURIComponent(valorBusqueda);
+                    });
                 }
+            }
 
-                window.location.href = '../views/producto.html?query=' + encodeURIComponent(valorBusqueda);
+            const modal = document.getElementById('searchModal');
+            modal.addEventListener('shown.bs.modal', function () {
+                agregarEventoBusqueda();
+                agregarEventoBotonBusqueda();
             });
+
+            modal.addEventListener('hidden.bs.modal', function () {
+                agregarEventoBotonBusqueda();
+            });
+            
+            agregarEventoBusqueda();
+            agregarEventoBotonBusqueda();
         })
+        
         .catch(error => console.error('Error:', error));
 });
