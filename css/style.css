@@ -2,6 +2,30 @@
 
 
 :root {
+    --sb-track-color: rgba(55, 55, 63, 255);/*rgba(43, 42, 48, 255)*/
+    --sb-thumb-color: #8d8ae1;
+    --sb-size: 10px;
+    --logo-green-color: #7ac94c;
+    --logo-blue-color: #5273FF;
+    --contrast-green-color: #356818;
+    --font-family-mono: "JetBrains Mono", monospace;
+}
+
+body::-webkit-scrollbar {
+    width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 3px;
+}
+
+
+:root {
     --sb-track-color: rgba(55, 55, 63, 255);
     --sb-thumb-color: #8d8ae1;
     --sb-size: 10px;
@@ -95,4 +119,9 @@ i:hover {
 	margin-left: 25px;
 	text-align: right;
 }
+
+/*.derechos{
+    padding-top: 10px;
+	text-align: center;
+}*/
 
