@@ -1,15 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Obtén el div del carrito
     let carritoDiv = document.getElementById('carrito');
-;
-    let cantidadSeleccionada = localStorage.getItem('cantidad'); 
 
-    // Obtén el carrito de localStorage
+    // Carrito de localStorage
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-    // Obtén los botones de eliminar y finalizar compra
+    // Botones de eliminar y finalizar compra
     let eliminarButtons = document.getElementsByClassName('eliminar');
     let finalizarCompraButton = document.getElementById('finalizar-compra');
+    let cancelarButton = document.getElementById('cancelar-compra');
 
     // Oculta los botones de eliminar y finalizar compra inicialmente
     for (let button of eliminarButtons) {
@@ -18,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
     finalizarCompraButton.style.display = 'none';
 
     // Para cada producto en el carrito
-    // Para cada producto en el carrito
     for (let producto of carrito) {
+        console.log("Producto ID: " + producto.id);
         // Crea un nuevo div para el producto
         let productoDiv = document.createElement('div');
         productoDiv.className = 'producto';
@@ -29,28 +27,46 @@ document.addEventListener('DOMContentLoaded', function () {
         let modelName = producto.model ? producto.model.name : 'Modelo desconocido';
 
         // Establece el contenido del div del producto
-        productoDiv.innerHTML = `
-        <img src="${producto.image[0]}" alt="${brandName} ${modelName}" style="width: 100px;"> 
-        <p>${brandName} ${modelName} Cantidad: ${cantidadSeleccionada}  
-        Precio: $${producto.priceARS} </p>  
-        `;
+        productoDiv.innerHTML = `<img src="${producto.image[0]}" alt="${brandName} ${modelName}" class="imagenProducto"> 
+                <div>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
+                | Precio unitario: $${producto.priceARS} </div>  `;
+
         // Agrega el div del producto al div del carrito
         carritoDiv.appendChild(productoDiv);
 
         // Si hay un producto en el carrito, agrega el botón de eliminar
         if (carrito.length > 0) {
+            console.log("Contenido del carrito:", carrito);
+            // Establece el contenido del div del producto
+            productoDiv.innerHTML = `<img src="${producto.image[0]}" alt="${brandName} ${modelName}" class="imagenProducto"> 
+                            <div>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
+                            | Precio unitario: $${producto.priceARS} </div>  `;
+            // Agrega el div del producto al div del carrito
+            carritoDiv.appendChild(productoDiv);
             let eliminarButton = document.createElement('button');
-            eliminarButton.className = 'eliminar';
+            eliminarButton.className = 'eliminar mx-3';
             eliminarButton.id = 'eliminar-' + producto.id;
             eliminarButton.textContent = 'Eliminar';
             productoDiv.appendChild(eliminarButton);
 
-            // Agrega un controlador de eventos al botón de eliminar
             eliminarButton.addEventListener('click', function () {
                 eliminarElementoDelCarrito(producto.id);
             });
         }
     }
+
+    let totalDiv = document.createElement('div');
+    totalDiv.className = 'total';
+    totalDiv.id = 'total';
+
+    let total = 0;
+    for (let producto of carrito) {
+        total += producto.priceARS * (producto.cantidad || 1);
+    }
+
+    totalDiv.textContent = `Total: $${total}`;
+
+    carritoDiv.appendChild(totalDiv);
 
     // Si hay productos en el carrito, muestra el botón de finalizar compra
     if (carrito.length > 0) {
@@ -75,22 +91,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Recarga la página para actualizar la lista de productos en el carrito
         location.reload();
-
-
     }
-
 
     // Si no hay más productos en el carrito, oculta el botón de finalizar compra
     if (carrito.length === 0) {
-        finalizarCompraButton.style.display = 'none'
+        finalizarCompraButton.style.display = 'none';
         carritoDiv.style.alignItems = 'center';
-        carritoDiv.innerHTML = `<p>No hay elementos agregados al carrito</p>`
+        carritoDiv.innerHTML = `<p>No hay elementos agregados al carrito</p>`;
     }
+
     // Función para finalizar la compra
     function finalizarCompra() {
         window.location.href = 'compra.html';
     }
 
-    // Agrega un controlador de eventos al botón de finalizar compra
     finalizarCompraButton.addEventListener('click', finalizarCompra);
+
+    // Cancelar regresa a la página anterior
+    cancelarButton.addEventListener('click', function () {
+        window.history.back();
+    });
 });
