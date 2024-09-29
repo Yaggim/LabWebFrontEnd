@@ -292,7 +292,7 @@ function cargarProductoPorID(idProducto) {
             let nota = document.getElementById("envioNota").value;
             let pago = document.getElementById("tarjeta").value;
             let articulo = [producto.brand, producto.model, producto.id];
-            console.log("DNI: ". dni, "Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota, "Pago efectuado:", pago, "Prod:", articulo, "Cantidad:", cantidad.value);
+            console.log("DNI: ".dni, "Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota, "Pago efectuado:", pago, "Prod:", articulo, "Cantidad:", cantidad.value);
             ////////////////////////////////////////////////////////////////////////////////////
             // Setea de nuevo la cantidad a elegir para que comience en 1
             cantidad.value = 1;
