@@ -21,6 +21,7 @@
     <!----------->
     <script src="../js/productos.js"></script>
     <script src="../js/busquedaProducto.js"></script>
+    <script src="../js/productos.js"></script>
     <title>HardTech - Productos</title>
     <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
 </head>
@@ -103,10 +104,27 @@
                         <a href="#" class="me-3 d-lg-none" type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
                             <i class="fa fa-search fs-5"></i>
                         </a>
-                        <a href="register.html" class="me-3 me-md-3 me-lg-4 ms-sm-2 ms-md-2">
-                            <i class="fa fa-user fs-5"></i>
-                        </a>
-                        <a href="carrito.html" class="me-3 me-md-3 me-lg-4 ms-sm-2">
+                            <a href="" type="button" class="me-3 me-md-3 me-lg-4 ms-sm-2 ms-md-2 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"">
+                                <i class="fa fa-user fs-5"></i>
+                            </a>
+                            <form class="dropdown-menu p-4 form-login">
+                                <h5 class="mb-4 login-title"><span>Inicia Sesión</span></h5>
+                                <div class="mb-3">
+                                    <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
+                                    <input type="text" class="form-control" id="nombreUsuario" placeholder="Usuario123">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="passwordSesion" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" id="passwordSesion" placeholder="***********">
+                                </div>
+                                <div class="text-center" >
+                                    <button type="submit" class="btn btn-custom mb-3 mt-2">Iniciar sesión</button>
+                                </div>
+                                <div class="mt-3">
+                                    <a href="./views/register.html">¿No tenés cuenta? <strong>Registrate</strong></a>
+                                </div>
+                            </form>
+                        <a href="./carrito.html" class="me-3 me-md-3 me-lg-4 ms-sm-2">
                             <i class="fa fa-shopping-cart fs-5"></i>
                         </a>
                     </div>
@@ -120,7 +138,7 @@
             <div class="" id="navbarNav">
                 <ul class="navbar-nav d-flex justify-content-evenly ">
                     <li class="nav-item">
-                        <a class="nav-link arma-pc" aria-current="page" href="armarpc.html">Armá tu PC</a>
+                        <a class="nav-link arma-pc" aria-current="page" href="./armarpc.html">Armá tu PC</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="productos.html">Productos</a>
@@ -220,8 +238,8 @@
                         <h5>Enlaces</h5>
                         <ul class="list-unstyled">
                           <li>➤ <a href="#" class="arma-pc-footer text-white text-decoration-none">Armá tu PC</a></li>
-                          <li><a href=".." class="text-white text-decoration-none">Inicio</a></li>
-                          <li><a href="#" class="text-white text-decoration-none">Productos</a></li>
+                          <li><a href="../index.html" class="text-white text-decoration-none">Inicio</a></li>
+                          <li><a href="../views/productos.html" class="text-white text-decoration-none">Productos</a></li>
                           <li><a href="#" class="text-white text-decoration-none">Novedades</a></li>
                           <li><a href="#" class="text-white text-decoration-none">Mi Cuenta</a></li>
                         </ul>
