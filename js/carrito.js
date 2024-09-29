@@ -27,11 +27,9 @@ document.addEventListener('DOMContentLoaded', function () {
         let modelName = producto.model ? producto.model.name : 'Modelo desconocido';
 
         // Establece el contenido del div del producto
-        productoDiv.innerHTML = `
-        <img src="${producto.image[0]}" alt="${brandName} ${modelName}" class="imagenProducto"> 
-        <div>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
-        | Precio unitario: $${producto.priceARS} </div>  
-        `;
+        productoDiv.innerHTML = `<img src="${producto.image[0]}" alt="${brandName} ${modelName}" class="imagenProducto"> 
+                <div>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
+                | Precio unitario: $${producto.priceARS} </div>  `;
 
         // Agrega el div del producto al div del carrito
         carritoDiv.appendChild(productoDiv);
@@ -98,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Si no hay más productos en el carrito, oculta el botón de finalizar compra
     if (carrito.length === 0) {
         finalizarCompraButton.style.display = 'none';
-        cancelarButton.style.display = 'none';
         carritoDiv.style.alignItems = 'center';
         carritoDiv.innerHTML = `<p>No hay elementos agregados al carrito</p>`;
     }
