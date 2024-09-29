@@ -60,3 +60,8 @@ input:invalid:not(:placeholder-shown) + p {
     display: initial;
     color: #a20e0e;
 }
+
+
+div.error{
+    color: red;
+}
