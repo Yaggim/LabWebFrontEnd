@@ -206,11 +206,12 @@ function crearInforme(){
 
     tabla.appendChild(tbody);
    
-
     let btnComprar = document.createElement('button');
     btnComprar.className = 'btn btn-success w-100 mt-3';
     btnComprar.textContent = "Comprar";
-  
+    btnComprar.addEventListener('click', () => {
+        window.location.href = '../views/compra.html';
+    });
 
     
     actualizar.appendChild(tabla);
