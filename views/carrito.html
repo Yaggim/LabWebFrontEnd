@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-	<script type="text/javascript" src="script.js" defer></script>
-	<script type="text/javascript" src="js/app.js" defer></script>
+<html lang="en">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/nav.css">
-	<link rel="stylesheet" href="css/footer.css">
-    <script defer src="js/busquedaProducto.js"></script>
-	<title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/register.css">
+    <link rel="stylesheet" href="../css/carrito.css">
+    <title>Carrito - HardTech</title>
+    <link rel="icon" href="images/hardtech-logo.jpeg">
+    <script src="../js/carrito.js"></script>
+    <script src="../js/busquedaProducto.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/productos.js"></script>
 </head>
 
 <body>
-
-
-	<header>
+    <!-- Comienzo del header -->
+    <header>
         <!-- Primera barra: Logo, Barra de búsqueda, Iconos -->
         <nav class="py-2 barra_main">
             <div class="container-fluid">
@@ -77,7 +77,7 @@
 
                     <!-- Logo (SVG) -->
                     <div class="col-auto">
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="../index.html">
                             <svg version="1.0" class="svg-logo" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" color-interpolation-filters="sRGB"> <rect x="62" y="60.84" width="36.6" height="39" fill="#fefefd" fill-opacity="1"></rect>  <g fill="#5273FF" transform="translate(50,50)"><g transform="translate(0,0)"><g><rect fill="#5273FF" fill-opacity="0" stroke-width="2" x="0" y="0" width="60.00000000000001" height="59.80086312579112"></rect> <svg x="0" y="0" width="60.00000000000001" height="59.80086312579112" filtersec="colorsb9545054840" style="overflow: visible;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120.40000915527344 120"><path fill="#7ac94c" d="M0 0v98.22h24.16V21.78h24.16v25.74h23.36V21.78h24.56V0H0z"></path><path fill="#5273FF" d="M120.4 120V21.78H96.24v76.44H72.08V72.47H48.71v25.75H24.16V120h96.24z"></path></svg></svg> </g></g> <g transform="translate(65,16.435431480407715)"><g data-gra="path-name" fill-rule=""><g transform="scale(1)"><g><path d="M8.91-4.93L9.86-4.93Q11.87-4.93 14.42-5.69L14.42-5.69 14.42-7.97 8.91-7.97Q8.35-7.97 7.97-7.59 7.59-7.21 7.59-6.64L7.59-6.64 7.59-6.26Q7.59-5.69 7.97-5.31 8.35-4.93 8.91-4.93L8.91-4.93ZM2.85-14.98L2.85-19.73Q9.79-20.48 15.36-20.48L15.36-20.48Q17.94-20.48 19.5-18.93 21.05-17.37 21.05-14.79L21.05-14.79 21.05 0 15.17 0 14.79-1.9Q13.01-0.72 11.13-0.17 9.26 0.38 7.97 0.38L7.97 0.38 6.64 0.38Q4.06 0.38 2.5-1.18 0.95-2.73 0.95-5.31L0.95-5.31 0.95-7.02Q0.95-9.6 2.5-11.15 4.06-12.71 6.64-12.71L6.64-12.71 14.42-12.71 14.42-14.23Q14.42-14.79 14.04-15.17 13.66-15.55 13.09-15.55L13.09-15.55Q10.62-15.55 7.64-15.33 4.67-15.1 2.85-14.98L2.85-14.98ZM39.26-14.6L36.04-14.6Q33.65-14.6 31.11-13.47L31.11-13.47 31.11 0 24.47 0 24.47-20.11 30.35-20.11 30.73-17.64Q33.99-20.48 37.56-20.48L37.56-20.48 39.26-20.48 39.26-14.6ZM61.26 0L55.38 0 55.01-1.9Q53.22-0.72 51.34-0.17 49.47 0.38 48.18 0.38L48.18 0.38 46.47 0.38Q43.89 0.38 42.34-1.18 40.78-2.73 40.78-5.31L40.78-5.31 40.78-14.04Q40.78-16.88 42.39-18.49 44-20.11 46.85-20.11L46.85-20.11 54.63-20.11 54.63-26.55 61.26-26.55 61.26 0ZM48.75-5.12L50.07-5.12Q52.08-5.12 54.63-5.88L54.63-5.88 54.63-14.98 48.94-14.98Q47.42-14.98 47.42-13.47L47.42-13.47 47.42-6.45Q47.42-5.88 47.8-5.5 48.18-5.12 48.75-5.12L48.75-5.12ZM78.34-21.24L78.34 0 71.51 0 71.51-21.24 63.54-21.24 63.54-26.55 86.3-26.55 86.3-21.24 78.34-21.24ZM97.87-15.74L94.46-15.74Q92.94-15.74 92.94-14.23L92.94-14.23 92.94-12.14 99.39-12.14 99.39-14.23Q99.39-15.74 97.87-15.74L97.87-15.74ZM105.27-5.12L105.27-0.38Q97.95 0.38 91.99 0.38L91.99 0.38Q89.41 0.38 87.86-1.18 86.3-2.73 86.3-5.31L86.3-5.31 86.3-14.42Q86.3-17.26 87.91-18.87 89.53-20.48 92.37-20.48L92.37-20.48 99.96-20.48Q102.8-20.48 104.42-18.87 106.03-17.26 106.03-14.42L106.03-14.42 106.03-7.4 92.94-7.4 92.94-5.88Q92.94-5.31 93.32-4.93 93.7-4.55 94.27-4.55L94.27-4.55Q98.02-4.55 105.27-5.12L105.27-5.12ZM127.27-5.31L127.27-0.38Q120.18 0.38 114.75 0.38L114.75 0.38Q112.17 0.38 110.62-1.18 109.06-2.73 109.06-5.31L109.06-5.31 109.06-14.04Q109.06-16.88 110.67-18.49 112.29-20.11 115.13-20.11L115.13-20.11 127.27-20.11 127.27-14.98 117.22-14.98Q115.7-14.98 115.7-13.47L115.7-13.47 115.7-6.07Q115.7-5.5 116.08-5.12 116.46-4.74 117.03-4.74L117.03-4.74Q120.44-4.74 127.27-5.31L127.27-5.31ZM136.94-26.55L136.94-19.73Q140.62-20.48 143.39-20.48L143.39-20.48 145.1-20.48Q147.68-20.48 149.23-18.93 150.79-17.37 150.79-14.79L150.79-14.79 150.79 0 144.15 0 144.15-14.04Q144.15-14.6 143.77-14.98 143.39-15.36 142.82-15.36L142.82-15.36 141.5-15.36Q140.05-15.36 138.86-15.21 137.66-15.06 136.94-14.98L136.94-14.98 136.94 0 130.31 0 130.31-26.55 136.94-26.55Z" transform="translate(-0.9500000476837158, 26.549999237060547)"></path></g> </g></g>  </g></g></svg>
                         </a>
                     </div>
@@ -126,7 +126,7 @@
                                     <a href="../views/register.html">¿No tenés cuenta? <strong>Registrate</strong></a>
                                 </div>
                             </form>
-                        <a href="../views/carrito.html" class="me-3 me-md-3 me-lg-4 ms-sm-2">
+                        <a href="./carrito.html" class="me-3 me-md-3 me-lg-4 ms-sm-2">
                             <i class="fa fa-shopping-cart fs-5"></i>
                         </a>
                     </div>
@@ -196,277 +196,90 @@
         </div>
     </header>
     <!-- Fin del Header -->
-	
+    <!-- Fin del Header -->
 
-	<main>
-	<!---------------------Inicio Carrusel----------------------------------------------->
-<div class="container-fluid carrusel">
-		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-		  <div class="carousel-inner">
-		    <div class="carousel-item active">
-		      <img src="images/banner_car01.jpg" class="d-block w-100" alt="...">
-		    </div>
-		    <div class="carousel-item">
-		      <img src="images/banner_car02.jpg" class="d-block w-100" alt="...">
-		    </div>
-		    <div class="carousel-item">
-		      <img src="images/banner_car03.jpg" class="d-block w-100" alt="...">
-		    </div>
-		    <div class="carousel-item">
-		      <img src="images/banner_car04.jpg" class="d-block w-100" alt="...">
-		    </div>
-		  </div>
-		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		    <span class="visually-hidden">Previous</span>
-		  </button>
-		  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-		    <span class="visually-hidden">Next</span>
-		  </button>
-		</div>
-</div>
-<!-----------------------------FIN Carrusel-------------------------------------------->
-
-<!----------------------------Contactos------------------------------------------------>
-<div>
-	<div class="container text-center g-info">
-  		<div class="row">
-    		<div class="col">
-      			<div class="card card-fondo" style="width: 18rem;">
-  						<img src="" class="card-img-top" alt="">
- 						 	<div class="card-body">
-    						<p class="card-text">
-    							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-  								<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-									</svg>
-									<div class="texto-card">Horarios</div>
-									<div>Lunes a viernes 9:30hs a 18:30hs</div>
-									<div>Lunes a viernes 9:00hs a 12:00hs</div>
-    						</p>
-  						</div>
-						</div>
-    		</div>
-    		<div class="col">
-      			<div class="card card-fondo" style="width: 18rem;">
-  						<img src="" class="card-img-top" alt="">
- 						 	<div class="card-body">
-    						<p class="card-text">
-   							 	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
-  								<path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
-  						  </svg> 
-  							<div class="texto-card">Venta telefónica</div>
-								<div>011- 2222-2222-2222/2589</div><br>
-
-
-    						</p>
-  						</div>
-						</div>
-    		</div>
-    		<div class="col">
-      			<div class="card card-fondo" style="width: 18rem;">
-  						<img src="" class="card-img-top" alt="">
- 						 	<div class="card-body">
-    						<p class="card-text">
-    							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
- 									 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
-										</svg><div class="texto-card"> Escribínos</div>
-													<div>hardtechventas@ht.com</div><br>
-    						</p>
-  						</div>
-						</div>
-    		</div>
-  		</div>
-	</div>	
-</div>
-<!------------------------------Fin Contactos------------------------------------------>
-
-
-<!----------------------------Grid para los cards-------------------------------------->
-	<div class="container-fluid g-info">
-  	<div class="row">
-    	<div class="col-md-3 col-lg-3 col-sm-6 col-xm-6">
-      	<div class="card">
-  				<img src="images/card01.jpg" class="card-img-top card-img-top" alt="...">
-  			<div class="card-body">
-    			<h5 class="card-title"> <a href="#" class="btn btn-primary">Armá tu PC</a></h5>
-				</div>
-			</div>
-  	</div>
-    <div class="col-md-3 col-lg-3 col-sm-6 col-xm-6">
-       	<div class="card" >
-  				<img src="images/card02.jpg" class="card-img-top card-img-top" alt="...">
-  			<div class="card-body">
-    			<h5 class="card-title"> <a href="#" class="btn btn-primary">PC Oficina</a></h5>
-				</div>
-			</div>
-  	</div>    
-    <div class="col-md-3 col-lg-3 col-sm-6 col-xm-6">
-      	<div class="card">
-  				<img src="images/card3.jpg" class="card-img-top card-img-top" alt="...">
-  			<div class="card-body">
-    			<h5 class="card-title"> <a href="#" class="btn btn-primary">PC Gamer</a></h5>
-				</div>
-			</div>
-  	</div>
-    <div class="col-md-3 col-lg-3 col-sm-6 col-xm-6">
-  <div class="card" >
-  				<img src="images/card04.jpg" class="card-img-top card-img-top" alt="...">
-  			<div class="card-body">
-    			<h5 class="card-title"> <a href="#" class="btn btn-primary">PC Gamer Extreme</a></h5>
-				</div>
-			</div>
-  	</div>
-   </div>
-  </div>
-</div>
-
-<!----------------------------Fin Grid para los cards---------------------------------->
-<
-<!-------------------------------Destacados-------------------------------------------->
-<!-----------------------Título--------------------->
-<div id="destacados">
-	<h2>Productos Destacados</h2>
-</div>
-
-<!-----------------------Carrusel de destacados--------------------------------------->
-
-
-<div id="carouselExample" class="carousel slide productos" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/sw74epduIVIGGURcCgih/imagen" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                            <a href="#" class="btn btn-primary">Ver</a>
-                        </div>
+    <div class="container-carrito">
+        <div class="row">
+             <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
+             <div id="carrito" class="bg-light p-3"></div>
+                
+                    <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
+                    <div class="d-flex flex-column align-items-end mb-3">
+                       
+                        <button id="finalizar-compra" class="btn btn-success mt-3">Finalizar compra</button>
+                        <button id="cancelar-compra" type="button" class="btn btn-secondary mt-3">Cancelar</button>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/BmfhqzK84PSpXbjn6a3s/imagen" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                           <a href="#" class="btn btn-primary">Ver</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/fVYiapxtEJpnvCzZ6BNu/imagen" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                           <a href="#" class="btn btn-primary">Ver</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                
+            
         </div>
-        <div class="carousel-item">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/fVYiapxtEJpnvCzZ6BNu/imagen" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                            <a href="#" class="btn btn-primary">Ver</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/gegAiCMDQgyTe7vzvdc4/imagen" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                            <a href="#" class="btn btn-primary">Ver</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/QpedN0h0axYamiITGwes/imagen" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                            <a href="#" class="btn btn-primary">Ver</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-<!------------------------------Recibí un email---------------------------------------->
 
-<div class="container-fluid email">
-	<div class="row">
-			<div class="col-md-12 col-lg-12">
-					<div class="nv-ht">
-						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-envelope-check-fill" viewBox="0 0 16 16">
-  					<path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 4.697v4.974A4.5 4.5 0 0 0 12.5 8a4.5 4.5 0 0 0-1.965.45l-.338-.207z"/>
-  					<path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686"/>
-					</svg> Recibí las mejores fertas por correo!!!
-						<input type="email" name=""  placeholder="Tu Email">
-						<button class="btn btn-outline-success">Sucribirme</button>
-					</div>
-			</div>
-
-	</div>
-</div>
-<!---------------------------------Fin recibi email----------------------------------->	
-	</main>
+    <!--Modal "Compra exitosa"-->
+    <div class="modal fade" id="modalFinCompra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Compra exitosa!</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- Body -->
+                <div class="modal-body">
+                    El número de pedido es #123456
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div class="cantidadCarrito"></div>
+                    <button type="button" id="botonModal" class="btn btn-warning"
+                        data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fin Modal "Compra exitosa"-->
 
     <!-- Comienzo del footer -->
     <footer class="bg-dark text-white pt-4 mt-auto">
         <div class="bg-dark container-fluid">
             <div class="row justify-content-md-center ">
-                    <div class="col-lg-auto col-md-12 mx-auto footer-info">
-                        <h5>Atención al cliente</h5>
-                        <ul class="list-unstyled">
-                            <li>Lunes a viernes de 9 a 18hs.</li>
-                            <li>
-                                <i class="bi bi-whatsapp"> </i>
-                                <a href="https://api.whatsapp.com/send/?phone=5491123456789" target="_blank" class="fw-medium"> +54 11 2345-6789 </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-auto col-md-12 mx-auto footer-info enlaces-footer">
-                        <h5>Enlaces</h5>
-                        <ul class="list-unstyled">
-                          <li>➤ <a href="#" class="arma-pc-footer text-white text-decoration-none">Armá tu PC</a></li>
-                          <li><a href="../index.html" class="text-white text-decoration-none">Inicio</a></li>
-                          <li><a href="../views/productos.html" class="text-white text-decoration-none">Productos</a></li>
-                          <li><a href="#" class="text-white text-decoration-none">Novedades</a></li>
-                          <li><a href="#" class="text-white text-decoration-none">Mi Cuenta</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-auto col-md-12 mx-auto footer-info">
-                        <h5 id="contacto" >Contacto</h5>
-                        <ul class="list-unstyled">
-                          <li>
+                <div class="col-lg-auto col-md-12 mx-auto footer-info">
+                    <h5>Atención al cliente</h5>
+                    <ul class="list-unstyled">
+                        <li>Lunes a viernes de 9 a 18hs.</li>
+                        <li>
+                            <i class="bi bi-whatsapp"> </i>
+                            <a href="https://api.whatsapp.com/send/?phone=5491123456789" target="_blank"
+                                class="fw-medium"> +54 11 2345-6789 </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-auto col-md-12 mx-auto footer-info enlaces-footer">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li>➤ <a href="#" class="arma-pc-footer text-white text-decoration-none">Armá tu PC</a></li>
+                        <li><a href="../index.html" class="text-white text-decoration-none">Inicio</a></li>
+                        <li><a href="../views/productos.html" class="text-white text-decoration-none">Productos</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Novedades</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Mi Cuenta</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-auto col-md-12 mx-auto footer-info">
+                    <h5 id="contacto">Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li>
                             <i class="bi bi-envelope"></i>
                             <a href="mailto:consultas@hardtech.com.ar" class="fw-medium">consultas@hardtech.com.ar</a>
                         </li>
-                          <li><i class="bi bi-telephone"></i> +54 3456 7890</li>
-                          <li><i class="bi bi-geo-alt"></i> Somewhere, Nowhere</li>
-                        </ul>
-                    </div>
+                        <li><i class="bi bi-telephone"></i> +54 3456 7890</li>
+                        <li><i class="bi bi-geo-alt"></i> Somewhere, Nowhere</li>
+                    </ul>
+                </div>
 
                 <!-- Línea divisoria -->
-                 <div>
-                     <hr class="my-4">
-                 </div>
+                <div>
+                    <hr class="my-4">
+                </div>
                 <!-- Sección de derechos reservados -->
                 <div class="text-center py-3 lead fs-6">
                     <p>&copy; 2024 HardTech. Todos los derechos reservados.</p>
@@ -475,5 +288,9 @@
         </div>
     </footer>
     <!-- Fin del footer -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
