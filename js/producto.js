@@ -300,7 +300,7 @@ function cargarProductoPorID(idProducto) {
                 let nota = document.getElementById("envioNota").value;
                 let pago = document.getElementById("tarjeta").value;
                 let articulo = [producto.brand, producto.model, producto.id];
-                console.log("DNI: ".dni, "Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota, "Pago efectuado:", pago, "Prod:", articulo, "Cantidad:", cantidad.value);
+                console.log("DNI: ", dni, "Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota, "Pago efectuado:", pago, "Prod:", articulo, "Cantidad:", cantidad.value);
                 ////////////////////////////////////////////////////////////////////////////////////
                 // Setea de nuevo la cantidad a elegir para que comience en 1
                 cantidad.value = 1;
@@ -422,53 +422,57 @@ function realizarCompra(idProducto) {
 
 function validarDatos() {
     let errores = 0;
-    //VALIDAR LARGO DEL NOMBRE
-    let nombre = document.getElementById("envioTitular").value
-    if(nombre.length < 3 || nombre.length > 50){
-        document.getElementById("envioTitular").classList.add('is-invalid');
-        errores += 1
+    let retiroLocal = document.getElementById("retiroLocal").checked;
+    if (!retiroLocal) {
+        //VALIDAR LARGO DEL NOMBRE
+        let nombre = document.getElementById("envioTitular").value
+        if (nombre.length < 3 || nombre.length > 50) {
+            document.getElementById("envioTitular").classList.add('is-invalid');
+            errores += 1
+        }
+        //VALIDAR NOMBRE 2 PALABRAS
+        let palabras = nombre.split(/ +/)
+        if (palabras.length != 2) {
+            document.getElementById("envioTitular").classList.add('is-invalid');
+            errores += 1
+        }
+        //VALIDAR CARACTERES VALIDOS
+        let exRegular = /^[a-zA-ZáéíóúÁÉÍÓÚ ]+$/;
+        if (!exRegular.test(nombre)) {
+            document.getElementById("envioTitular").classList.add('is-invalid');
+            errores += 1
+        }
+        //VALIDAR CALLE
+        let calle = document.getElementById("envioCalle").value
+        let exRegularCalle = /^[A-Za-z0-9.áéíóúÁÉÍÓÚ ]+$/;
+        if (!exRegularCalle.test(calle)) {
+            document.getElementById("envioCalle").classList.add('is-invalid');
+            errores += 1
+        }
+        if (calle.length < 3 || calle.length > 30) {
+            document.getElementById("envioCalle").classList.add('is-invalid');
+            errores += 1
+        }
+        //VALIDAR ALTURA
+        let altura = document.getElementById("envioAltura").value
+        if (isNaN(altura) || altura < 1 || altura > 99999) {
+            document.getElementById("envioAltura").classList.add('is-invalid');
+            errores += 1
+        }
+        //VALIDAR CODIGO POSTAL
+        let cp = document.getElementById("envioPostal").value
+        if (isNaN(cp) || cp.length != 4) {
+            document.getElementById("envioPostal").classList.add('is-invalid');
+            errores += 1
+        }
+        //VALIDAR NOTAS
+        let nota = document.getElementById("envioNota").value
+        if (nota.length > 200) {
+            document.getElementById("envioNota").classList.add('is-invalid');
+            errores += 1
+        }
     }
-    //VALIDAR NOMBRE 2 PALABRAS
-    let palabras = nombre.split(/ +/)
-    if (palabras.length != 2) {
-        document.getElementById("envioTitular").classList.add('is-invalid');
-        errores += 1
-    }
-    //VALIDAR CARACTERES VALIDOS
-    let exRegular = /^[a-zA-ZáéíóúÁÉÍÓÚ ]+$/;
-    if (!exRegular.test(nombre)) {
-        document.getElementById("envioTitular").classList.add('is-invalid');
-        errores += 1
-    }
-    //VALIDAR CALLE
-    let calle = document.getElementById("envioCalle").value
-    let exRegularCalle = /^[A-Za-z0-9.áéíóúÁÉÍÓÚ ]+$/;
-    if (!exRegularCalle.test(calle)) {
-        document.getElementById("envioCalle").classList.add('is-invalid');
-        errores += 1
-    }
-    if (calle.length < 3 || calle.length > 30){
-        document.getElementById("envioCalle").classList.add('is-invalid');
-        errores += 1
-    }
-    //VALIDAR ALTURA
-    let altura = document.getElementById("envioAltura").value
-    if (isNaN(altura) || altura < 1 || altura > 99999) {
-        document.getElementById("envioAltura").classList.add('is-invalid');
-        errores += 1
-    }
-    //VALIDAR CODIGO POSTAL
-    let cp = document.getElementById("envioPostal").value
-    if (isNaN(cp) || cp.length != 4){
-        document.getElementById("envioPostal").classList.add('is-invalid');
-        errores += 1
-    }
-    //VALIDAR NOTAS
-    let nota = document.getElementById("envioNota").value
-    if (nota.length > 200){
-        document.getElementById("envioNota").classList.add('is-invalid');
-        errores += 1
-    }
+
     //VALIDAR DNI NUMERICO 
     let dni = document.getElementById("dni").value
     if (isNaN(dni)) {
@@ -482,13 +486,13 @@ function validarDatos() {
     }
     //VALIDAR TARJETA
     let tarjeta = document.getElementById("tarjeta").value
-    if (tarjeta.length != 12 || isNaN(tarjeta)){
+    if (tarjeta.length != 12 || isNaN(tarjeta)) {
         document.getElementById("tarjeta").classList.add('is-invalid');
         errores += 1
     }
 
-    console.log("Errores capturados: "+ errores)
-    if (errores > 0){
+    console.log("Errores capturados: " + errores)
+    if (errores > 0) {
         return false
     } else {
         return true

@@ -63,8 +63,11 @@ function confirmarCompra(event) {
 }
 
 function validarDatos() {
+    let retiroLocal = document.getElementById("retiroLocal").checked;
     let errores = 0;
-    //VALIDAR LARGO DEL NOMBRE
+
+    if (!retiroLocal) {
+        //VALIDAR LARGO DEL NOMBRE
     let nombre = document.getElementById("envioTitular").value
     if(nombre.length < 3 || nombre.length > 50){
         document.getElementById("envioTitular").classList.add('is-invalid');
@@ -111,6 +114,8 @@ function validarDatos() {
         document.getElementById("envioNota").classList.add('is-invalid');
         errores += 1
     }
+    }
+    
     //VALIDAR DNI NUMERICO 
     let dni = document.getElementById("dni").value
     if (isNaN(dni)) {
