@@ -27,7 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
         let modelName = producto.model ? producto.model.name : 'Modelo desconocido';
 
         // Establece el contenido del div del producto
-        productoDiv.innerHTML = `<img src="${producto.image[0]}" alt="${brandName} ${modelName}" class="imagenProducto"> 
+        let srcImageOriginal = producto.image[0];
+        let srcImageCarrito = srcImageOriginal.replace("../", "");
+        
+        productoDiv.innerHTML = `<img src="${srcImageCarrito}" alt="${brandName} ${modelName}" class="imagenProducto"> 
                 <div>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
                 | Precio unitario: $${producto.priceARS} </div>  `;
 
@@ -38,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (carrito.length > 0) {
             console.log("Contenido del carrito:", carrito);
             // Establece el contenido del div del producto
-            productoDiv.innerHTML = `<img src="${producto.image[0]}" alt="${brandName} ${modelName}" class="imagenProducto"> 
+            productoDiv.innerHTML = `<img src="${srcImageCarrito}" alt="${brandName} ${modelName}" class="imagenProducto"> 
                             <div>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
                             | Precio unitario: $${producto.priceARS} </div>  `;
             // Agrega el div del producto al div del carrito
@@ -102,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para finalizar la compra
     function finalizarCompra() {
-        window.location.href = 'compra.html';
+        window.location.href = 'finalizar-compra';
     }
 
     finalizarCompraButton.addEventListener('click', finalizarCompra);
