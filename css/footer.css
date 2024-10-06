@@ -8,6 +8,7 @@ footer {
     border-top: 2px solid #8d8ae1;
     font-family: var(--font-header-footer);
     font-size: medium;
+    margin-top: 2rem !important;
 }
 
 .arma-pc-footer {
