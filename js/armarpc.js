@@ -1,7 +1,8 @@
-let archivos = ['../jsons/cpu.json', '../jsons/cooler.json', 
-				'../jsons/mother.json','../jsons/memoria.json',
-				'../jsons/video.json','../jsons/disco.json',
-				'../jsons/fuente.json','../jsons/gabinete.json','../jsons/cpu.json'];
+let archivos = ['/LabWebFrontEnd/jsons/cpu.json', '/LabWebFrontEnd/jsons/cooler.json',
+                '/LabWebFrontEnd/jsons/mother.json','/LabWebFrontEnd/jsons/memoria.json',
+                '/LabWebFrontEnd/jsons/video.json','/LabWebFrontEnd/jsons/disco.json',
+                '/LabWebFrontEnd/jsons/fuente.json','/LabWebFrontEnd/jsons/gabinete.json',
+                '/LabWebFrontEnd/jsons/cpu.json'];
 
 let prodSelecc = [];
 
@@ -210,7 +211,7 @@ function crearInforme(){
     btnComprar.className = 'btn btn-success w-100 mt-3';
     btnComprar.textContent = "Comprar";
     btnComprar.addEventListener('click', () => {
-        window.location.href = '../views/compra.html';
+        window.location.href = 'finalizar-compra';
     });
 
     
