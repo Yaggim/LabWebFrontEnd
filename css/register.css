@@ -22,6 +22,7 @@ body {
     background-repeat: no-repeat;
 }
 
+/*
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -33,22 +34,23 @@ input[type="number"] {
     -moz-appearance:textfield;
 }
 
+
 input:invalid:not(:placeholder-shown):not([type="checkbox"]):not([id="search-bar"]) {
     border-color: red;
     background-image: url(../images/uncheck.png);
 }
 
-input:valid:not(:placeholder-shown):not([type="checkbox"]):not([id="search-bar"]) {
+input:valid:not(:placeholder-shown, [type="checkbox"], .search-bar) {
     background-image: url(../images/check.png);
 }
 
-input:invalid:not(:placeholder-shown):not([type="checkbox"]),
-input:valid:not(:placeholder-shown):not([type="checkbox"]) {
+input:invalid:not(:placeholder-shown, [type="checkbox"]),
+input:valid:not(:placeholder-shown, [type="checkbox"]) {
     background-size: 20px;
     background-repeat: no-repeat;
     background-position: calc(100% - 10px);
 }
-
+*/
 input[type="password"] + p {
     display: block;
     display: none;
@@ -57,4 +59,9 @@ input[type="password"] + p {
 input:invalid:not(:placeholder-shown) + p {
     display: initial;
     color: #a20e0e;
+}
+
+
+div.error{
+    color: red;
 }

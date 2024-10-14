@@ -1,9 +1,25 @@
+body {
+    background-image: -webkit-linear-gradient(
+        136deg,
+        rgb(116, 235, 213) 0%,
+        rgb(63, 43, 150) 100%
+    );
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+}
+
 #carrito {
+    background-image: -webkit-linear-gradient(
+        136deg,
+        rgb(56, 217, 187) 0%,
+        rgb(63, 43, 150) 100%
+    );
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-right: 50px; /* Ajusta este valor a tu gusto */
+    margin-right: 50px; 
 }
 
 .btn-custom{
@@ -12,10 +28,11 @@
 }
 
 .container-carrito {
-    margin-top: 100px; /* Ajusta este valor según tus necesidades */
+    min-height: 40vh;
+    margin-top: 200px;
 }
 
-#finalizar-compra {
+#carrito button{
     display: block; 
     margin-left: auto;
     margin-right: 20px; 
@@ -23,21 +40,34 @@
 }
 
 .producto {
+    color: #fff;
     display: flex;
     align-items: center;
-    font-size: 20px; /* Establece el tamaño de la fuente a 50px */
-    font-weight: bold; /* Hace que el texto esté en negrita */
-    margin-bottom: 20px; /* Agrega un margen en la parte inferior para separar los productos */
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-bottom: 20px;
+    margin-right: 20px; 
 }
 
 .eliminar {
-    color: #fff; /* Establece el color del texto a blanco */
-    background-color: #dc3545; /* Establece el color de fondo a rojo (similar al .btn-danger de Bootstrap) */
-    border: none; /* Elimina el borde */
-    padding: 2px 20px; /* Agrega un poco de padding */
-    cursor: pointer; /* Cambia el cursor a un puntero cuando se pasa el mouse sobre el botón */
-    display: block; /* Hace que el botón se muestre en línea con el texto del producto */
-    float: right; /* Alinea el botón a la derecha del div del producto */
-    margin-left: 15px;
-    border-radius: 3px;
+    color: #fff; 
+    background-color: #dc3545; 
+    border: none; 
+    padding: 2px 20px; 
+    cursor: pointer; 
+    margin-bottom: 10px; 
+    border-radius: 5px;
+}
+
+.imagenProducto{
+    height: auto;
+    width: 50px;
+    margin-right: 10px;
+}
+
+.total {
+    color: #fff;
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-left: 60px; 
 }

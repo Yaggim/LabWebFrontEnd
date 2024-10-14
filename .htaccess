@@ -1,0 +1,15 @@
+
+# Redirecciones URL
+RewriteEngine On
+
+RewriteRule ^home$                                      index.php
+RewriteRule ^carrito$                                   /LabWebFrontEnd/views/carrito.php
+RewriteRule ^registro$                                  /LabWebFrontEnd/views/register.php
+RewriteRule ^producto$                                  /LabWebFrontEnd/views/producto.php
+RewriteRule ^productos$                                 /LabWebFrontEnd/views/productos.php
+RewriteRule ^arma-tu-pc$                                /LabWebFrontEnd/views/armar_pc.php
+RewriteRule ^editar-perfil$                             /LabWebFrontEnd/views/actualizar_datos.php
+RewriteRule ^finalizar-compra$                          /LabWebFrontEnd/views/compra.php
+RewriteRule ^resultado-busqueda$                        /LabWebFrontEnd/views/search.php
+RewriteRule ^([a-z]+)/[a-z\d]+(-[a-z\d]+)+/(\d+)$       /LabWebFrontEnd/views/producto.php?id=$3
+
