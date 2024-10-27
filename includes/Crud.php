@@ -69,5 +69,25 @@ class Crud {
         //retorna filas afectadas
         return $stmt->rowCount();
     }
+
+
+    //buscar por nombre
+    public function findByName($nombre){
+        $stmt = $this->conexion->prepare("SELECT * FROM {$this->tabla} WHERE nombre LIKE :nombre");
+        $stmt->bindParam(":nombre", $nombre);
+        $stmt->execute();
+
+        //retorna TODOS los registros coincidentes
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+    //cerrar conexión
+    public function closeConn(){
+        if ($this->conexion !== null) {
+            $this->conexion = null;
+        }
+    }
 }
 ?>
