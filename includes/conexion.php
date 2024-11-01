@@ -4,7 +4,8 @@ if (!isset($conn)) {
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $db = "hardtech2";
+    $db = "hardtech";
+    //$db = "hardtech2";
 
     try {
         $conn = new PDO("mysql:host=".$servername.";dbname=".$db.";charset=utf8", $username, $password);
