@@ -17,7 +17,7 @@
     <!-- Comienzo del CONTAINER -->
     <div class="container mt-5 mb-5 border">
         <h1 class="text-center">Finalizar la compra</h1>
-        <form id="formCompra" method="POST">
+        <form id="formCompra" action="generar_venta.php" method="POST">
             <!-- Opción para retiro en el local -->
             <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" name="retiroLocal" id="retiroLocal">
