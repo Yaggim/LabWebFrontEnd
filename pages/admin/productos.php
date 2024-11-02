@@ -21,25 +21,25 @@
         <h3 class="text-center">Panel de administrador</h3>
         <ul class="nav flex-row mt-4">
             <li class="nav-item">
-                <a class="nav-link text-white" href="marca.html"><i class="fas fa-tags me-2"></i>Marcas</a>
+                <a class="nav-link text-white" href="marca.php"><i class="fas fa-tags me-2"></i>Marcas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="modelo.html"><i class="fas fa-cubes me-2"></i>Modelos</a>
+                <a class="nav-link text-white" href="modelo.php"><i class="fas fa-cubes me-2"></i>Modelos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="categoria.html"><i class="fas fa-list-alt me-2"></i>Categorías</a>
+                <a class="nav-link text-white" href="categoria.php"><i class="fas fa-list-alt me-2"></i>Categorías</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="productos.html"><i class="fas fa-box-open me-2"></i>Productos</a>
+                <a class="nav-link text-white" href="productos.php"><i class="fas fa-box-open me-2"></i>Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="stock.html"><i class="fas fa-warehouse me-2"></i>Stock</a>
+                <a class="nav-link text-white" href="stock.php"><i class="fas fa-warehouse me-2"></i>Stock</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="combos.html"><i class="fas fa-gift me-2"></i>Combos</a>
+                <a class="nav-link text-white" href="combos.php"><i class="fas fa-gift me-2"></i>Combos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="descuentos.html"><i class="fas fa-percent me-2"></i>Descuentos</a>
+                <a class="nav-link text-white" href="descuentos.php"><i class="fas fa-percent me-2"></i>Descuentos</a>
             </li>
         </ul>
     </nav>
@@ -60,10 +60,11 @@
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>Categoría</th>
-                    <th>Precio (ARS)</th>
+                    <th>Stock</th>
                     <th>Precio (USD)</th>
                     <th>Habilitado</th>
                     <th>Imagen</th>
+                    <th>Imagen 2</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -84,11 +85,6 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="productBrand" class="form-label">Marca</label>
-                                <select class="form-select" id="productBrand" required>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
                                 <label for="productModel" class="form-label">Modelo</label>
                                 <div class="input-group">
                                     <select class="form-select" id="productModel" required>
@@ -101,8 +97,8 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="productPriceARS" class="form-label">Precio en Pesos (ARS)</label>
-                                <input type="number" class="form-control" id="productPriceARS" required>
+                                <label for="productStock" class="form-label">stock</label>
+                                <input type="number" class="form-control" id="productStock" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="productPriceUSD" class="form-label">Precio en Dólares (USD)</label>
@@ -115,10 +111,11 @@
                                     <label class="form-check-label" for="productEnabled">Sí</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="productImage" class="form-label">Imagen (URL)</label>
-                                <input type="text" class="form-control" id="productImage" required>
-                            </div>
+                            <div class="col-12" id="imageContainer">
+    <label for="productImages" class="form-label">Imágenes (URLs)</label>
+    <input type="text" class="form-control mb-2" id="productImage" placeholder="URL de imagen">
+    <button type="button" class="btn btn-secondary" id="addImageField">Agregar otra imagen</button>
+</div>
                             <div class="col-12">
                                 <label for="productDescription" class="form-label">Descripción</label>
                                 <textarea class="form-control" id="productDescription" rows="3" required></textarea>
@@ -147,11 +144,6 @@
                         <div class="row g-3">
                             <input type="hidden" id="editProductId"/>
                             <div class="col-md-6">
-                                <label for="editProductBrand" class="form-label">Marca</label>
-                                <select class="form-select" id="editProductBrand" required>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
                                 <label for="editProductModel" class="form-label">Modelo</label>
                                 <div class="input-group">
                                     <select class="form-select" id="editProductModel" required>
@@ -164,8 +156,8 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="editProductPriceARS" class="form-label">Precio en Pesos (ARS)</label>
-                                <input type="number" class="form-control" id="editProductPriceARS" required>
+                                <label for="editProductStock" class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="editProductStock" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="editProductPriceUSD" class="form-label">Precio en Dólares (USD)</label>
@@ -178,10 +170,13 @@
                                     <label class="form-check-label" for="editProductEnabled">Sí</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="editProductImage" class="form-label">Imagen (URL)</label>
-                                <input type="text" class="form-control" id="editProductImage" required>
-                            </div>
+                            <div class="mb-3">
+        <label for="editProductImages" class="form-label">Imágenes</label>
+        <div id="editImageContainer">
+            
+        </div>
+        <button type="button" id="editImageField" class="btn btn-secondary">Agregar imagen</button>
+    </div>
                             <div class="col-12">
                                 <label for="editProductDescription" class="form-label">Descripción</label>
                                 <textarea class="form-control" id="editProductDescription" rows="3" required></textarea>

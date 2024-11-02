@@ -4,10 +4,18 @@ import { producto } from './conexion.js'; // Ajusta la ruta según sea necesario
 let selectedProductId = null;
 let products = [];
 
+async function fetchProducts() {
+
+    const response = await fetch('../../includes/admin/producto.php');
+
+    return response.json();
+
+}
+
 // Función para cargar los productos inicialmente
 async function loadProducts() {
     try {
-        const productos = await producto();
+        const productos = await fetchProducts();
         products = productos;
         updateProductsTable();
     } catch (error) {
@@ -28,10 +36,10 @@ function updateProductsTable() {
     products.forEach(product => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${product.id}</td>
-            <td>${product.brand.name}</td>
-            <td>${product.model.name}</td>
-            <td>${product.category.name}</td>
+            <td>${product.id_producto}</td>
+            <td>${product.brand_name}</td>
+            <td>${product.model_name}</td>
+            <td>${product.category_name}</td>
             <td>${product.stock}</td>
             <td>
                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#manageStockModal" data-id="${product.id}">
@@ -49,7 +57,6 @@ function updateProductsTable() {
     });
 }
 
-// Función para simular la actualización del stock
 async function simulateUpdateStock(productId, quantity, action) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -131,5 +138,5 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('No se encontró el formulario de gestión de stock.');
     }
 
-    loadProducts(); // Cargar productos al inicio
+    loadProducts(); 
 });

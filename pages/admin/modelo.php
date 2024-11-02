@@ -21,30 +21,29 @@
         <h3 class="text-center">Panel de administrador</h3>
         <ul class="nav flex-row mt-4">
             <li class="nav-item">
-                <a class="nav-link text-white" href="marca.html"><i class="fas fa-tags me-2"></i>Marcas</a>
+                <a class="nav-link text-white" href="marca.php"><i class="fas fa-tags me-2"></i>Marcas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="modelo.html"><i class="fas fa-cubes me-2"></i>Modelos</a>
+                <a class="nav-link text-white" href="modelo.php"><i class="fas fa-cubes me-2"></i>Modelos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="categoria.html"><i class="fas fa-list-alt me-2"></i>Categorías</a>
+                <a class="nav-link text-white" href="categoria.php"><i class="fas fa-list-alt me-2"></i>Categorías</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="productos.html"><i class="fas fa-box-open me-2"></i>Productos</a>
+                <a class="nav-link text-white" href="productos.php"><i class="fas fa-box-open me-2"></i>Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="stock.html"><i class="fas fa-warehouse me-2"></i>Stock</a>
+                <a class="nav-link text-white" href="stock.php"><i class="fas fa-warehouse me-2"></i>Stock</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="combos.html"><i class="fas fa-gift me-2"></i>Combos</a>
+                <a class="nav-link text-white" href="combos.php"><i class="fas fa-gift me-2"></i>Combos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="descuentos.html"><i class="fas fa-percent me-2"></i>Descuentos</a>
+                <a class="nav-link text-white" href="descuentos.php"><i class="fas fa-percent me-2"></i>Descuentos</a>
             </li>
         </ul>
     </nav>
 
-    <!--Modelo-->
 
 
     <div id="models" class="container mt-5">
@@ -53,7 +52,6 @@
             <i class="fas fa-plus"></i> Añadir Modelo
         </button>
 
-        <!-- Tabla de modelos existentes -->
         <table class="table table-striped" id="modelsTable">
             <thead>
                 <tr>
@@ -67,7 +65,6 @@
         </table>
     </div>
 
-    <!-- Modal para añadir modelo -->
     <div class="modal fade" id="addModelModal" tabindex="-1" aria-labelledby="addModelModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -96,7 +93,6 @@
         </div>
     </div>
 
-     <!-- Modal para Editar Modelo -->
      <div class="modal fade" id="editModelModal" tabindex="-1" aria-labelledby="editModelModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -128,7 +124,6 @@
         </div>
     </div>
 
-    <!-- Modal para Eliminar Modelo -->
     <div class="modal fade" id="deleteModelModal" tabindex="-1" aria-labelledby="deleteModelModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -146,6 +141,16 @@
             </div>
         </div>
     </div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="errorToastMessage">
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
 
 </body>
 

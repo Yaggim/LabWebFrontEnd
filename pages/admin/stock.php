@@ -21,25 +21,25 @@
         <h3 class="text-center">Panel de administrador</h3>
         <ul class="nav flex-row mt-4">
             <li class="nav-item">
-                <a class="nav-link text-white" href="marca.html"><i class="fas fa-tags me-2"></i>Marcas</a>
+                <a class="nav-link text-white" href="marca.php"><i class="fas fa-tags me-2"></i>Marcas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="modelo.html"><i class="fas fa-cubes me-2"></i>Modelos</a>
+                <a class="nav-link text-white" href="modelo.php"><i class="fas fa-cubes me-2"></i>Modelos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="categoria.html"><i class="fas fa-list-alt me-2"></i>Categorías</a>
+                <a class="nav-link text-white" href="categoria.php"><i class="fas fa-list-alt me-2"></i>Categorías</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="productos.html"><i class="fas fa-box-open me-2"></i>Productos</a>
+                <a class="nav-link text-white" href="productos.php"><i class="fas fa-box-open me-2"></i>Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="stock.html"><i class="fas fa-warehouse me-2"></i>Stock</a>
+                <a class="nav-link text-white" href="stock.php"><i class="fas fa-warehouse me-2"></i>Stock</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="combos.html"><i class="fas fa-gift me-2"></i>Combos</a>
+                <a class="nav-link text-white" href="combos.php"><i class="fas fa-gift me-2"></i>Combos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="descuentos.html"><i class="fas fa-percent me-2"></i>Descuentos</a>
+                <a class="nav-link text-white" href="descuentos.php"><i class="fas fa-percent me-2"></i>Descuentos</a>
             </li>
         </ul>
     </nav>

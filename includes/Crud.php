@@ -19,6 +19,10 @@ class Crud {
         $this->tabla    = $nombre_tabla;
     }
 
+    public function getConexion() {
+        return $this->conexion;
+    }
+
 
     //Obtener todos los registros
     public function getAll() {
@@ -57,6 +61,20 @@ class Crud {
 
         //retorna filas afectadas
         return $stmt->rowCount();
+    }
+
+    public function update($id, $array_asoc, $PK_nombre) {
+        $set = "";
+        foreach ($array_asoc as $key => $value) {
+            $set .= "$key = :$key, ";
+        }
+        $set = rtrim($set, ", ");
+        $stmt = $this->conexion->prepare("UPDATE {$this->tabla} SET $set WHERE $PK_nombre = :id");
+        $stmt->bindParam(":id", $id);
+        foreach ($array_asoc as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+        return $stmt->execute();
     }
 
 
