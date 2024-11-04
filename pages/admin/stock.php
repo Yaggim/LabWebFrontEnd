@@ -89,6 +89,12 @@
                                 <option value="subtract">Descontar Stock</option>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="stockReason" class="form-label">Motivo</label>
+                            <select class="form-select" id="stockReason" required>
+                                <!-- Opciones serán llenadas dinámicamente -->
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
