@@ -3,14 +3,14 @@ let products = [];
 
 async function fetchProducts() {
 
-    const response = await fetch('../../includes/admin/producto.php');
+    const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php');
 
     return response.json();
 
 }
 
 async function fetchMovementTypes() {
-    const response = await fetch('../../includes/admin/producto.php?movement_types=true');
+    const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php?movement_types=true');
     return response.json();
 }
 
@@ -77,7 +77,7 @@ function updateProductsTable() {
 }
 
 async function updateStock(productId, quantity, action, reason) {
-    const response = await fetch('../../includes/admin/producto.php', {
+    const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'

@@ -9,21 +9,16 @@ class MarcaBBDD extends Crud {
     }
 
     public function hasRelatedRecords($id_marca) {
-        $queryProductos = "SELECT COUNT(*) FROM productos WHERE id_marca = :id_marca";
+
         $queryModelos = "SELECT COUNT(*) FROM modelos WHERE id_marca = :id_marca";
 
-        $stmtProductos = $this->conexion->prepare($queryProductos);
-        $stmtProductos->bindParam(":id_marca", $id_marca);
-        $stmtProductos->execute();
         $stmtModelos = $this->conexion->prepare($queryModelos);
         $stmtModelos->bindParam(":id_marca", $id_marca);
         $stmtModelos->execute();
 
-        $countProductos = $stmtProductos->fetchColumn();
         $countModelos = $stmtModelos->fetchColumn();
 
-        // Retorna true si existen registros relacionados
-        return $countProductos > 0 || $countModelos > 0;
+        return  $countModelos > 0;
     }
 }
 

@@ -2,13 +2,13 @@ let brands = [];
 let currentBrandId = null;
 
 async function fetchBrands() {
-    const response = await fetch('../../includes/admin/marca.php');
+    const response = await fetch('/LabWebFrontEnd/includes/admin/marca.php');
     return response.json();
 }
 
 async function addBrand(name) {
     try {
-        const response = await fetch('../../includes/admin/marca.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/marca.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ async function addBrand(name) {
 
 async function editBrand(id, name) {
     try {
-        const response = await fetch('../../includes/admin/marca.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/marca.php', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ async function editBrand(id, name) {
 
 async function deleteBrand(id) {
     try {
-        const response = await fetch('../../includes/admin/marca.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/marca.php', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ async function deleteBrand(id) {
 
 async function loadBrands() {
     try {
-        const response = await fetch('../../includes/admin/marca.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/marca.php', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

@@ -6,7 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let productos = [];
     let categorias = [];
+    let dolarBlue = 0;
 
+    async function fetchDolarBlue() {
+        const response = await fetch("https://dolarapi.com/v1/dolares/blue");
+        const data = await response.json();
+        dolarBlue = data.venta;
+    }
+    
     async function fetchProducts() {
         const response = await fetch('./includes/admin/producto.php');
         return response.json();
@@ -19,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     async function loadProductsAndCategories() {
         try {
+            await fetchDolarBlue();
             productos = await fetchProducts();
             categorias = await fetchCategories();
             displayCategories(categorias);
@@ -30,8 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (searchInput && categoryList && clearFiltersButton) {
         loadProductsAndCategories();
-        displayCategories(categorias);
-        displayProducts(productos);
 
         searchInput.addEventListener('input', () => {
             const filteredProducts = filterProducts(productos, searchInput.value);
@@ -70,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (product.habilitado) {
                 const productCard = document.createElement('div');
                 productCard.className = 'col-md-4 mb-4';
-                const descripcionTruncada = product.descripcion.length > 100 ? product.descripcion.substring(0, 100) + '...' : product.description;
+                const descripcionTruncada = product.descripcion.length > 100 ? product.descripcion.substring(0, 100) + '...' : product.descripcion;
 
                 const nombreMarcaModelo = product.brand_name + ' ' + product.model_name;
                 const productNombre = nombreMarcaModelo.trim().toLowerCase().replaceAll(' ', '-');
@@ -81,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="card-body">
                             <h5 class="card-title">${nombreMarcaModelo}</h5>
                             <p class="card-text">${descripcionTruncada}</p>
-                            <p class="card-text">Precio: $${product.precio_usd * 1200} / $${product.precio_usd} USD</p>
+                            <p class="card-text">Precio: $${(product.precio_usd * dolarBlue).toFixed(2)} / $${product.precio_usd} USD</p>
                             <p class="card-text">Stock: ${product.stock}</p>
                             <a href="${product.category_name}/${productNombre}/${product.id_producto}" class="btn btn-primary">Seleccionar</a>
                         </div>

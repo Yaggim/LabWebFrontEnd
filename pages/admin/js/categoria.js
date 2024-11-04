@@ -2,7 +2,7 @@ let categories = [];
 let currentCategoryId = null;
 
 async function fetchCategories() {
-    const response = await fetch('../../includes/admin/categoria.php');
+    const response = await fetch('/LabWebFrontEnd/includes/admin/categoria.php');
     if (!response.ok) {
         throw new Error('Error al obtener las categorías');
     }
@@ -11,7 +11,7 @@ async function fetchCategories() {
 
 async function addCategory(name) {
     try {
-        const response = await fetch('../../includes/admin/categoria.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/categoria.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ async function addCategory(name) {
 
 async function editCategory(id, name) {
     try {
-        const response = await fetch('../../includes/admin/categoria.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/categoria.php', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ async function editCategory(id, name) {
 
 async function deleteCategory(id) {
     try {
-        const response = await fetch('../../includes/admin/categoria.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/categoria.php', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

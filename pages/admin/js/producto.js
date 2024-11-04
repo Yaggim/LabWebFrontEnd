@@ -5,17 +5,17 @@ let products = [];
 let currentProductId = null;
 
 async function fetchProducts() {
-    const response = await fetch('../../includes/admin/producto.php');
+    const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php');
     return response.json();
 }
 
 async function fetchModels() {
-    const response = await fetch('../../includes/admin/modelo.php');
+    const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php');
     return response.json();
 }
 
 async function fetchCategories() {
-    const response = await fetch('../../includes/admin/categoria.php');
+    const response = await fetch('/LabWebFrontEnd/includes/admin/categoria.php');
     return response.json();
 }
 
@@ -108,7 +108,7 @@ function displayError(elementId, message) {
 
 async function addProduct(product) {
     try {
-        const response = await fetch('../../includes/admin/producto.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -128,7 +128,7 @@ async function addProduct(product) {
 
 async function editProduct(id, updatedProduct) {
     try {
-        const response = await fetch('../../includes/admin/producto.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -148,7 +148,7 @@ async function editProduct(id, updatedProduct) {
 
 async function deleteProduct(id) {
     try {
-        const response = await fetch('../../includes/admin/producto.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

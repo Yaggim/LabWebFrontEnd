@@ -5,14 +5,14 @@ let currentModelId = null;
 
 async function fetchModels() {
 
-    const response = await fetch('../../includes/admin/modelo.php');
+    const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php');
 
     return response.json();
 
 }
 
 async function fetchBrands() {
-    const response = await fetch('../../includes/admin/marca.php');
+    const response = await fetch('/LabWebFrontEnd/includes/admin/marca.php');
     return response.json();
 }
 
@@ -75,7 +75,7 @@ async function loadBrands() {
 
 async function addModel(name, brandId) {
     try {
-        const response = await fetch('../../includes/admin/modelo.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ async function addModel(name, brandId) {
 
 async function editModel(id, name, brandId) {
     try {
-        const response = await fetch('../../includes/admin/modelo.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ async function editModel(id, name, brandId) {
 
 async function deleteModel(id) {
     try {
-        const response = await fetch('../../includes/admin/modelo.php', {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

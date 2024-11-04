@@ -2,8 +2,8 @@ import { categoria as getCategories, producto as getProductsByCategory, combos a
 
 let categories = [];
 let combos = [];
-let allProducts = []; // Para manejar todos los productos cargados
-let selectedProducts = []; // Productos seleccionados para el nuevo combo
+let allProducts = [];
+let selectedProducts = []; 
 let currentComboId = null; 
 
 async function loadCombos(){
@@ -29,8 +29,8 @@ async function loadCategories() {
             categorySelect.appendChild(option);
         });
 
-        // Cargar productos de la primera categoría por defecto
-        const defaultCategoryId = categories[0].id; // Puedes ajustar esto según la categoría que desees como predeterminada
+        
+        const defaultCategoryId = categories[0].id; 
         await loadProductsByCategory(defaultCategoryId);
         
 
@@ -199,8 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await addCombo(newCombo);
 
             document.getElementById('createComboForm').reset();
-            selectedProducts = []; // Limpiar productos seleccionados
-            renderSelectedProductsTable(); // Limpiar la tabla de productos seleccionados
+            selectedProducts = []; 
+            renderSelectedProductsTable(); 
             updateCombosTable();
             bootstrap.Modal.getInstance(document.getElementById('addComboModal')).hide();
         } catch (error) {
