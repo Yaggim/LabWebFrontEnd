@@ -1,69 +1,76 @@
 <?php
-//CONEXIÓN CON REQUIRE_ONCE (SI YA ESTÁ CONECTADO NO LO VUELVE A INCLUIR)
+// Iniciar sesión si es necesario para obtener $id_persona desde la sesión
+session_start();
+
+// Conexión a la base de datos
 require_once 'conexion.php';
 
 function generarVenta($carrito, $id_persona, $datosEnvio = null)
 {
     global $conn;
-
-    //INICIAR TRANSACCION (SI SALE BIEN CONFIRMA CON COMMIT, NO ANTES)
     $conn->beginTransaction();
 
     try {
-        //INSERTAR EN TABLA ventas_cabecera
+        // Insertar en ventas_cabecera
         $fecha_venta = date("Y-m-d H:i:s");
         $stmt_cabecera = $conn->prepare("INSERT INTO ventas_cabecera (fecha_venta, id_persona) VALUES (?, ?)");
         $stmt_cabecera->execute([$fecha_venta, $id_persona]);
-        $id_venta_cabecera = $conn->lastInsertId(); // Obtener el ID de la venta recién creada
+        $id_venta_cabecera = $conn->lastInsertId();
 
-        //INSERTAR EN TABLA ventas_detalle Y ACTUALIZAR SU STOCK TABLA productos
+        // Preparar declaraciones para insertar en ventas_detalle y actualizar stock en productos
         $stmt_detalle = $conn->prepare("INSERT INTO ventas_detalle (id_venta_cabecera, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)");
         $stmt_stock = $conn->prepare("UPDATE productos SET stock = stock - ? WHERE id_producto = ?");
 
+        // Recorrer los productos del carrito
         foreach ($carrito as $producto) {
             $id_producto = $producto['id'];
             $cantidad = $producto['cantidad'];
-            $precio_unitario = $producto['precioARS'];
+            $precio_unitario = $producto['priceARS'];
 
-            //INSRTAR ventas_detalle
+            // Insertar en ventas_detalle
             $stmt_detalle->execute([$id_venta_cabecera, $id_producto, $cantidad, $precio_unitario]);
 
-            //ACTUALIZAR STOCK
+            // Actualizar el stock en productos
             $stmt_stock->execute([$cantidad, $id_producto]);
         }
 
-        //INSERTAR EN TABLA DE ENVÍOS (SI SE SELECCIONÓ ENVIO)
+        // Insertar en la tabla envios si datosEnvio está presente
         if ($datosEnvio) {
+            list($nombre, $apellido) = array_pad(explode(' ', $datosEnvio['envioTitular']), 2, null);
             $stmt_envio = $conn->prepare("INSERT INTO envios (nombre, apellido, dni, calle, altura, cod_postal, notas, id_venta_cabecera) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt_envio->execute([
-                explode(' ', $datosEnvio['envioTitular'])[0],  // nombre de envioTitular
-                explode(' ', $datosEnvio['envioTitular'])[1],  // apellido de envioTitular
+                $nombre,
+                $apellido,
                 $datosEnvio['dni'],
                 $datosEnvio['envioCalle'],
                 $datosEnvio['envioAltura'],
                 $datosEnvio['envioPostal'],
-                $datosEnvio['envioNota'], 
-                $id_venta_cabecera// ACÁ HAY QUE USAR PARA RELACIONAR CON EL ENVÍO 
+                $datosEnvio['envioNota'],
+                $id_venta_cabecera
             ]);
         }
 
-        //CONFIRMACIÓN
+        // Confirmar la transacción
         $conn->commit();
-        echo "Compra realizada con éxito.";
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'message' => 'Compra realizada con éxito.']);
 
     } catch (Exception $e) {
-        //ROLLBACK SI HAY ERRORES
+        // Rollback en caso de error
         $conn->rollBack();
-        echo "Error en la compra: " . $e->getMessage();
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Error en la compra: ' . $e->getMessage()]);
     }
 }
 
-// 
-$carrito = json_decode($_POST['carrito'], true); //CARRITO
-$id_persona = $_POST['id_persona'];//LO TIENE QUE RECIBIR POR LA SESIÓN
+// Procesar datos recibidos por POST
+$carrito = json_decode($_POST['carrito'], true);
+$id_persona = $_SESSION['id_persona'] ?? $_POST['id_persona'];  // Obtenido de la sesión o de POST
 $datosEnvio = isset($_POST['envio']) ? json_decode($_POST['envio'], true) : null;
 
-//GENERAR LA VENTA
+// Generar la venta
 generarVenta($carrito, $id_persona, $datosEnvio);
 
+// Cerrar la conexión (opcional)
+$conn = null;
 ?>

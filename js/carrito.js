@@ -1,8 +1,39 @@
+var productos = [];
+
+async function fetchProducts(id = null) {
+    const url = `../../includes/admin/producto.php?id_producto=${id}`;
+    const response = await fetch(url);
+    return response.json();
+}
+
+async function cargarCarrito() {
+    try {
+        // Limpiar el array de productos antes de cargar nuevos datos
+        productos = [];
+
+        // Obtener el carrito de localStorage
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        // Iterar sobre cada item en el carrito y cargar sus datos desde la base de datos
+        for (const item of carrito) {
+            const producto = await fetchProducts(item.id_producto); // Obtener datos del producto por ID
+            producto.cantidad = item.cantidad; // Agregar la cantidad seleccionada del carrito
+            productos.push(producto); // Agregar el producto completo al array productos
+        }
+
+        // Mostrar los productos cargados en la consola para verificar
+        console.log("Productos en el carrito:", productos);
+    } catch (error) {
+        console.error("Error cargando el carrito de productos:", error);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+    
     let carritoDiv = document.getElementById('carrito');
 
     // Carrito de localStorage
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let carrito = cargarCarrito();
 
     // Botones de eliminar y finalizar compra
     let eliminarButtons = document.getElementsByClassName('eliminar');
@@ -17,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Para cada producto en el carrito
     for (let producto of carrito) {
-        console.log("Producto ID: " + producto.id);
+        console.log("Producto ID: " + producto.id_producto);
         // Crea un nuevo div para el producto
         let productoDiv = document.createElement('div');
         productoDiv.className = 'producto';
@@ -29,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Establece el contenido del div del producto
         let srcImageOriginal = producto.image[0];
         let srcImageCarrito = srcImageOriginal.replace("../", "");
-        
+
         productoDiv.innerHTML = `<img src="${srcImageCarrito}" alt="${brandName} ${modelName}" class="imagenProducto"> 
                 <div>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
                 | Precio unitario: $${producto.priceARS} </div>  `;
@@ -102,11 +133,44 @@ document.addEventListener('DOMContentLoaded', function () {
         carritoDiv.style.alignItems = 'center';
         carritoDiv.innerHTML = `<p>No hay elementos agregados al carrito</p>`;
     }
+    //  *************** INICIO CODIGO VIEJO  ***************
+        // Función para finalizar la compra
+        function finalizarCompra() {
+            window.location.href = 'finalizar-compra';
+        }
+     //*************** FIN CODIGO VIEJO  ***************
+    /*
 
+    // *************** INICIO NUEVO CODIGO  ***************
     // Función para finalizar la compra
     function finalizarCompra() {
-        window.location.href = 'finalizar-compra';
+        // Obtén el carrito de localStorage
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        // Envía el carrito al servidor usando fetch con método POST
+        fetch('views/compra.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ carrito: carrito }) // Enviamos el carrito como JSON
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // CONFIRMAR COMPRA
+                    window.location.href = 'confirmacion-compra'; // 
+                } else {
+                    // Manejar errores
+                    console.error('Error en la compra:', data.message);
+                }
+            })
+            .catch(error => console.error('Error en la solicitud:', error));
+            window.location.href = 'finalizar-compra';
     }
+    */
+    // *************** FIN NUEVO CODIGO  ***************
+    
 
     finalizarCompraButton.addEventListener('click', finalizarCompra);
 

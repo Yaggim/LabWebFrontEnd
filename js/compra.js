@@ -8,6 +8,8 @@ function iniciar() {
     let formCompra = document.getElementById("formCompra");
     formCompra.addEventListener("submit", confirmarCompra)
     document.getElementById("retiroLocal").addEventListener("change", enviarRetirar);
+    // NUEVO: Evento para el checkbox de pago en efectivo
+    document.getElementById("pagoEfectivo").addEventListener("change", togglePagoEfectivo);
 }
 
 // Funcion para la logica de envío a domicilio o retiro por el local
@@ -46,6 +48,20 @@ function enviarRetirar() {
     document.getElementById("btnCarrito").disabled = true
 }*/
 
+// NUEVO: función para el pago en efectivo
+function togglePagoEfectivo() {
+    let esPagoEfectivo = document.getElementById("pagoEfectivo").checked;
+    let campoTarjeta = document.getElementById("tarjeta");
+
+    if (esPagoEfectivo) {
+        document.getElementById("tarjetaContainer").classList.add("d-none");
+        campoTarjeta.required = false;
+    } else {
+        document.getElementById("tarjetaContainer").classList.remove("d-none");
+        campoTarjeta.required = true;
+    }
+}
+
 function confirmarCompra(event) {
     document.getElementById("envioTitular").classList.remove('is-invalid');
     document.getElementById("envioCalle").classList.remove('is-invalid');
@@ -64,6 +80,7 @@ function confirmarCompra(event) {
 
 function validarDatos() {
     let retiroLocal = document.getElementById("retiroLocal").checked;
+    let pagoEfectivo = document.getElementById("pagoEfectivo").checked;
     let errores = 0;
 
     if (!retiroLocal) {
@@ -128,10 +145,20 @@ function validarDatos() {
         errores += 1
     }
     //VALIDAR TARJETA
-    let tarjeta = document.getElementById("tarjeta").value
-    if (tarjeta.length != 12 || isNaN(tarjeta)){
-        document.getElementById("tarjeta").classList.add('is-invalid');
-        errores += 1
+    // NUEVO: Validación de la tarjeta solo si no es pago en efectivo
+    let campoTarjeta = document.getElementById("tarjeta");
+    if (!pagoEfectivo) {
+        let tarjeta = campoTarjeta.value;
+        if (tarjeta.length !== 12 || isNaN(tarjeta)) {
+            campoTarjeta.classList.add('is-invalid');
+            errores += 1;
+        } else {
+            campoTarjeta.classList.remove('is-invalid');
+        }
+        campoTarjeta.required = true; // Campo requerido si no es efectivo
+    } else {
+        campoTarjeta.required = false; // No requerido si es efectivo
+        campoTarjeta.classList.remove('is-invalid'); // Limpieza de errores previos
     }
 
     console.log("Errores capturados: "+ errores)
