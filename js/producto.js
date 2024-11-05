@@ -1,235 +1,38 @@
-const productos = [
-    {
-        "id": 1,
-        "brand": {
-            "id": 1,
-            "name": "Kingston"
-        },
-        "model": {
-            "id": 1,
-            "name": "Fury Beast"
-        },
-        "category": {
-            "id": 1,
-            "name": "memorias"
-        },
-        "priceARS": 55200,
-        "priceUSD": 55.2,
-        "enabled": true,
-        "stock": 10,
-        "image": [
-            "images/productos/prod1_foto1.jpg",
-            "images/productos/prod1_foto2.jpg"],
-        "description": "Si tu computadora funciona con lentitud, si un programa no responde o no se carga, lo más probable es que se trate de un problema de memoria. Estos son posibles indicios de un rendimiento defectuoso en el día a día de tus tareas. Por ello, contar con una memoria Kingston -sinónimo de trayectoria y excelencia- mejorará la productividad de tu equipo."
-    },
-    {
-        "id": 2,
-        "brand": {
-            "id": 2,
-            "name": "Corsair"
-        },
-        "model": {
-            "id": 2,
-            "name": "Vengeance LPX"
-        },
-        "category": {
-            "id": 1,
-            "name": "memorias"
-        },
-        "priceARS": 88100,
-        "priceUSD": 88.1,
-        "enabled": true,
-        "stock": 2,
-        "image": [
-            "images/productos/prod2_foto1.jpg",
-            "images/productos/prod2_foto2.jpg"],
-        "description": "Con diseños únicos y modernos, Corsair es una de las marcas más elegidas por los usuarios al momento de comprar una memoria ram. Cargar programas más rápido, aumentar la capacidad de responder y ejecutar aplicaciones de uso intensivo son algunas de las características y ventajas que tendrás al momento de adquirir esta memoria. No esperes más para mejorar el rendimiento de tu computadora."
-    },
-    {
-        "id": 3,
-        "brand": {
-            "id": 3,
-            "name": "AMD"
-        },
-        "model": {
-            "id": 3,
-            "name": "Ryzen 3"
-        },
-        "category": {
-            "id": 2,
-            "name": "procesadores"
-        },
-        "priceARS": 350500,
-        "priceUSD": 350.5,
-        "enabled": true,
-        "stock": 8,
-        "image": [
-            "images/productos/prod3_foto1.jpg",
-            "images/productos/prod3_foto2.jpg"],
-        "description": "Mejora tu experiencia de juego con el Procesador gamer AMD Ryzen 3 3200G, diseñado para brindarte un rendimiento óptimo en tus partidas. Con sus 4 núcleos y una frecuencia máxima de 4 GHz, disfrutarás de una velocidad y fluidez excepcionales en tus juegos favoritos. Además, su arquitectura x86-64 te garantiza una compatibilidad amplia con diversos sistemas y aplicaciones."
-    },
-    {
-        "id": 4,
-        "brand": {
-            "id": 4,
-            "name": "WD"
-        },
-        "model": {
-            "id": 4,
-            "name": "Black SN850X"
-        },
-        "category": {
-            "id": 3,
-            "name": "discos"
-        },
-        "priceARS": 95700,
-        "priceUSD": 95.7,
-        "enabled": true,
-        "stock": 15,
-        "image": [
-            "images/productos/prod4_foto1.jpg",
-            "images/productos/prod4_foto2.jpg"],
-        "description": "Western Digital es una marca de renombre mundial en almacenamiento de datos con la cual podés crear, experimentar y guardar contenidos a través de una amplia gama de dispositivos. La alta seguridad y rendimiento que brindan sus unidades la convierten en una de las empresas más elegidas del mercado. El WD Black SN850X Wds200t2xhe está adaptado para que puedas acceder de forma rápida a tus documentos digitales gracias a su tecnología en estado sólido."
-    },
-    {
-        "id": 5,
-        "brand": {
-            "id": 5,
-            "name": "Samsung"
-        },
-        "model": {
-            "id": 5,
-            "name": "990 PRO"
-        },
-        "category": {
-            "id": 3,
-            "name": "discos"
-        },
-        "priceARS": 150000,
-        "priceUSD": 150,
-        "enabled": false,
-        "stock": 20,
-        "image": [
-            "images/productos/prod5_foto1.jpg",
-            "images/productos/prod5_foto2.jpg"],
-        "description": "Considerada una de las marcas más innovadoras en el rubro de electrónica, Samsung ofrece productos de calidad y se destaca por su especialización en unidades de almacenamiento. El 990 Pro MZ-V9P1T0B/AM está adaptado para que puedas acceder de forma rápida a tus documentos digitales gracias a su tecnología en estado sólido."
-    },
-    {
-        "id": 6,
-        "brand": {
-            "id": 6,
-            "name": "Acer"
-        },
-        "model": {
-            "id": 6,
-            "name": "Gaming Kg241q"
-        },
-        "category": {
-            "id": 4,
-            "name": "monitores"
-        },
-        "priceARS": 220000,
-        "priceUSD": 220,
-        "enabled": true,
-        "stock": 12,
-        "image": [
-            "images/productos/prod6_foto1.jpg",
-            "images/productos/prod6_foto2.jpg"],
-        "description": "Sumérgete en una experiencia de juego inigualable con el Monitor Gamer Acer Nitro KG1 KG241Q Sbmiipx de 24 pulgadas. Con una resolución Full HD de 1920x1080 píxeles y una relación de aspecto de 16:9, disfrutarás de imágenes nítidas y colores vibrantes en cada partida. Gracias a su frecuencia de actualización de 165 Hz y tiempo de respuesta GTG de 1 ms, podrás apreciar cada detalle en tiempo real, sin desenfoques ni retrasos."
-    },
-    {
-        "id": 7,
-        "brand": {
-            "id": 7,
-            "name": "AOC"
-        },
-        "model": {
-            "id": 7,
-            "name": "G2790VX"
-        },
-        "category": {
-            "id": 4,
-            "name": "monitores"
-        },
-        "priceARS": 115000,
-        "priceUSD": 115,
-        "enabled": true,
-        "stock": 1,
-        "image": [
-            "images/productos/prod7_foto1.jpg",
-            "images/productos/prod7_foto2.jpg"],
-        "description": "La tecnología AMD FreeSync permite una comunicación eficiente entre el monitor y la placa de video, proporcionando imágenes fluidas y sin efecto fantasma. Tiempo de respuesta de apenas 1 ms para movimientos rápidos y sensibles, mejorando el desempeño en juegos. Tasa de refresco de 144 hz para movimientos suaves y fluidos, mejorando la experiencia visual. Diseño borderless para una visualización amplia y sin interrupciones."
-    },
-    {
-        "id": 8,
-        "brand": {
-            "id": 8,
-            "name": "Nisuta"
-        },
-        "model": {
-            "id": 8,
-            "name": "NSKBG5RL"
-        },
-        "category": {
-            "id": 5,
-            "name": "perifericos"
-        },
-        "priceARS": 35000,
-        "priceUSD": 35,
-        "enabled": true,
-        "stock": 30,
-        "image": [
-            "images/productos/prod8_foto1.jpg",
-            "images/productos/prod8_foto2.jpg"],
-        "description": "Este teclado Nisuta de alto rendimiento permite que puedas disfrutar de horas ilimitadas de juegos. Está diseñado especialmente para que puedas expresar tanto tus habilidades como tu estilo. Podrás mejorar tu experiencia de gaming, ya seas un aficionado o todo un experto y hacer que tus jugadas alcancen otro nivel."
-    },
-    {
-        "id": 9,
-        "brand": {
-            "id": 9,
-            "name": "Crucial "
-        },
-        "model": {
-            "id": 9,
-            "name": "CT1000BX500SSD1 "
-        },
-        "category": {
-            "id": 3,
-            "name": "discos"
-        },
-        "priceARS": 95100,
-        "priceUSD": 95.1,
-        "enabled": false,
-        "stock": 25,
-        "image": [
-            "images/productos/prod9_foto1.jpg",
-            "images/productos/prod9_foto2.jpg"],
-        "description": "Con la unidad en estado sólido Crucial de 1TB vas a incrementar la capacidad de respuesta de tu equipo. Gracias a esta tecnología podrás invertir en velocidad y eficiencia para el inicio, la carga y la transferencia de datos."
-    },
-    {
-        "id": 10,
-        "brand": {
-            "id": 10,
-            "name": "Redragon"
-        },
-        "model": {
-            "id": 10,
-            "name": "Star Pro M917GB"
-        },
-        "category": {
-            "id": 5,
-            "name": "perifericos"
-        },
-        "priceARS": 87000,
-        "priceUSD": 87,
-        "enabled": true,
-        "stock": 0,
-        "image": [
-            "images/productos/prod10_foto1.jpg",
-            "images/productos/prod10_foto2.jpg"],
-        "description": "Parte de una nueva generación enfocada 100% en el rendimiento, el St4ar Pro es un ratón de alto nivel desarrollado para gamers realmente exigentes. Es liviano y cómodo -pesa alrededor de 60 g- y cuenta con doble conexión inalámbrica, cable de paracord y patines de teflón para que el movimiento sea siempre suave y ligero. Está equipado, además, con uno de los sensores más avanzados de su generación y switches Huano que soportan hasta 20 millones de clics."
+var producto = [];
+
+async function fetchProducts(id = null) {
+    const url = `../../includes/admin/producto.php?id_producto=${id}`;
+    const response = await fetch(url);
+    return response.json();
+}
+
+async function loadProducts(productId) {
+    try {
+        const fetchProductos = await fetchProducts(productId);
+        producto = fetchProductos;
+        cargarProductoPorID(productId);
+    } catch (error) {
+        console.error('Error cargando los productos en (loadProducts):', error);
     }
-];
+}
+
+async function fetchDolarBlue() {
+    const response = await fetch("https://dolarapi.com/v1/dolares/blue");
+    const data = await response.json();
+    dolarBlue = data.venta;
+    return dolarBlue;
+}
+
+async function actualizarPrecioARS() {
+    try {
+        const dolarBlue = await fetchDolarBlue();
+        const precioEnPesos = producto.precio_usd * dolarBlue;
+        console.log("Valor actual del Dolar Blue: ", dolarBlue);
+        document.getElementById("producto-priceARS").textContent = "Precio: US$" + producto.precio_usd + "  |  $" + precioEnPesos.toFixed(2);
+    } catch (error) {
+        console.error("Error al obtener el precio en pesos:", error);
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlPath = window.location.pathname;
@@ -237,20 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const productId = parseInt(segmentosPath[segmentosPath.length - 1]);
 
     if (productId) {
-        cargarProductoPorID(productId);
+        loadProducts(productId);
     } else {
         console.error("ID del producto no encontrado en la URL.");
     }
 });
 
 function cargarProductoPorID(idProducto) {
-    // Buscar el producto por el ID
-    const producto = productos.find(prod => prod.id === idProducto);
+    console.log("PRODUCTO CARGADO:", producto);
     if (producto) {
-        // Cargar todos los datos del producto a la página
-        completarDatosPagina(idProducto)
-        // Completa el recuadro de "Stock en la web" según el stock disponible de este producto
-        completarRecuadroStock(idProducto)
+        completarDatosPagina()
+        completarRecuadroStock()
 
         // Incremento y decremento de cantidad seleccionada del producto
         const decrement = document.getElementById('btnDecrement');
@@ -271,14 +71,19 @@ function cargarProductoPorID(idProducto) {
         });
 
         // Comprar producto
+        /*
         document.getElementById("btnCompra").addEventListener("click", function () {
             // Vuelvo a completar el recuadro de stock, por si bajaron las unidades en stock
-            document.getElementById("pagoTotal").innerHTML = "Cant: " + cantidad.value + "<br>Total a abonar $" + cantidad.value * (producto.priceARS);
+            document.getElementById("pagoTotal").innerHTML = "Cant: " + cantidad.value + "<br>Total a abonar $" + cantidad.value * (producto.precio_usd);
             realizarCompra(idProducto);
         });
-
+        */
+        document.getElementById("btnCompra").addEventListener("click", function () {
+            // Redirige a la página de pago
+            window.location.href = "../../views/compra.php";
+        });
+        /* ESTA LÓGICA AHORA DEBE ESTAR APLICADA A LA PÁGINA DE COMPRA
         // Formulario de datos del modal envío a domicilio
-        // FALTARÍA VALIDAR TAMBIÉN POR ACÁ LOS DATOS DEL FORMULARIO
         document.getElementById("formCompra").addEventListener("submit", function (event) {
             document.getElementById("envioTitular").classList.remove('is-invalid');
             document.getElementById("envioCalle").classList.remove('is-invalid');
@@ -300,7 +105,7 @@ function cargarProductoPorID(idProducto) {
                 let postal = document.getElementById("envioPostal").value;
                 let nota = document.getElementById("envioNota").value;
                 let pago = document.getElementById("tarjeta").value;
-                let articulo = [producto.brand, producto.model, producto.id];
+                let articulo = [producto.brand_name, producto.model_name, producto.id_producto];
                 console.log("DNI: ", dni, "Titular:", titular, "Calle:", calle, "Altura:", altura, "Código Postal:", postal, "Nota:", nota, "Pago efectuado:", pago, "Prod:", articulo, "Cantidad:", cantidad.value);
                 ////////////////////////////////////////////////////////////////////////////////////
                 // Setea de nuevo la cantidad a elegir para que comience en 1
@@ -310,22 +115,28 @@ function cargarProductoPorID(idProducto) {
                 let finCompraModal = new bootstrap.Modal(document.getElementById("modalFinCompra"));
                 finCompraModal.show();
                 // Vuelvo a evaluar el stock para completar el recuadro de "Stock en la web"
-                completarRecuadroStock(idProducto)
+                completarRecuadroStock()
             }
         });
+        */
 
+        // ESTA FUNCION HAY QUE MODIFICARLE LA LOGICA PARA QUE AGREGUE EL PRODUCTO QUE MUESTRA LA PAG AL CARRITO
         // Agregar al carrito
         document.getElementById("btnCarrito").addEventListener("click", agregarAlCarrito);
+
+        // COMIENZO DE VIEJA FUNCION AGREGAR AL CARRITO
         function agregarAlCarrito() {
             let carritoModal = new bootstrap.Modal(document.getElementById("modalCarrito"));
             let carrito = document.getElementById("modalCarrito")
-            carrito.querySelector(".modal-body").innerHTML = "Se ha añadido al carrito exitosamente: <br>" + producto.brand.name + " " + producto.model.name
+            carrito.querySelector(".modal-body").innerHTML = "Se ha añadido al carrito exitosamente: <br>" + producto.brand_name + " " + producto.model_name
             carrito.querySelector("div.cantidadCarrito").textContent = "Cantidad: " + cantidad.value
             carritoModal.show();
+            //HASTA ACÁ FUNCIONA OK
 
-
+            /* VIEJO CODIGO --------------------------------------------------------------------
             // Almaceno la cantidad que seleccionó a una clave "cantidad:"
             localStorage.setItem('cantidad', cantidad.value);
+            
 
             // Obtener el carrito de localStorage
             let productoACarrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -341,6 +152,36 @@ function cargarProductoPorID(idProducto) {
 
             // Guardar el carrito en localStorage
             localStorage.setItem('carrito', JSON.stringify(productoACarrito));
+            VIEJO CODIGO ---------------------------------------------------------------------
+            */
+
+
+            // NUEVO CÓDIGO DE CARRITO DONDE SOLAMENTE ALMACENO EL ID Y LA CANTIDAD SELECCIONADA
+            // Obtener el carrito de localStorage o iniciar un carrito vacío
+            let carritoLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
+
+            // Verificar si el producto ya existe en el carrito para actualizar la cantidad
+            const productoExistente = carritoLocalStorage.find(item => item.id === producto.id_producto);
+
+            if (productoExistente) {
+                // Si el producto ya está en el carrito
+                productoExistente.cantidad = parseInt(cantidad.value);
+            } else {
+                // Si el producto no está en el carrito
+                const productoConCantidad = {
+                    id: producto.id_producto, // ID del producto
+                    cantidad: parseInt(cantidad.value) // Cantidad 
+                };
+                carritoLocalStorage.push(productoConCantidad);
+            }
+
+            // Guarda el carrito actualizado en localStorage
+            localStorage.setItem('carrito', JSON.stringify(carritoLocalStorage));
+
+            console.log("Carrito actualizado:");
+            carritoLocalStorage.forEach(item => {
+                console.log(`ID: ${item.id}, Cantidad: ${item.cantidad}`);
+            });
 
         }
 
@@ -349,19 +190,18 @@ function cargarProductoPorID(idProducto) {
     }
 }
 
-function completarDatosPagina(idProducto) {
-    const producto = productos.find(prod => prod.id === idProducto);
-    document.getElementById("producto-id").textContent = "Código de identificación de producto: " + producto.id;
-    document.getElementById("producto-brand-model").textContent = producto.brand.name + " " + producto.model.name;
-    document.getElementById("producto-category").textContent = "Categoría: " + producto.category.name;
-    document.getElementById("producto-priceARS").textContent = "Precio: $" + producto.priceARS + ".-"; //+ " / USD: $" + producto.priceUSD;
-    document.getElementById("producto-image1").src = "/LabWebFrontEnd/" + producto.image[0];
-    document.getElementById("producto-image2").src = "/LabWebFrontEnd/" + producto.image[1];
-    document.getElementById("producto-description").textContent = producto.description;
+function completarDatosPagina() {
+
+    document.getElementById("producto-id").textContent = "Código de identificación de producto: " + producto.id_producto;
+    document.getElementById("producto-brand-model").textContent = producto.brand_name + " " + producto.model_name;
+    document.getElementById("producto-category").textContent = "Categoría: " + producto.category_name;
+    actualizarPrecioARS();//Esta función se encarga de calcular y completar el $ARS de acuerdo al precio del "dolar blue" actual
+    document.getElementById("producto-image1").src = "/LabWebFrontEnd/" + producto.imagenes[0];
+    document.getElementById("producto-image2").src = "/LabWebFrontEnd/" + producto.imagenes[1];
+    document.getElementById("producto-description").textContent = producto.descripcion;
 }
 
-function completarRecuadroStock(idProducto) {
-    const producto = productos.find(prod => prod.id === idProducto);
+function completarRecuadroStock() {
     let divStock = document.getElementById("divStock");
     if (producto.stock >= 10) {
         document.querySelector("#divStock h2").innerHTML = "ALTO"
@@ -371,16 +211,15 @@ function completarRecuadroStock(idProducto) {
         document.querySelector("#divStock h2").innerHTML = "BAJO"
         divStock.style.backgroundColor = "#e72c2c"
     }
-    if (producto.stock == 0 || producto.enabled == false) {
+    if (producto.stock == 0 || producto.habilitado == 0) {
         document.querySelector("#divStock h2").innerHTML = "SIN STOCK"
         divStock.style.backgroundColor = "#e72c2c"
         document.getElementById("btnCompra").disabled = true
         document.getElementById("btnCarrito").disabled = true
     }
 }
-
-function realizarCompra(idProducto) {
-    const producto = productos.find(prod => prod.id === idProducto);
+/* ESTA FUNCION AHORA SE DEBE APLICAR A LA PAGINA DE COMPRA
+function realizarCompra() {
     if (producto.stock > 0) {
         // Funcion para la logica de envío a domicilio o retiro por el local
         document.getElementById("retiroLocal").addEventListener("change", function () {
@@ -421,6 +260,7 @@ function realizarCompra(idProducto) {
     }
 }
 
+ESTA FUNCION TAMBIÉN DEBE APLICARSE AHORA A LA PÁGINA DE COMPRA
 function validarDatos() {
     let errores = 0;
     let retiroLocal = document.getElementById("retiroLocal").checked;
@@ -499,4 +339,6 @@ function validarDatos() {
         return true
     }
 }
+*/
+
 
