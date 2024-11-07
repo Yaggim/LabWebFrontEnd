@@ -27,7 +27,7 @@ async function loadMovementTypes() {
             reasonSelect.appendChild(option);
         });
     } catch (error) {
-        console.error('Error cargando los tipos de movimientos:', error);
+        showToastError(error.message);
     }
 }
 
@@ -38,8 +38,16 @@ async function loadProducts() {
         products = productos;
         updateProductsTable();
     } catch (error) {
-        console.error('Error cargando los productos:', error);
+        showToastError(error.message);
     }
+}
+
+function showToastError(message) {
+    const toastElement = document.getElementById('errorToast');
+    const toastMessageElement = document.getElementById('errorToastMessage');
+    toastMessageElement.innerText = message;
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
 }
 
 // Función para actualizar la tabla con los productos actuales
@@ -136,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     errorMessage.textContent = error.message;
                     errorMessage.classList.remove('d-none');
                 } else {
-                    console.error('Error al gestionar el stock:', error);
+                    showToastError(error.message);
                 }
             }
         });

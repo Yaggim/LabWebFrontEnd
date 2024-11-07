@@ -19,8 +19,5 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="/<?php echo CARPETA_PROYECTO ?>/combos"><i class="fas fa-gift me-2"></i>Combos</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/<?php echo CARPETA_PROYECTO ?>/descuentos"><i class="fas fa-percent me-2"></i>Descuentos</a>
-            </li>
         </ul>
     </nav>

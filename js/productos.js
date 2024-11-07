@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="card-body">
                             <h5 class="card-title">${nombreMarcaModelo}</h5>
                             <p class="card-text">${descripcionTruncada}</p>
-                            <p class="card-text">Precio: $${(product.precio_usd * dolarBlue).toFixed(2)} / $${product.precio_usd} USD</p>
+                            <p class="card-text">Precio: $${(product.precio_usd * dolarBlue).toFixed(2)}</p>
                             <p class="card-text">Stock: ${product.stock}</p>
                             <a href="${product.category_name}/${productNombre}/${product.id_producto}" class="btn btn-primary">Seleccionar</a>
                         </div>

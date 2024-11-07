@@ -183,16 +183,36 @@ break;
     case 'PUT':
         $data = json_decode(file_get_contents('php://input'), true);
 
+
+        $missingFields = [];
+
+        if (empty($data['id_modelo'])) {
+            $missingFields[] = 'id_modelo';
+        }
+        if (empty($data['id_categoria'])) {
+            $missingFields[] = 'id_categoria';
+        }
+        if (empty($data['stock'])) {
+            $missingFields[] = 'stock';
+        }
+        if (empty($data['precio_usd'])) {
+            $missingFields[] = 'precio_usd';
+        }
+
+        if (empty($data['descripcion'])) {
+            $missingFields[] = 'descripcion';
+        }
+
+        if (!empty($missingFields)) {
+            echo json_encode(['error' => 'Faltan los siguientes campos: ' . implode(', ', $missingFields)]);
+            break;
+        }
+        
         if (empty($data['id_producto']) || !is_numeric($data['id_producto'])) {
             echo json_encode(['error' => 'ID de producto inválido']);
             break;
         }
-        
-        if (empty($data['id_modelo']) || empty($data['id_categoria']) || empty($data['stock']) || empty($data['precio_usd']) || empty($data['habilitado']) || empty($data['descripcion'])) {
-            echo json_encode(['error' => 'Todos los campos son obligatorios']);
-            break;
-        }
-                
+                        
         if (!is_numeric($data['id_modelo']) || !is_numeric($data['id_categoria']) || !is_numeric($data['stock']) || !is_numeric($data['precio_usd'])) {
             echo json_encode(['error' => 'ID de modelo, categoría, stock y precio deben ser numéricos']);
             break;
@@ -223,27 +243,39 @@ break;
         echo json_encode($result ? ['result' => $result] : ['error' => 'Error al actualizar el producto']);
         break;
 
-    case 'DELETE':
-        $data = json_decode(file_get_contents('php://input'), true);
+        case 'DELETE':
+            $data = json_decode(file_get_contents('php://input'), true);
+            
+            if (isset($data['id_producto'])) {
+                $id = $data['id_producto'];
+                
+                if (!is_numeric($id)) {
+                    echo json_encode(['error' => 'ID inválido']);
+                    break;
+                }
+                
+                $productoBBDD->getConexion()->beginTransaction();
         
-        if (isset($data['id_producto'])) {
-            $id = $data['id_producto'];
-            
-            if (!is_numeric($id)) {
-                echo json_encode(['error' => 'ID inválido']);
-                break;
+                try {
+                    $stmt = $productoBBDD->getConexion()->prepare("DELETE FROM imagenes_productos WHERE id_producto_fk = :id");
+                    $stmt->bindParam(":id", $id);
+                    $stmt->execute();
+        
+                    $result = $productoBBDD->deleteById($id, 'id_producto');
+                    $productoBBDD->getConexion()->commit();
+                    echo json_encode($result ? ['result' => $result] : ['error' => 'Error al eliminar el producto']);
+                } catch (PDOException $e) {
+                    $productoBBDD->getConexion()->rollBack();
+                    if ($e->getCode() == 23000) {
+                        echo json_encode(['error' => 'No se puede borrar el producto ya que está asociado a un combo']);
+                    } else {
+                        echo json_encode(['error' => 'Error al eliminar el producto: ' . $e->getMessage()]);
+                    }
+                }
+            } else {
+                echo json_encode(['error' => 'id_producto no proporcionado']);
             }
-            
-            $stmt = $productoBBDD->getConexion()->prepare("DELETE FROM imagenes_productos WHERE id_producto_fk = :id");
-            $stmt->bindParam(":id", $id);
-            $stmt->execute();
-
-            $result = $productoBBDD->deleteById($id, 'id_producto');
-            echo json_encode($result ? ['result' => $result] : ['error' => 'Error al eliminar el producto']);
-        } else {
-            echo json_encode(['error' => 'id_producto no proporcionado']);
-        }
-        break;
+            break;
 
         case 'PATCH':
             $data = json_decode(file_get_contents('php://input'), true);

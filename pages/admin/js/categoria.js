@@ -9,6 +9,15 @@ async function fetchCategories() {
     return response.json();
 }
 
+function showToastError(message) {
+    const toastElement = document.getElementById('errorToast');
+    const toastMessageElement = document.getElementById('errorToastMessage');
+    toastMessageElement.innerText = message;
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
+}
+
+
 async function addCategory(name) {
     try {
         const response = await fetch('/LabWebFrontEnd/includes/admin/categoria.php', {
@@ -25,7 +34,7 @@ async function addCategory(name) {
             throw new Error(result.error || 'Error al agregar la categoría');
         }
     } catch (error) {
-        displayError('addCategoryError', error.message);
+        showToastError(error.message);
     }
 }
 
@@ -45,7 +54,7 @@ async function editCategory(id, name) {
             throw new Error(result.error || 'Error al editar la categoría');
         }
     } catch (error) {
-        displayError('editCategoryError', error.message);
+        showToastError(error.message);
     }
 }
 
@@ -65,7 +74,7 @@ async function deleteCategory(id) {
             throw new Error(result.error || 'Error al eliminar la categoría');
         }
     } catch (error) {
-        displayError('deleteCategoryError', error.message);
+        showToastError(error.message);
     }
 }
 
@@ -75,7 +84,7 @@ async function loadCategories() {
         categories = categorias;
         updateCategoriesTable();
     } catch (error) {
-        console.error('Error cargando las categorías:', error);
+        showToastError(error.message);
     }
 }
 
@@ -185,11 +194,6 @@ function clearErrorOnInput(input) {
     });
 }
 
-function displayError(elementId, message) {
-    const errorElement = document.getElementById(elementId);
-    errorElement.innerText = message;
-    errorElement.style.display = 'block';
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('addCategoryForm').addEventListener('submit', async function (e) {
@@ -207,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCategoriesTable();
             bootstrap.Modal.getInstance(document.getElementById('addCategoryModal')).hide();
         } catch (error) {
-            console.error('Error al agregar la categoría:', error);
+            showToastError(error.message);
         }
     });
 
@@ -227,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCategoriesTable();
             bootstrap.Modal.getInstance(document.getElementById('editCategoryModal')).hide();
         } catch (error) {
-            console.error('Error al editar la categoría:', error);
+            showToastError(error.message);
         }
     });
 
@@ -237,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCategoriesTable();
             bootstrap.Modal.getInstance(document.getElementById('deleteCategoryModal')).hide();
         } catch (error) {
-            console.error('Error al eliminar la categoría:', error);
+            showToastError(error.message);
         }
     });
 

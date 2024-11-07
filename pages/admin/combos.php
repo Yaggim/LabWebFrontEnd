@@ -33,6 +33,9 @@
                     <th>ID</th>
                     <th>Nombre del Combo</th>
                     <th>Productos</th>
+                    <th>Habilitado</th>
+                    <th>Descuento</th>
+                    <th>Imagenes</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -44,102 +47,153 @@
 
     <!-- Modal para crear combo -->
     <div class="modal fade" id="addComboModal" tabindex="-1" aria-labelledby="addComboModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form id="createComboForm">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addComboModalLabel">Crear Combo de Productos</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="createComboForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addComboModalLabel">Crear Combo de Productos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="comboName" class="form-label">Nombre del Combo</label>
+                        <input type="text" class="form-control" id="comboName" required>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="comboName" class="form-label">Nombre del Combo</label>
-                            <input type="text" class="form-control" id="comboName" required>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="productCategory" class="form-label">Categoría</label>
-                            <select class="form-select" id="productCategory" required></select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="comboProducts" class="form-label">Seleccionar Productos</label>
-                            <select multiple class="form-select" id="comboProducts"></select>
-                        </div>
-
-                        <div id="warningMessage" class="alert alert-warning mt-3 d-none" role="alert">
-                            Debe seleccionar al menos un producto.
-                        </div>
-                        
-                        <button type="button" class="btn btn-success mb-3" id="addProductBtn">Agregar Producto</button>
-
-                        <!-- Lista de productos seleccionados -->
-                        <h5>Productos Seleccionados</h5>
-                        <table class="table table-striped" id="selectedProductsTable">
-                            <thead>
-                                <tr>
-                                    <th>Marca</th>
-                                    <th>Modelo</th>
-                                    <th>Categoría</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-
+                    <div class="mb-3">
+                        <label for="productCategory" class="form-label">Categoría</label>
+                        <select class="form-select" id="productCategory" required></select>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Crear Combo</button>
+
+                    <div class="mb-3">
+                        <label for="comboDiscount" class="form-label">Descuento</label>
+                        <input type="number" class="form-control" id="comboDiscount" required>
                     </div>
-                </form>
-            </div>
+
+                    <div class="mb-3">
+                        <label for="comboImages" class="form-label">Imágenes (URLs)</label>
+                        <div id="imageContainer">
+                            <input type="text" class="form-control mb-2" placeholder="URL de imagen">
+                        </div>
+                        <button type="button" class="btn btn-secondary" id="addImageField">Agregar otra imagen</button>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label d-block">Habilitado</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="comboProductEnabled" checked>
+                            <label class="form-check-label" for="comboProductEnabled">Sí</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="comboProducts" class="form-label">Seleccionar Productos</label>
+                        <select multiple class="form-select" id="comboProducts"></select>
+                    </div>
+
+                    <div id="warningMessage" class="alert alert-warning mt-3 d-none" role="alert">
+                        Debe seleccionar al menos un producto.
+                    </div>
+                    
+                    <button type="button" class="btn btn-success mb-3" id="addProductBtn">Agregar Producto</button>
+
+                    <!-- Lista de productos seleccionados -->
+                    <h5>Productos Seleccionados</h5>
+                    <table class="table table-striped" id="selectedProductsTable">
+                        <thead>
+                            <tr>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Categoría</th>
+                                <th>Cantidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear Combo</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="editCombosModal" tabindex="-1" aria-labelledby="editCombosModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form id="editCombosForm">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar Combo:</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+<div class="modal fade" id="editCombosModal" tabindex="-1" aria-labelledby="editCombosModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="editCombosForm">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Combo:</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editComboName" class="form-label">Nombre del Combo</label>
+                        <input type="text" class="form-control" id="editComboName" required>
+                        <input type="hidden" id="editComboId">
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="editComboName" class="form-label">Nombre del Combo</label>
-                            <input type="text" class="form-control" id="editComboName" required>
-                            <input type="hidden" id="editComboId">
-                        </div>
-                        <div class="mb-3">
-                            <label for="editProductCategory" class="form-label">Categoría</label>
-                            <select class="form-select" id="editProductCategory" required></select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editComboProducts" class="form-label">Seleccionar Productos</label>
-                            <select multiple class="form-select" id="editComboProducts"></select>
-                        </div>
-                        <h5>Productos Seleccionados</h5>
-                        <table class="table table-striped" id="editSelectedProductsTable">
-                            <thead>
-                                <tr>
-                                    <th>Marca</th>
-                                    <th>Modelo</th>
-                                    <th>Categoría</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                    <div class="mb-3">
+                        <label for="editProductCategory" class="form-label">Categoría</label>
+                        <select class="form-select" id="editProductCategory" required></select>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+
+                    <div class="mb-3">
+                        <label for="editComboDiscount" class="form-label">Descuento</label>
+                        <input type="number" class="form-control" id="editComboDiscount" required>
                     </div>
-                </form>
-            </div>
+
+                    <div class="mb-3">
+                        <label for="editComboImages" class="form-label">Imágenes</label>
+                        <div id="editImageContainer"></div>
+                        <button type="button" class="btn btn-secondary" id="editImageField">Agregar imagen</button>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label d-block">Habilitado</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="editComboProductEnabled" checked>
+                            <label class="form-check-label" for="editComboProductEnabled">Sí</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editComboProducts" class="form-label">Seleccionar Productos</label>
+                        <select multiple class="form-select" id="editComboProducts"></select>
+                    </div>
+
+                    <div id="editWarningMessage" class="alert alert-warning mt-3 d-none" role="alert">
+                        Debe seleccionar al menos un producto.
+                    </div>
+                    
+                    <button type="button" class="btn btn-success mb-3" id="editAddProductBtn">Agregar Producto</button>
+
+                    <h5>Productos Seleccionados</h5>
+                    <table class="table table-striped" id="editSelectedProductsTable">
+                        <thead>
+                            <tr>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Categoría</th>
+                                <th>Cantidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
 
     <div class="modal fade" id="deleteComboModal" tabindex="-1" aria-labelledby="deleteCombosModalLabel" aria-hidden="true">
         <div class="modal-dialog">

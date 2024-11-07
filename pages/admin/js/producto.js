@@ -19,13 +19,21 @@ async function fetchCategories() {
     return response.json();
 }
 
+function showToastError(message) {
+    const toastElement = document.getElementById('errorToast');
+    const toastMessageElement = document.getElementById('errorToastMessage');
+    toastMessageElement.innerText = message;
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
+}
+
 async function loadProducts() {
     try {
         const productos = await fetchProducts();
         products = productos;
         updateProductsTable();
     } catch (error) {
-        console.error('Error cargando los productos:', error);
+        showToastError(error.message);
     }
 }
 
@@ -73,7 +81,7 @@ async function loadCategories() {
             categorySelect.appendChild(option);
         });
     } catch (error) {
-        console.error('Error cargando las categorías:', error);
+        showToastError(error.message);
     }
 }
 
@@ -92,17 +100,7 @@ async function loadModels() {
         });
         
     } catch (error) {
-        console.error('Error cargando los modelos:', error);
-    }
-}
-
-function displayError(elementId, message) {
-    const errorElement = document.getElementById(elementId);
-    if (errorElement) {
-        errorElement.innerText = message;
-        errorElement.style.display = 'block';
-    } else {
-        console.error(`Elemento con ID ${elementId} no encontrado`);
+        showToastError(error.message);
     }
 }
 
@@ -122,7 +120,7 @@ async function addProduct(product) {
             throw new Error(result.error || 'Error al agregar el producto');
         }
     } catch (error) {
-        displayError('addProductError', error.message);
+        showToastError(error.message);
     }
 }
 
@@ -142,7 +140,7 @@ async function editProduct(id, updatedProduct) {
             throw new Error(result.error || 'Error al editar el producto');
         }
     } catch (error) {
-        displayError('editProductError', error.message);
+        showToastError(error.message);
     }
 }
 
@@ -162,7 +160,7 @@ async function deleteProduct(id) {
             throw new Error(result.error || 'Error al eliminar el producto');
         }
     } catch (error) {
-        displayError('deleteProductError', error.message);
+        showToastError(error.message);
     }
 }
 
@@ -286,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateProductsTable();
             bootstrap.Modal.getInstance(document.getElementById('addProductModal')).hide();
         } catch (error) {
-            console.error('Error al agregar el producto:', error);
+            showToastError(error.message);
         }
     });
 
@@ -316,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('ID del producto actual no definido.');
             }
         } catch (error) {
-            console.error('Error al editar el producto:', error);
+            showToastError(error.message);
         }
     });
 
@@ -327,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateProductsTable();
                 bootstrap.Modal.getInstance(document.getElementById('deleteProductModal')).hide();
             } catch (error) {
-                console.error('Error al eliminar el producto:', error);
+                showToastError(error.message);
             }
         } else {
             console.error('ID del producto actual no definido.');

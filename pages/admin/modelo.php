@@ -22,7 +22,6 @@
     <?php require(RUTA_PROYECTO.'/components/adminHeader.php'); ?>
 
 
-
     <div id="models" class="container mt-5">
         <h2>Gestión de Modelos</h2>
         <button class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#addModelModal">
@@ -119,15 +118,15 @@
         </div>
     </div>
 
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body" id="errorToastMessage">
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="errorToastMessage">
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
     </div>
-</div>
 
 </body>
 

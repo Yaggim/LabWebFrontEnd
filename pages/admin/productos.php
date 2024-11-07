@@ -89,10 +89,10 @@
                                 </div>
                             </div>
                             <div class="col-12" id="imageContainer">
-    <label for="productImages" class="form-label">Imágenes (URLs)</label>
-    <input type="text" class="form-control mb-2" id="productImage" placeholder="URL de imagen">
-    <button type="button" class="btn btn-secondary" id="addImageField">Agregar otra imagen</button>
-</div>
+                                <label for="productImages" class="form-label">Imágenes (URLs)</label>
+                                <input type="text" class="form-control mb-2" id="productImage" placeholder="URL de imagen">
+                                <button type="button" class="btn btn-secondary" id="addImageField">Agregar otra imagen</button>
+                            </div>
                             <div class="col-12">
                                 <label for="productDescription" class="form-label">Descripción</label>
                                 <textarea class="form-control" id="productDescription" rows="3" required></textarea>
@@ -148,12 +148,12 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-        <label for="editProductImages" class="form-label">Imágenes</label>
-        <div id="editImageContainer">
-            
-        </div>
-        <button type="button" id="editImageField" class="btn btn-secondary">Agregar imagen</button>
-    </div>
+                                <label for="editProductImages" class="form-label">Imágenes</label>
+                                <div id="editImageContainer">
+                                    
+                                </div>
+                                <button type="button" id="editImageField" class="btn btn-secondary">Agregar imagen</button>
+                            </div>
                             <div class="col-12">
                                 <label for="editProductDescription" class="form-label">Descripción</label>
                                 <textarea class="form-control" id="editProductDescription" rows="3" required></textarea>
@@ -189,7 +189,16 @@
         </div>
     </div>
 
-
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="errorToastMessage">
+                    <!-- Mensaje de error -->
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
     
 </body>
 

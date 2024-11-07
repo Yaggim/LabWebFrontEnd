@@ -16,5 +16,4 @@ RewriteRule ^modelo$                                    /LabWebFrontEnd/pages/ad
 RewriteRule ^productosAdmin$                                 /LabWebFrontEnd/pages/admin/productos.php
 RewriteRule ^categoria$                                 /LabWebFrontEnd/pages/admin/categoria.php
 RewriteRule ^stock$                                     /LabWebFrontEnd/pages/admin/stock.php
-RewriteRule ^descuentos$                                /LabWebFrontEnd/pages/admin/descuentos.php
 RewriteRule ^combos$                                    /LabWebFrontEnd/pages/admin/combos.php
