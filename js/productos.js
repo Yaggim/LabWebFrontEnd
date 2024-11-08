@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let productos = [];
     let categorias = [];
+    let combos = [];
     let dolarBlue = 0;
 
     async function fetchDolarBlue() {
@@ -23,14 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch('./includes/admin/categoria.php');
         return response.json();
     }
+
+    async function fetchCombos() {
+        const response = await fetch('/LabWebFrontEnd/includes/admin/combo.php');
+        return response.json();
+    }
     
     async function loadProductsAndCategories() {
         try {
             await fetchDolarBlue();
             productos = await fetchProducts();
             categorias = await fetchCategories();
+            combos = await fetchCombos();
             displayCategories(categorias);
-            displayProducts(productos);
+            displayProducts(productos, combos);
         } catch (error) {
             console.error('Error cargando productos y categorías:', error);
         }
@@ -41,20 +48,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         searchInput.addEventListener('input', () => {
             const filteredProducts = filterProducts(productos, searchInput.value);
-            displayProducts(filteredProducts);
+            const filteredCombos = filterCombos(combos, searchInput.value);
+            displayProducts(filteredProducts, filteredCombos);
         });
 
         categoryList.addEventListener('click', (event) => {
             if (event.target.tagName === 'A') {
                 const categoryId = event.target.dataset.categoryId;
-                const filteredProducts = filterProductsById(productos, categoryId);
-                displayProducts(filteredProducts);
+                if (categoryId === 'combos') {
+                    displayProducts([], combos);
+                } else {
+                    const filteredProducts = filterProductsById(productos, categoryId);
+                    displayProducts(filteredProducts, []);
+                }
             }
         });
 
         clearFiltersButton.addEventListener('click', () => {
             searchInput.value = '';
-            displayProducts(productos);
+            displayProducts(productos, combos);
         });
     }
 
@@ -68,10 +80,20 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             categoryList.appendChild(categoryItem);
         });
+
+        // Agregar opción para filtrar por combos
+        const combosItem = document.createElement('li');
+        combosItem.className = 'nav-item';
+        combosItem.innerHTML = `
+            <a class="nav-link" href="#" data-category-id="combos">Combos</a>
+        `;
+        categoryList.appendChild(combosItem);
     };
 
-    function displayProducts(products) {
+    function displayProducts(products, combos) {
         productContainer.innerHTML = '';
+
+        // Mostrar productos
         products.forEach(product => {
             if (product.habilitado) {
                 const productCard = document.createElement('div');
@@ -96,6 +118,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 productContainer.appendChild(productCard);
             }
         });
+
+        // Mostrar combos
+        combos.forEach(combo => {
+            if (combo.habilitado) {
+                const comboCard = document.createElement('div');
+                comboCard.className = 'col-md-4 mb-4';
+                const descripcionTruncada = combo.productos.map(p => p.brand_name + ' ' + p.model_name).join(' ').substring(0, 100) + '...';
+
+                // Calcular el precio del combo
+                const precioTotalProductos = combo.productos.reduce((total, producto) => total + (producto.precio_usd * producto.cantidad), 0);
+                const precioConDescuento = precioTotalProductos * (1 - combo.descuento / 100);
+
+                comboCard.innerHTML = `
+                    <div class="card">
+                        <img src="${combo.imagenes[0]}" alt="${combo.nombre}" style="object-fit: contain; width: 100%; height: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">${combo.nombre}</h5>
+                            <p class="card-text">${descripcionTruncada}</p>
+                            <p class="card-text">Precio: $${(precioConDescuento * dolarBlue).toFixed(2)}</p>
+                            <p class="card-text">Descuento total por combo: ${combo.descuento}%</p>
+                            <a href="combos/${combo.nombre.toLowerCase().replaceAll(' ', '-')}/${combo.id_combo}" class="btn btn-primary">Seleccionar</a>
+                        </div>
+                    </div>
+                `;
+                productContainer.appendChild(comboCard);
+            }
+        });
     };
 
     function filterProducts(products, searchTerm) {
@@ -107,9 +156,16 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     };
 
+    function filterCombos(combos, searchTerm) {
+        return combos.filter(combo => 
+            combo.habilitado &&
+            combo.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    };
+
     function filterProductsById(products, categoryId) {
         return products.filter(product => 
-            product.habilitado && product.category_id === parseInt(categoryId)
+            product.habilitado && product.id_categoria === parseInt(categoryId)
         );
     }
 
