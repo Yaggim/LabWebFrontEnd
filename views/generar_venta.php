@@ -3,7 +3,14 @@
 session_start();
 
 // Conexión a la base de datos
-require_once 'conexion.php';
+require_once(__DIR__ . "/../conexion.php");
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    //EJECUTAR EL STORED PROCEDURE RECIBIENDO LOS PARÁMETROS DEL ID DE USUARIO, FECHA, PRODUCTOS, CANTIDAD ...
+}
+
+/*
 
 function generarVenta($carrito, $id_persona, $datosEnvio = null)
 {
@@ -71,6 +78,7 @@ $datosEnvio = isset($_POST['envio']) ? json_decode($_POST['envio'], true) : null
 // Generar la venta
 generarVenta($carrito, $id_persona, $datosEnvio);
 
-// Cerrar la conexión (opcional)
+// Cerrar la conexión
 $conn = null;
+*/
 ?>

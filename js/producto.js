@@ -16,6 +16,8 @@ async function loadProducts(productId) {
     }
 }
 
+// FUNCION DE LOADCOMBO(COMBOID)
+
 async function fetchDolarBlue() {
     const response = await fetch("https://dolarapi.com/v1/dolares/blue");
     const data = await response.json();
@@ -77,12 +79,13 @@ function cargarProductoPorID(idProducto) {
             document.getElementById("pagoTotal").innerHTML = "Cant: " + cantidad.value + "<br>Total a abonar $" + cantidad.value * (producto.precio_usd);
             realizarCompra(idProducto);
         });
-        */
+        
         document.getElementById("btnCompra").addEventListener("click", function () {
             // Redirige a la página de pago
-            window.location.href = "../../views/compra.php";
+            window.location.href = "../../views/compra.php";      
         });
-        /* ESTA LÓGICA AHORA DEBE ESTAR APLICADA A LA PÁGINA DE COMPRA
+        
+         ESTA LÓGICA AHORA DEBE ESTAR APLICADA A LA PÁGINA DE COMPRA
         // Formulario de datos del modal envío a domicilio
         document.getElementById("formCompra").addEventListener("submit", function (event) {
             document.getElementById("envioTitular").classList.remove('is-invalid');
