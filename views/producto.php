@@ -1,4 +1,7 @@
-<?php require_once __DIR__ .'/../config/config.php' ?>
+<?php require_once __DIR__ . '/../config/config.php';
+session_start();
+?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -6,14 +9,14 @@
 <head>
     <title>HardTech - Producto</title>
 
-    <?php require(RUTA_PROYECTO.'/components/head.php') ?>
+    <?php require(RUTA_PROYECTO . '/components/head.php') ?>
 
     <link rel="stylesheet" type="text/css" href="/<?php echo CARPETA_PROYECTO ?>/css/producto.css">
     <script type="text/javascript" src="/<?php echo CARPETA_PROYECTO ?>/js/producto.js" defer></script>
 </head>
 
 <body>
-    <?php require(RUTA_PROYECTO.'/components/header.php'); ?>
+    <?php require(RUTA_PROYECTO . '/components/header.php'); ?>
 
     <div class="container p-2 my-2 rounded">
         <div class="row">
@@ -80,8 +83,10 @@
                 </div>
                 <!-- Botón de compra -->
                 <div class="col-12 p-2 text-center rounded">
-                    <button id="btnCompra" type="button" class="btn btn-success btn-lg">REALIZAR COMPRA <i
-                            class="bi bi-credit-card"></i></button>
+                    <form action="../../views/compra.php" method="POST">
+                        <button type="submit" class="btn btn-success btn-lg">REALIZAR COMPRA <i
+                                class="bi bi-credit-card"></i></button>
+                    </form>
                 </div>
                 <!-- Carrito -->
                 <div class="col-12 p-2 text-center rounded">
@@ -124,7 +129,7 @@
     </div>
     <!--Fin Modal "Agregado al carrito"-->
 
-    <?php require(RUTA_PROYECTO.'/components/footer.php'); ?>
+    <?php require(RUTA_PROYECTO . '/components/footer.php'); ?>
 </body>
 
 </html>
