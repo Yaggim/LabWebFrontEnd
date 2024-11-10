@@ -1,28 +1,16 @@
+import { marca as getBrands, modelo as getModels } from "./conexion.js";
+
 let brands = [];
 let models = [];
 let currentModelId = null; 
 
-
-async function fetchModels() {
-
-    const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php');
-
-    return response.json();
-
-}
-
-async function fetchBrands() {
-    const response = await fetch('/LabWebFrontEnd/includes/admin/marca.php');
-    return response.json();
-}
-
 async function loadModels() {
     try {
-        const modelos = await fetchModels();
+        const modelos = await getModels();
         models = modelos;
         updateModelsTable();
     } catch (error) {
-        showToastError(error.message);
+        console.error('Error cargando los modelos:', error);
     }
 }
 
@@ -32,12 +20,12 @@ function updateModelsTable() {
     models.forEach(model => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${model.id_modelo}</td>
-            <td>${model.nombre}</td>
-            <td>${model.nombre_marca}</td>
+            <td>${model.id}</td>
+            <td>${model.name}</td>
+            <td>${model.brand}</td>
             <td>
-                <button class="btn btn-warning btn-sm edit-btn" data-id="${model.id_modelo}" data-bs-toggle="modal" data-bs-target="#editModelModal"><i class="fas fa-edit"></i> Editar</button>
-                <button class="btn btn-danger btn-sm delete-btn" data-id="${model.id_modelo}" data-bs-toggle="modal" data-bs-target="#deleteModelModal"><i class="fas fa-trash"></i> Eliminar</button>
+                <button class="btn btn-warning btn-sm edit-btn" data-id="${model.id}" data-bs-toggle="modal" data-bs-target="#editModelModal"><i class="fas fa-edit"></i> Editar</button>
+                <button class="btn btn-danger btn-sm delete-btn" data-id="${model.id}" data-bs-toggle="modal" data-bs-target="#deleteModelModal"><i class="fas fa-trash"></i> Eliminar</button>
             </td>
         `;
         tbody.appendChild(row);
@@ -56,99 +44,80 @@ function updateModelsTable() {
 
 async function loadBrands() {
     try {
-        const marcas = await fetchBrands();
+        const marcas = await getBrands(); 
         brands = marcas;
 
         const brandSelect = document.getElementById("brandSelect");
 
         brands.forEach(brand => {
             const option = document.createElement('option');
-            option.value = brand.id_marca; 
-            option.textContent = brand.nombre;  
+            option.value = brand.id; 
+            option.textContent = brand.name;  
             brandSelect.appendChild(option);
         });
         
     } catch (error) {
-        showToastError(error.message);
-    }
-}
-
-async function addModel(name, brandId) {
-    try {
-        const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ nombre: name, id_marca: brandId })
-        });
-        const result = await response.json();
-        if (result.result) {
-            loadModels();
-        } else {
-            throw new Error(result.error || 'Error al agregar el modelo');
-        }
-    } catch (error) {
-        showToastError(error.message);
+        console.error('Error cargando las marcas:', error);
     }
 }
 
 
-async function editModel(id, name, brandId) {
-    try {
-        const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id_modelo: id, nombre: name, id_marca: brandId })
-        });
-        const result = await response.json();
-        if (result.result) {
-            loadModels();
-        } else {
-            throw new Error(result.error || 'Error al editar el modelo');
-        }
-    } catch (error) {
-        showToastError(error.message);
-    }
+function addModel(name, brandId) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const newId = models.length ? models[models.length - 1].id + 1 : 1;
+            const brand = brands.find(b => b.id === parseInt(brandId));
+            models.push({ id: newId, name, brand: brand ? brand.name : 'Desconocida'});
+            resolve();
+        }, 1000); 
+    });
 }
 
-async function deleteModel(id) {
-    try {
-        const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id_modelo: id })
-        });
-        const result = await response.json();
-        if (result.result) {
-            loadModels();
-        } else {
-            throw new Error(result.error || 'Error al eliminar el modelo');
-        }
-    } catch (error) {
-        showToastError(error.message);
-    }
+
+function editModel(id, name, brandId) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const model = models.find(m => m.id == id); 
+            const brand = brands.find(b => b.id === parseInt(brandId));
+            if (model) {
+                model.name = name;
+                model.brand = brand.name; 
+                resolve();
+            } else {
+                reject(new Error('Modelo no encontrado'));
+            }
+        }, 1000); 
+    });
 }
+
+function deleteModel(id) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const index = models.findIndex(b => b.id == id);
+            if (index !== -1) {
+                models.splice(index, 1);
+                resolve();
+            } else {
+                reject(new Error('Modelo no encontrado'));
+            }
+        }, 1000); 
+    });
+}
+
+
+
 
 function confirmDelete(id) {
     currentModelId = id;
-    const model = models.find(m => m.id_modelo == id);
-    if (model) {
-        document.getElementById('deleteModelName').innerText = model.nombre;
-        document.getElementById('deleteModelId').innerText = id;
-    } else {
-        showToastError(error.message);
-    }
+    const model = models.find(b => b.id == id);
+    document.getElementById('deleteModelName').innerText = model.name;
+    document.getElementById('deleteModelId').innerText = id;
 }
 
 function loadModelForEdit(id) {
-    const model = models.find(m => m.id_modelo == id);
+    const model = models.find(m => m.id == id);
     if (!model) {
-        showToastError(error.message);
+        console.error('Modelo no encontrado');
         return;
     }
 
@@ -157,21 +126,21 @@ function loadModelForEdit(id) {
     const brandSelect = document.getElementById('editBrandSelect');
 
     if (modelNameInput && modelIdInput && brandSelect) {
-        modelNameInput.value = model.nombre;
-        modelIdInput.value = model.id_modelo;
+        modelNameInput.value = model.name;
+        modelIdInput.value = model.id;
 
         brandSelect.innerHTML = ''; 
         brands.forEach(brand => {
             const option = document.createElement('option');
-            option.value = brand.id_marca;
-            option.textContent = brand.nombre;
-            if (brand.nombre === model.brand) {
+            option.value = brand.id;
+            option.textContent = brand.name;
+            if (brand.name === model.brand) {
                 option.selected = true;
             }
             brandSelect.appendChild(option);
         });
     } else {
-        showToastError(error.message);
+        console.error('No se encontraron los elementos de edición en el DOM.');
     }
 }
 
@@ -229,16 +198,6 @@ function clearErrorOnInput(input) {
     });
 }
 
-
-function showToastError(message) {
-    const toastElement = document.getElementById('errorToast');
-    const toastMessageElement = document.getElementById('errorToastMessage');
-    toastMessageElement.innerText = message;
-    const toast = new bootstrap.Toast(toastElement);
-    toast.show();
-}
-
-
 document.addEventListener('DOMContentLoaded', () => {
 
 
@@ -265,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateModelsTable();
             bootstrap.Modal.getInstance(document.getElementById('addModelModal')).hide();
         } catch (error) {
-            showToastError(error.message);
+            console.error('Error al agregar el modelo:', error);
         }
     });
 
@@ -282,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateModelsTable();
                 bootstrap.Modal.getInstance(document.getElementById('editModelModal')).hide();
             } catch (error) {
-                showToastError(error.message);
+                console.error('Error al editar el modelo:', error);
             }
          
     });
@@ -294,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateModelsTable();
             bootstrap.Modal.getInstance(document.getElementById('deleteModelModal')).hide();
         } catch (error) {
-            showToastError(error.message);
+            console.error('Error al eliminar el modelo:', error);
         }
     });
     
