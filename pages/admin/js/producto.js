@@ -1,39 +1,18 @@
+import { marca as getBrands, categoria as getCategories, modelo as getModels, producto as getProducts } from "./conexion.js";
+
 let brands = [];
 let categories = [];
 let models = [];
 let products = [];
 let currentProductId = null;
 
-async function fetchProducts() {
-    const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php');
-    return response.json();
-}
-
-async function fetchModels() {
-    const response = await fetch('/LabWebFrontEnd/includes/admin/modelo.php');
-    return response.json();
-}
-
-async function fetchCategories() {
-    const response = await fetch('/LabWebFrontEnd/includes/admin/categoria.php');
-    return response.json();
-}
-
-function showToastError(message) {
-    const toastElement = document.getElementById('errorToast');
-    const toastMessageElement = document.getElementById('errorToastMessage');
-    toastMessageElement.innerText = message;
-    const toast = new bootstrap.Toast(toastElement);
-    toast.show();
-}
-
 async function loadProducts() {
     try {
-        const productos = await fetchProducts();
+        const productos = await getProducts();
         products = productos;
         updateProductsTable();
     } catch (error) {
-        showToastError(error.message);
+        console.error('Error cargando los productos:', error);
     }
 }
 
@@ -43,18 +22,17 @@ function updateProductsTable() {
     products.forEach(product => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${product.id_producto}</td>
-            <td>${product.brand_name}</td>
-            <td>${product.model_name}</td>
-            <td>${product.category_name}</td>
-            <td>${product.stock}</td>
-            <td>${product.precio_usd}</td>
-            <td>${product.habilitado ? 'Sí' : 'No'}</td>
-            <td>${product.imagenes[0]}</td>
-            <td>${product.imagenes[1]}</td>
+            <td>${product.id}</td>
+            <td>${product.brand.name}</td>
+            <td>${product.model.name}</td>
+            <td>${product.category.name}</td>
+            <td>${product.priceARS}</td>
+            <td>${product.priceUSD}</td>
+            <td>${product.enabled ? 'Sí' : 'No'}</td>
+            <td>${product.image}</td>
             <td>
-                <button class="btn btn-warning btn-sm edit-btn" data-id="${product.id_producto}" data-bs-toggle="modal" data-bs-target="#editProductModal"><i class="fas fa-edit"></i> Editar</button>
-                <button class="btn btn-danger btn-sm delete-btn" data-id="${product.id_producto}" data-bs-toggle="modal" data-bs-target="#deleteProductModal"><i class="fas fa-trash"></i> Eliminar</button>
+                <button class="btn btn-warning btn-sm edit-btn" data-id="${product.id}" data-bs-toggle="modal" data-bs-target="#editProductModal"><i class="fas fa-edit"></i> Editar</button>
+                <button class="btn btn-danger btn-sm delete-btn" data-id="${product.id}" data-bs-toggle="modal" data-bs-target="#deleteProductModal"><i class="fas fa-trash"></i> Eliminar</button>
             </td>
         `;
         tbody.appendChild(row);
@@ -69,99 +47,96 @@ function updateProductsTable() {
     });
 }
 
+async function loadBrands() {
+    try {
+        const marcas = await getBrands(); 
+        brands = marcas;
+
+        const brandSelect = document.getElementById("productBrand");
+
+        brands.forEach(brand => {
+            const option = document.createElement('option');
+            option.value = brand.id; 
+            option.textContent = brand.name;  
+            brandSelect.appendChild(option);
+        });
+        
+    } catch (error) {
+        console.error('Error cargando las marcas:', error);
+    }
+}
+
 async function loadCategories() {
     try {
-        const categorias = await fetchCategories();
+        const categorias = await getCategories();
         categories = categorias;
         const categorySelect = document.getElementById("productCategory");
         categories.forEach(category => {
             const option = document.createElement('option');
-            option.value = category.id_categoria;
-            option.textContent = category.nombre;
+            option.value = category.id;
+            option.textContent = category.name;
             categorySelect.appendChild(option);
         });
     } catch (error) {
-        showToastError(error.message);
+        console.error('Error cargando las categorías:', error);
     }
 }
 
 async function loadModels() {
     try {
-        const modelos = await fetchModels(); 
+        const modelos = await getModels(); 
         models = modelos;
 
         const modelSelect = document.getElementById("productModel");
 
         models.forEach(model => {
             const option = document.createElement('option');
-            option.value = model.id_modelo; 
-            option.textContent = model.nombre;  
+            option.value = model.id; 
+            option.textContent = model.name;  
             modelSelect.appendChild(option);
         });
         
     } catch (error) {
-        showToastError(error.message);
+        console.error('Error cargando las marcas:', error);
     }
 }
 
-async function addProduct(product) {
-    try {
-        const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(product)
-        });
-        const result = await response.json();
-        if (result.result) {
-            loadProducts();
-        } else {
-            throw new Error(result.error || 'Error al agregar el producto');
-        }
-    } catch (error) {
-        showToastError(error.message);
-    }
+function addProduct(product) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const newId = products.length ? products[products.length - 1].id + 1 : 1;
+            products.push({ ...product, id: newId });
+            resolve();
+        }, 1000);
+    });
 }
 
-async function editProduct(id, updatedProduct) {
-    try {
-        const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id_producto: id, ...updatedProduct })
-        });
-        const result = await response.json();
-        if (result.result) {
-            loadProducts();
-        } else {
-            throw new Error(result.error || 'Error al editar el producto');
-        }
-    } catch (error) {
-        showToastError(error.message);
-    }
+function editProduct(id, updatedProduct) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const product = products.find(p => p.id == id);
+            if (product) {
+                Object.assign(product, updatedProduct);
+                resolve();
+            } else {
+                reject(new Error('Producto no encontrado'));
+            }
+        }, 1000);
+    });
 }
 
-async function deleteProduct(id) {
-    try {
-        const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id_producto: id })
-        });
-        const result = await response.json();
-        if (result.result) {
-            loadProducts();
-        } else {
-            throw new Error(result.error || 'Error al eliminar el producto');
-        }
-    } catch (error) {
-        showToastError(error.message);
-    }
+function deleteProduct(id) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const index = products.findIndex(p => p.id == id);
+            if (index !== -1) {
+                products.splice(index, 1);
+                resolve();
+            } else {
+                reject(new Error('Producto no encontrado'));
+            }
+        }, 1000); 
+    });
 }
 
 function confirmDelete(id) {
@@ -169,35 +144,46 @@ function confirmDelete(id) {
     document.getElementById('deleteProductId').innerText = id;
 }
 
-function removeImageField(button) {
-    button.parentElement.remove();
-}
-
 function loadProductForEdit(id) {
-    const product = products.find(p => p.id_producto == id);
+    const product = products.find(p => p.id == id);
     if (!product) {
         console.error('Producto no encontrado');
         return;
     }
 
+    // Obtener los elementos del formulario de edición
+    const productBrandSelect = document.getElementById('editProductBrand');
     const productModelSelect = document.getElementById('editProductModel');
     const productCategorySelect = document.getElementById('editProductCategory');
-    const productStockInput = document.getElementById('editProductStock');
+    const productPriceARSInput = document.getElementById('editProductPriceARS');
     const productPriceUSDInput = document.getElementById('editProductPriceUSD');
     const productEnabledCheckbox = document.getElementById('editProductEnabled');
+    const productImageInput = document.getElementById('editProductImage');
     const productDescriptionTextarea = document.getElementById('editProductDescription');
-    const editImageContainer = document.getElementById('editImageContainer');
 
-    if (productModelSelect && productCategorySelect &&
-        productStockInput && productPriceUSDInput && productEnabledCheckbox &&
-        productDescriptionTextarea && editImageContainer) {
+    // Verificar que los elementos existen en el DOM
+    if (productBrandSelect && productModelSelect && productCategorySelect &&
+        productPriceARSInput && productPriceUSDInput && productEnabledCheckbox &&
+        productImageInput && productDescriptionTextarea) {
+
+        // Llenar los selects de marca, modelo y categoría con las opciones disponibles
+        productBrandSelect.innerHTML = ''; 
+        brands.forEach(brand => {
+            const option = document.createElement('option');
+            option.value = brand.id;
+            option.textContent = brand.name;
+            if (brand.id === product.brand.id) {
+                option.selected = true;
+            }
+            productBrandSelect.appendChild(option);
+        });
 
         productModelSelect.innerHTML = ''; 
         models.forEach(model => {
             const option = document.createElement('option');
-            option.value = model.id_modelo;
-            option.textContent = model.nombre;
-            if (model.id_modelo === product.model_id) {
+            option.value = model.id;
+            option.textContent = model.name;
+            if (model.id === product.model.id) {
                 option.selected = true;
             }
             productModelSelect.appendChild(option);
@@ -206,76 +192,49 @@ function loadProductForEdit(id) {
         productCategorySelect.innerHTML = ''; 
         categories.forEach(category => {
             const option = document.createElement('option');
-            option.value = category.id_categoria;
-            option.textContent = category.nombre;
-            if (category.id_categoria === product.category_id) {
+            option.value = category.id;
+            option.textContent = category.name;
+            if (category.id === product.category.id) {
                 option.selected = true;
             }
             productCategorySelect.appendChild(option);
         });
 
-        productStockInput.value = product.stock || '';
-        productPriceUSDInput.value = product.precio_usd || '';
-        productEnabledCheckbox.checked = product.habilitado;
-        productDescriptionTextarea.value = product.descripcion;
-
-        // Mostrar las imágenes existentes
-        editImageContainer.innerHTML = '';
-        product.imagenes.forEach((url, index) => {
-            const div = document.createElement('div');
-            div.className = 'mb-2';
-            div.innerHTML = `
-                <input type="text" class="form-control mb-2" value="${url}" placeholder="URL de imagen">
-                <button type="button" class="btn btn-danger btn-sm remove-image">Eliminar</button>
-            `;
-            editImageContainer.appendChild(div);
-        });
-        
-        // Agrega el evento después de que hayas agregado los botones
-        editImageContainer.querySelectorAll('.remove-image').forEach(button => {
-            button.addEventListener('click', function() {
-                removeImageField(this);
-            });
-        });
-
+        // Asignar los valores del producto a los campos del formulario
+        productPriceARSInput.value = product.priceARS;
+        productPriceUSDInput.value = product.priceUSD || '';
+        productEnabledCheckbox.checked = product.enabled;
+        productImageInput.value = product.image;
+        productDescriptionTextarea.value = product.description;
         document.getElementById('editProductId').value = id;
     } else {
         console.error('No se encontraron los elementos de edición en el DOM.');
     }
 }
 
-document.getElementById('addImageField').addEventListener('click', function() {
-    const container = document.getElementById('imageContainer');
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'form-control mb-2';
-    input.placeholder = 'URL de imagen';
-    container.insertBefore(input, this);
-});
-
-document.getElementById('editImageField').addEventListener('click', function() {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'form-control mb-2';
-    input.placeholder = 'URL de imagen';
-    document.getElementById('editImageContainer').appendChild(input);
-});
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('addProductForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const imageInputs = document.querySelectorAll('#imageContainer input[type="text"]');
-        const images = Array.from(imageInputs).map(input => input.value).filter(url => url);
-
         const newProduct = {
-            id_modelo: parseInt(document.getElementById('productModel').value),
-            id_categoria: parseInt(document.getElementById('productCategory').value),
-            stock: parseInt(document.getElementById('productStock').value),
-            precio_usd: parseFloat(document.getElementById('productPriceUSD').value) || null,
-            habilitado: document.getElementById('productEnabled').checked ? 1 : 0,
-            descripcion: document.getElementById('productDescription').value.trim(),
-            imagenes: images
+            brand: {
+                id: parseInt(document.getElementById('productBrand').value),
+                name: brands.find(b => b.id == document.getElementById('productBrand').value).name
+            },
+            model: {
+                id: parseInt(document.getElementById('productModel').value),
+                name: models.find(m => m.id == document.getElementById('productModel').value).name
+            },
+            category: {
+                id: parseInt(document.getElementById('productCategory').value),
+                name: categories.find(c => c.id == document.getElementById('productCategory').value).name
+            },
+            priceARS: parseFloat(document.getElementById('productPriceARS').value),
+            priceUSD: parseFloat(document.getElementById('productPriceUSD').value) || null,
+            enabled: document.getElementById('productEnabled').checked,
+            image: document.getElementById('productImage').value.trim(),
+            description: document.getElementById('productDescription').value.trim(),
         };
 
         try {
@@ -284,29 +243,39 @@ document.addEventListener('DOMContentLoaded', () => {
             updateProductsTable();
             bootstrap.Modal.getInstance(document.getElementById('addProductModal')).hide();
         } catch (error) {
-            showToastError(error.message);
+            console.error('Error al agregar el producto:', error);
         }
     });
 
     document.getElementById('editProductForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const editProductId = document.getElementById('editProductId').value;
-        const imageFields = document.querySelectorAll('#editImageContainer input[type="text"]');
-        const images = Array.from(imageFields).map(input => input.value).filter(url => url);
+        const editProductId  = document.getElementById('editProductId').value;
 
         const updatedProduct = {
-            id_modelo: parseInt(document.getElementById('editProductModel').value),
-            id_categoria: parseInt(document.getElementById('editProductCategory').value),
-            stock: parseFloat(document.getElementById('editProductStock').value),
-            precio_usd: parseFloat(document.getElementById('editProductPriceUSD').value) || null,
-            habilitado: document.getElementById('editProductEnabled').checked ? 1 : 0,
-            descripcion: document.getElementById('editProductDescription').value.trim(),
-            imagenes: images
+            brand: {
+                id: parseInt(document.getElementById('editProductBrand').value),
+                name: brands.find(b => b.id == document.getElementById('editProductBrand').value).name
+            },
+            model: {
+                id: parseInt(document.getElementById('editProductModel').value),
+                name: models.find(m => m.id == document.getElementById('editProductModel').value).name
+            },
+            category: {
+                id: parseInt(document.getElementById('editProductCategory').value),
+                name: categories.find(c => c.id == document.getElementById('editProductCategory').value).name
+            },
+            priceARS: parseFloat(document.getElementById('editProductPriceARS').value),
+            priceUSD: parseFloat(document.getElementById('editProductPriceUSD').value) || null,
+            enabled: document.getElementById('editProductEnabled').checked,
+            image: document.getElementById('editProductImage').value.trim(),
+            description: document.getElementById('editProductDescription').value.trim(),
         };
+       
 
         try {
             if (editProductId) {
+                
                 await editProduct(editProductId, updatedProduct);
                 updateProductsTable();
                 bootstrap.Modal.getInstance(document.getElementById('editProductModal')).hide();
@@ -314,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('ID del producto actual no definido.');
             }
         } catch (error) {
-            showToastError(error.message);
+            console.error('Error al editar el producto:', error);
         }
     });
 
@@ -325,13 +294,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateProductsTable();
                 bootstrap.Modal.getInstance(document.getElementById('deleteProductModal')).hide();
             } catch (error) {
-                showToastError(error.message);
+                console.error('Error al eliminar el producto:', error);
             }
         } else {
             console.error('ID del producto actual no definido.');
         }
     });
 
+
+
+
+    loadBrands();
     loadCategories();
     loadModels();
     loadProducts();

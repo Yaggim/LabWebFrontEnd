@@ -1,53 +1,18 @@
+// stock.js
+import { producto } from './conexion.js'; // Ajusta la ruta según sea necesario
+
 let selectedProductId = null;
 let products = [];
-
-async function fetchProducts() {
-
-    const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php');
-
-    return response.json();
-
-}
-
-async function fetchMovementTypes() {
-    const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php?movement_types=true');
-    return response.json();
-}
-
-async function loadMovementTypes() {
-    try {
-        const movementTypes = await fetchMovementTypes();
-        const reasonSelect = document.getElementById('stockReason');
-        reasonSelect.innerHTML = ''; // Limpiar opciones existentes
-
-        movementTypes.forEach(type => {
-            const option = document.createElement('option');
-            option.value = type.id_movimientos_stock_tipo;
-            option.textContent = type.detalle;
-            reasonSelect.appendChild(option);
-        });
-    } catch (error) {
-        showToastError(error.message);
-    }
-}
 
 // Función para cargar los productos inicialmente
 async function loadProducts() {
     try {
-        const productos = await fetchProducts();
+        const productos = await producto();
         products = productos;
         updateProductsTable();
     } catch (error) {
-        showToastError(error.message);
+        console.error('Error cargando los productos:', error);
     }
-}
-
-function showToastError(message) {
-    const toastElement = document.getElementById('errorToast');
-    const toastMessageElement = document.getElementById('errorToastMessage');
-    toastMessageElement.innerText = message;
-    const toast = new bootstrap.Toast(toastElement);
-    toast.show();
 }
 
 // Función para actualizar la tabla con los productos actuales
@@ -63,13 +28,13 @@ function updateProductsTable() {
     products.forEach(product => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${product.id_producto}</td>
-            <td>${product.brand_name}</td>
-            <td>${product.model_name}</td>
-            <td>${product.category_name}</td>
+            <td>${product.id}</td>
+            <td>${product.brand.name}</td>
+            <td>${product.model.name}</td>
+            <td>${product.category.name}</td>
             <td>${product.stock}</td>
             <td>
-                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#manageStockModal" data-id="${product.id_producto}">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#manageStockModal" data-id="${product.id}">
                     Gestionar Stock
                 </button>
             </td>
@@ -84,23 +49,40 @@ function updateProductsTable() {
     });
 }
 
-async function updateStock(productId, quantity, action, reason) {
-    const response = await fetch('/LabWebFrontEnd/includes/admin/producto.php', {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id_producto: productId, cantidad: quantity, accion: action, id_movimiento_stock_tipo: reason })
+// Función para simular la actualización del stock
+async function simulateUpdateStock(productId, quantity, action) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const productIndex = products.findIndex(p => p.id === parseInt(productId));
+            if (productIndex === -1) {
+                reject(new Error('Producto no encontrado'));
+                return;
+            }
+
+            
+            if (action === 'add') {
+                products[productIndex].stock += quantity;
+            } else if (action === 'subtract') {
+                if (quantity > products[productIndex].stock) {
+                    reject(new Error('La cantidad ingresada es mayor al stock actual'));
+                    return;
+                }
+                products[productIndex].stock -= quantity;
+                if (products[productIndex].stock < 0) {
+                    products[productIndex].stock = 0;
+                }
+            } else {
+                reject(new Error('Acción no válida'));
+                return;
+            }
+
+            // Actualiza la tabla para reflejar los cambios
+            updateProductsTable();
+
+            resolve();
+        }, 1000);
     });
-    console.log(response);
-    const result = await response.json();
-    console.log(result);
-    if (!result.result) {
-        throw new Error(result.error || 'Error al actualizar el stock');
-    }
 }
-
-
 
 // Código para manejar el DOM y eventos
 document.addEventListener('DOMContentLoaded', () => {
@@ -122,11 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const quantityInput = document.getElementById('stockQuantity');
             const actionSelect = document.getElementById('stockAction');
-            const reasonInput = document.getElementById('stockReason');
 
             const quantity = parseInt(quantityInput.value.trim(), 10);
             const action = actionSelect.value;
-            const reason = reasonInput.value.trim();
 
             if (isNaN(quantity) || quantity <= 0) {
                 errorMessage.textContent = 'Por favor, ingresa una cantidad válida.';
@@ -135,16 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                await updateStock(selectedProductId, quantity, action, reason);
+                await simulateUpdateStock(selectedProductId, quantity, action);
                 errorMessage.classList.add('d-none');
                 bootstrap.Modal.getInstance(manageStockModal).hide();
-                loadProducts(); 
             } catch (error) {
                 if (error.message === 'La cantidad ingresada es mayor al stock actual') {
                     errorMessage.textContent = error.message;
                     errorMessage.classList.remove('d-none');
                 } else {
-                    showToastError(error.message);
+                    console.error('Error al gestionar el stock:', error);
                 }
             }
         });
@@ -152,6 +131,5 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('No se encontró el formulario de gestión de stock.');
     }
 
-    loadProducts(); 
-    loadMovementTypes(); 
+    loadProducts(); // Cargar productos al inicio
 });
