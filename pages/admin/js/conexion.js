@@ -1,8 +1,8 @@
-const urlMarcaJSON = '../admin/db/marca.json'; 
-const urlModeloJSON = '../admin/db/modelo.json';
-const urlCategoriaJSON = '../admin/db/categoria.json';
-const urlProductoJSON = '../admin/db/producto.json';
-const urlCombosJSON = '../admin/db/combos.json';
+const urlMarcaJSON = '/LabWebFrontEnd/pages/admin/db/marca.json'; 
+const urlModeloJSON = '/LabWebFrontEnd/pages/admin/db/modelo.json';
+const urlCategoriaJSON = '/LabWebFrontEnd/pages/admin/db/categoria.json';
+const urlProductoJSON = '/LabWebFrontEnd/pages/admin/db/producto.json';
+const urlCombosJSON = '/LabWebFrontEnd/pages/admin/db/combos.json';
 
 export const marca = async () => {
 
