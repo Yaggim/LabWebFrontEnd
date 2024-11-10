@@ -68,8 +68,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="stockReason" class="form-label">Motivo</label>
-                            <select class="form-select" id="stockReason" required>
-                                <!-- Opciones serán llenadas dinámicamente -->
+                            <select class="form-select" id="stockReason" required>              
                             </select>
                         </div>
                     </div>
