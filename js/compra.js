@@ -39,14 +39,6 @@ function enviarRetirar() {
         infoLocal.classList.replace("d-block", "d-none");
     }
 }
-/* }*/
-/*else {
-    // Deshabilitar los botones de compra y carrito si no hay stock
-    document.querySelector("#divStock h2").innerHTML = "SIN STOCK"
-    divStock.style.backgroundColor = "#e72c2c"
-    document.getElementById("btnCompra").disabled = true
-    document.getElementById("btnCarrito").disabled = true
-}*/
 
 // NUEVO: función para el pago en efectivo
 function togglePagoEfectivo() {

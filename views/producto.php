@@ -83,8 +83,8 @@ session_start();
                 </div>
                 <!-- Botón de compra -->
                 <div class="col-12 p-2 text-center rounded">
-                    <form action="../../views/compra.php" method="POST">
-                        <button type="submit" class="btn btn-success btn-lg">REALIZAR COMPRA <i
+                    <form action="/<?php echo CARPETA_PROYECTO ?>/views/compra.php" method="POST">
+                        <button id="btnCompra" type="submit" class="btn btn-success btn-lg">REALIZAR COMPRA <i
                                 class="bi bi-credit-card"></i></button>
                     </form>
                 </div>
