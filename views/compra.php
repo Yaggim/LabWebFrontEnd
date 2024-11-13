@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // IMPORTANTE: LE SACO LOS REQUIRED DE HTML PARA PROBAR LAS VALIDACIONES DE PHP
 
-$variables_recibidas = []; //ACA NECESITO CONTAR CON LAS SESIONES PARA OBTENER EL ID_USUARIO, ID_PRODUCTOS, CANTIDADES, ETC
 $errors = [];
 $variables = []; 
 
@@ -73,7 +72,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Si no hay errores, se procesa la compra
     if (empty($errors) && !empty($variables)) {
         echo "Compra exitosa";
-        // Procesar la compra: llamar al stored procedure
+        // Procesar la compra: llamar al stored procedure con bindparam y demás
+        /*
+        CALL procesar_compra(
+                1,  -- ID persona (cliente)
+                'TARJETA',  -- variable TARJETA / EFECTIVO 
+                1500.00,  -- Precio total de la venta
+                "(1,2,500.00),(2,1,500.00)"  -- Cadena con los productos FORMATEAR EN PHP EL ARRAY "(id_producto, cantidad, precio_unitario), (id2, cant2, precio2) , etc"
+);
+
+        */
         foreach ($variables as $campo => $valor) {
             echo "<p>Variable {$campo}: {$valor}</p>";
         }
