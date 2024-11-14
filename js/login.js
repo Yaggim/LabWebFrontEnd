@@ -47,23 +47,6 @@ async function validarLogin(e){
         
         if (result.success) {
             document.querySelector('.form-login').innerHTML = result.html;
-            
-            const btnPerfil = document.getElementById('btnPerfil');
-            if (btnPerfil) {
-                btnPerfil.addEventListener('click', function() {
-                    const basePath = window.location.pathname.split('/')[1];
-                    window.location.href = `/${basePath}/perfil`;
-                });
-            }
-            
-            const botonesEditarPerfil = document.getElementsByClassName('btnEditarPerfil');
-            Array.from(botonesEditarPerfil).forEach((boton) => {
-                boton.addEventListener('click', function () {
-                    const basePath = window.location.pathname.split('/')[1];
-                    window.location.href = `/${basePath}/editar-perfil`;
-                });
-            });
-
             location.reload();
         } else {
             // Mostrar mensaje de error del backend

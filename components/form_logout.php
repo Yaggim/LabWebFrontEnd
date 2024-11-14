@@ -11,6 +11,11 @@
     <div class="input-group mt-3">
         <button type="button" class="col-6 btn btn-custom mb-3 mx-auto btnEditarPerfil">Editar perfil</button>
     </div>
+    <?php if (Permisos::esRol('administrador', $_SESSION['usuario']['id']) ): ?>
+    <div class="input-group mt-3">
+        <button type="button" class="col-6 btn btn-custom mb-3 mx-auto" id="btnAdmin">Panel admin</button>
+    </div>
+    <?php endif; ?>  
     <div class="input-group mt-3">
         <button type="submit" class="col-6 btn btn-custom mb-3 mx-auto" name="action" value="logout" id="btnLogout">Cerrar sesión</button>
     </div>

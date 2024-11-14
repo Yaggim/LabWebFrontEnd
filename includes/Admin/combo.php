@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . "/../../config/config.php"); 
 require_once(__DIR__ . "/../conexion.php");
 require_once(__DIR__ . "/../Crud.php");
 
@@ -288,14 +289,13 @@ class ComboBBDD extends Crud {
             $stmt->execute();
         }
     
-        $id_usuario = 1;
+        
 
         // Registrar movimiento de stock
         $stmt = $this->conexion->prepare("INSERT INTO movimientos_stock (cantidad, id_movimiento_tipo, fecha, id_usuario, id_producto, id_combo) VALUES (:cantidad, :id_movimiento_tipo, NOW(), :id_usuario, :id_producto, :id_combo)");
         $stmt->bindParam(":cantidad", $quantity);
         $stmt->bindParam(":id_movimiento_tipo", $movementType);
-        $stmt->bindParam(":id_usuario", $id_usuario);
-        //$stmt->bindParam(":id_usuario", $_SESSION['id_usuario']); 
+        $stmt->bindParam(":id_usuario", $_SESSION['id_usuario']); 
         $stmt->bindParam(":id_producto", $productId);
         $stmt->bindParam(":id_combo", $comboId);
         $stmt->execute();

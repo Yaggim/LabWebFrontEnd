@@ -23,6 +23,14 @@ if (btnPerfil) {
     });
 }
 
+const btnAdmin = document.getElementById('btnAdmin');
+if (btnAdmin) {
+    btnAdmin.addEventListener('click', function () {
+        const basePath = window.location.pathname.split('/')[1];
+        window.location.href = `/${basePath}/admin`;
+    });
+}
+
 const botonesEditarPerfil = document.getElementsByClassName('btnEditarPerfil');
 Array.from(botonesEditarPerfil).forEach((boton) => {
     boton.addEventListener('click', function () {
