@@ -1,4 +1,15 @@
-<?php require_once(__DIR__ .'/../../config/config.php'); ?>
+<?php
+    require_once(__DIR__ . "/../../config/config.php"); 
+    //session_start();
+    if(!isset($_SESSION['usuario'])){
+        header('Location: home');
+    }
+
+    if (!Permisos::tienePermiso("Crear producto", $_SESSION['usuario']['id'])) {
+        header("Location: home");
+        die;
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -68,7 +79,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="stockReason" class="form-label">Motivo</label>
-                            <select class="form-select" id="stockReason" required>              
+                            <select class="form-select" id="stockReason" required>
+                                <!-- Opciones serán llenadas dinámicamente -->
                             </select>
                         </div>
                     </div>

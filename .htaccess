@@ -16,10 +16,11 @@ RewriteRule ^procesar-login$                            /LabWebFrontEnd/includes
 RewriteRule ^procesar-registro$                         /LabWebFrontEnd/includes/procesar_registro.php
 RewriteRule ^procesar-editar-perfil$                    /LabWebFrontEnd/includes/procesar_editar_perfil.php
 RewriteRule ^perfil$                                    /LabWebFrontEnd/views/info_cuenta.php
+RewriteRule ^admin$                                     /LabWebFrontEnd/pages/admin/admin.php
 RewriteRule ^marca$                                     /LabWebFrontEnd/pages/admin/marca.php
 RewriteRule ^modelo$                                    /LabWebFrontEnd/pages/admin/modelo.php
-RewriteRule ^productosAdmin$                                 /LabWebFrontEnd/pages/admin/productos.php
+RewriteRule ^productosAdmin$                            /LabWebFrontEnd/pages/admin/productos.php
 RewriteRule ^categoria$                                 /LabWebFrontEnd/pages/admin/categoria.php
 RewriteRule ^stock$                                     /LabWebFrontEnd/pages/admin/stock.php
-RewriteRule ^ofertaSemana$                                /LabWebFrontEnd/pages/admin/ofertaSemana.php
+RewriteRule ^ofertaSemana$                              /LabWebFrontEnd/pages/admin/ofertaSemana.php
 RewriteRule ^combos$                                    /LabWebFrontEnd/pages/admin/combos.php

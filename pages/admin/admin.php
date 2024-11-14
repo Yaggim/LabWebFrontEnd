@@ -1,3 +1,17 @@
+<?php
+    require_once(__DIR__ . "/../../config/config.php"); 
+    //session_start();
+    if(!isset($_SESSION['usuario'])){
+        header('Location: home');
+    }
+
+    if (!Permisos::esRol("administrador", $_SESSION['usuario']['id'])) {
+        header("Location: home");
+        die;
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +27,7 @@
 
     <body>
        
-    <?php require('components/adminHeader.php'); ?>
+    <?php require(RUTA_PROYECTO.'/components/adminHeader.php'); ?>
     
         
     </body>
