@@ -2,10 +2,29 @@ $(document).ready(function() {
     // Cargar el carrito desde el backend
     function cargarCarrito() {
         $.ajax({
-            url: 'obtener_carrito.php',
+            url: '../includes/obtener_carrito.php',
             method: 'GET',
             success: function(data) {
                 const carrito = JSON.parse(data);
+                obtenerDetallesProductos(carrito);
+            }
+        });
+    }
+
+    // Obtener los detalles de los productos desde el backend
+    function obtenerDetallesProductos(carrito) {
+        $.ajax({
+            url: '../includes/obtener_productos.php',
+            method: 'GET',
+            success: function(data) {
+                const productos = JSON.parse(data);
+                // Añadir detalles de los productos al carrito
+                for (const productoId in carrito) {
+                    if (productos[productoId]) {
+                        carrito[productoId].nombre = productos[productoId].nombre;
+                        carrito[productoId].precio = productos[productoId].precio;
+                    }
+                }
                 renderizarCarrito(carrito);
             }
         });
@@ -44,7 +63,7 @@ $(document).ready(function() {
     $(document).on('click', '.eliminar', function() {
         const productoId = $(this).data('id');
         $.ajax({
-            url: 'eliminar_del_carrito.php',
+            url: '../includes/eliminar_del_carrito.php',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ producto_id: productoId }),
