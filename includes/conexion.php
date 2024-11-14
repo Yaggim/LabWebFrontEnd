@@ -9,7 +9,7 @@
     {
         private $servername  = "localhost";
         private $username    = "root"     ;
-        private $password    = "";
+        private $password    = "jb2nocanja";
         private $db          = 'hardtech';
         private $pdo                      ;
         private static $conn = null       ;
