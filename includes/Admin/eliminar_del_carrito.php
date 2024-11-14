@@ -2,18 +2,17 @@
 session_start();
 require_once '../includes/Admin/carrito.php';
 
-$data = json_decode(file_get_contents('php://input'), true);
-$productoId = $data['producto_id'];
+header('Content-Type: application/json');
 
-$userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-$carrito = new Carrito($userId);
+try {
+    $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+    $carrito = new Carrito($userId);
+    $productosCarrito = $carrito->verCarrito();
 
-$response = ['success' => false];
-if ($carrito->eliminarDelCarrito($productoId)) {
-    $response['success'] = true;
-} else {
-    $response['message'] = 'Error al eliminar el producto del carrito.';
+    echo json_encode($productosCarrito);
+} catch (Exception $e) {
+    // Manejo de errores
+    http_response_code(500);
+    echo json_encode(['error' => $e->getMessage()]);
 }
-
-echo json_encode($response);
 ?>
