@@ -1,17 +1,14 @@
 <?php
 
-class Usuario {
-    private $conn;
-    private $loggedIn = false;
+require_once __DIR__.'/Crud.php';
 
-    public function __construct($conn) {
-        $this->conn = $conn;
-    }
+class Usuario extends Crud {
+    private $loggedIn = false;
 
     public function login($username, $password) {
         try {
             // Consulta para verificar el usuario
-            $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE username = :username");
+            $stmt = $this->conexion->prepare("SELECT * FROM usuarios WHERE username = :username");
             $stmt->bindParam(':username', $username);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -19,151 +16,203 @@ class Usuario {
             // Verificamos si el usuario existe y la contraseña es correcta
             if ($user && password_verify($password, $user['password'])) {
                 $this->loggedIn = true;
-                echo "<script>
-                        alert('Login exitoso');
-                        // Aquí puedes invocar un modal de éxito
-                      </script>";
+
+                $userData = $this->getDatosUsuario($user['id'], $user['id_persona']);
+
+                $_SESSION['usuario'] = [
+                    'id' => $user['id'],
+                    'nombre' => $userData['nombre'],
+                    'apellido' => $userData['apellido'],
+                    'dni' => $userData['dni'],
+                    'telefono' => $userData['telefono'],
+                    'username' => $user['username'],
+                    'email' => $user['email'],
+                    'password' => $user['password'],
+                ];
+
+                return ['success' => true];
             } else {
-                // Mostramos un mensaje que nos indique si el usuario o la contraseña son incorrectos. 
-                if (!$user) {
-                    echo "<script>
-                            document.getElementById('username-error').innerText = 'Usuario incorrecto';
-                          </script>";
-                } else {
-                    echo "<script>
-                            document.getElementById('password-error').innerText = 'Contraseña incorrecta';
-                          </script>";
-                }
+                return [
+                    'success' => false,
+                    'error' => !$user ? 'Usuario incorrecto' : 'Contraseña incorrecta'
+                ];
             }
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => 'Error en el servidor. Inténtalo más tarde.'];
         }
     }
 
     public function logout() {
-        $this->loggedIn = false;
+        try {
+            $this->loggedIn = false;
+            session_unset();
+            if (session_destroy()) {
+                return ['success' => true];
+            }
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => 'Error en el servidor. Inténtalo más tarde.'];
+        }
     }
 
     public function isLoggedIn() {
-        return $this->loggedIn;
+        return isset($_SESSION['usuario']) || $this->loggedIn;
     }
 
-    public function register($username, $password) {
+    public function register($nombre, $apellido, $dni, $telefono, $username, $email, $password) {
         // Lógica para registrar un nuevo usuario
-    }
+        try {
+            $this->conexion->beginTransaction();
 
-    public function buscarProductos($query) {
-        // Lógica para buscar productos en la base de datos y devolver los resultados
-        // (No recuerdo si linkeabamos tablas)
-        $stmt = $this->conn->prepare("SELECT * FROM productos WHERE nombre LIKE ?");
-        $stmt->execute(['%' . $query . '%']);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function agregarAlCarrito($productoId) {
-        if (!$this->isLoggedIn()) {
-            // Usuario no logueado, almacenar en la sesión
-            if (!isset($_SESSION['carrito'])) {
-                $_SESSION['carrito'] = [];
+            if (empty($nombre) || empty($apellido) || empty($dni) || empty($telefono) || empty($username) || empty($email) || empty($password)) {
+                throw new Exception("Todos los campos son obligatorios.");
             }
-    
-            if (isset($_SESSION['carrito'][$productoId])) {
-                $_SESSION['carrito'][$productoId]['cantidad'] += 1;
-            } else {
-                // Obtener detalles del producto desde la base de datos
-                $stmt = $this->conn->prepare("SELECT * FROM productos WHERE id = :productoId");
-                $stmt->bindParam(':productoId', $productoId);
-                $stmt->execute();
-                $producto = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-                if ($producto) {
-                    $_SESSION['carrito'][$productoId] = [
-                        // Dudas con las cantidades, por eso dejo 1 por defecto. Quizás 
-                        // deberíamos rechequear el carrito en la vista de carrito.
-                        'nombre' => $producto['nombre'],
-                        'precio' => $producto['precio'],
-                        'cantidad' => 1
-                    ];
-                } else {
-                    echo "Producto no encontrado.";
-                }
-            }
-        } else {
-            // Usuario logueado, almacenar en la base de datos
-            $userId = $_SESSION['user_id']; // Asumiendo que el ID del usuario está almacenado en la sesión
-    
-            // Verificamos si el producto ya está en el carrito
-            $stmt = $this->conn->prepare("SELECT * FROM carrito WHERE user_id = :userId AND producto_id = :productoId");
-            $stmt->bindParam(':userId', $userId);
-            $stmt->bindParam(':productoId', $productoId);
+            
+            $stmt = $this->conexion->prepare("SELECT 1
+                                            FROM personas
+                                            WHERE dni = :dni");
+            $stmt->bindParam(':dni', $dni);
             $stmt->execute();
-            $item = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            if ($item) {
-                // Actualizar la cantidad del producto en el carrito
-                $stmt = $this->conn->prepare("UPDATE carrito SET cantidad = cantidad + 1 WHERE user_id = :userId AND producto_id = :productoId");
-                $stmt->bindParam(':userId', $userId);
-                $stmt->bindParam(':productoId', $productoId);
-                $stmt->execute();
-            } else {
-                // Obtener detalles del producto desde la base de datos
-                $stmt = $this->conn->prepare("SELECT * FROM productos WHERE id = :productoId");
-                $stmt->bindParam(':productoId', $productoId);
-                $stmt->execute();
-                $producto = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-                if ($producto) {
-                    // Insertar el producto en el carrito
-                    $stmt = $this->conn->prepare("INSERT INTO carrito (user_id, producto_id, nombre, precio, cantidad) VALUES (:userId, :productoId, :nombre, :precio, 1)");
-                    $stmt->bindParam(':userId', $userId);
-                    $stmt->bindParam(':productoId', $productoId);
-                    $stmt->bindParam(':nombre', $producto['nombre']);
-                    $stmt->bindParam(':precio', $producto['precio']);
-                    $stmt->execute();
-                } else {
-                    echo "Producto no encontrado.";
-                }
-            }
-        }
-    }
 
-    public function verCarrito() {
-        $carrito = [];
-
-        if (!$this->isLoggedIn()) {
-            // Usuario no logueado, obtener el carrito desde la sesión
-            if (isset($_SESSION['carrito'])) {
-                $carrito = $_SESSION['carrito'];
+            if ($stmt->rowCount() > 0) {
+                throw new Exception("El DNI ya está registrado.");
             }
-        } else {
-            // Usuario logueado, obtener el carrito desde la base de datos
-            $userId = $_SESSION['user_id']; // Asumiendo que el ID del usuario está almacenado en la sesión
-    
-            $stmt = $this->conn->prepare("SELECT * FROM carrito WHERE user_id = :userId");
-            $stmt->bindParam(':userId', $userId);
+
+            $stmt = $this->conexion->prepare("SELECT 1
+                                            FROM usuarios
+                                            WHERE email = :email");
+            $stmt->bindParam(':email', $email);
             $stmt->execute();
-            $carrito = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($stmt->rowCount() > 0) {
+                throw new Exception("El correo electrónico ya está registrado.");
+            }
+
+            $query = <<<SQL
+                INSERT INTO
+                    personas (nombre, apellido, dni, telefono)
+                    VALUES (:nombre, :apellido, :dni, :telefono)
+            SQL;
+
+            $stmt = $this->conexion->prepare($query);
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':apellido', $apellido);
+            $stmt->bindParam(':dni', $dni);
+            $stmt->bindParam(':telefono', $telefono);
+            $stmt->execute();
+
+            $id_persona = $this->conexion->lastInsertId();
+
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+            $query = <<<SQL
+                INSERT INTO
+                    usuarios (username, email, password, estado, id_persona)
+                VALUES (:username, :email, :password, :estado, :id_persona)
+            SQL;
+
+            $stmt = $this->conexion->prepare($query);
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $hashedPassword);
+            $estado = 1; // Estado: activo por defecto.
+            $stmt->bindParam(':estado', $estado);
+            $stmt->bindParam(':id_persona', $id_persona);
+            $stmt->execute();
+            
+            $id_usuario = $this->conexion->lastInsertId();
+            
+            $query = <<<SQL
+                INSERT INTO
+                    roles_usuarios (id_rol, id_usuario)
+                VALUES (:id_rol, :id_usuario)
+            SQL;
+            
+            $stmt = $this->conexion->prepare($query);
+            $id_rol = 2; // Rol: cliente por defecto.
+            $stmt->bindParam(':id_rol', $id_rol);
+            $stmt->bindParam(':id_usuario', $id_usuario);
+            $stmt->execute();
+
+            $this->conexion->commit();
+            $this->login($username, $password);
+
+        } catch (Exception $e) {
+            $this->conexion->rollBack();
+            throw $e;
         }
-    
-        return $carrito;
+
     }
 
-    public function realizarCompra() {
-        if (!$this->isLoggedIn()) {
-            throw new Exception("Debe estar logueado para realizar una compra.");
+    public function actualizarPerfilUsuario($newTelefono, $newEmail, $newPassword, $oldPassword) {
+        try {
+            $this->conexion->beginTransaction();
+
+            if (empty($newTelefono) || empty($newEmail) || empty($newPassword) || empty($oldPassword)) {
+                throw new Exception("Todos los campos son obligatorios.");
+            }
+
+            $id_usuario = $_SESSION['usuario']['id'];
+            $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+
+            $query = <<<SQL
+                    UPDATE usuarios AS u
+                    JOIN personas AS p ON u.id_persona = p.id_persona
+                    SET u.email = :email,
+                        u.password = :password,
+                        p.telefono = :telefono
+                    WHERE u.id = :id_usuario;
+                    SQL;
+            
+            $stmt = $this->conexion->prepare($query);
+            $stmt->bindParam(':email', $newEmail);
+            $stmt->bindParam(':password', $hashedPassword);
+            $stmt->bindParam(':telefono', $newTelefono);
+            $stmt->bindParam(':id_usuario', $id_usuario);
+            $stmt->execute();
+
+            $this->conexion->commit();
+
+            $_SESSION['usuario']['email'] = $newEmail;
+            $_SESSION['usuario']['password'] = $hashedPassword;
+
+        }
+        catch (Exception $e) {
+            $this->conexion->rollBack();
+            throw $e;
         }
     }
 
-    public function seleccionarMedioPago($medioPago) {
-        if (!$this->isLoggedIn()) {
-            throw new Exception("Debe estar logueado para seleccionar un medio de pago.");
-        }
-    }
+    public function getDatosUsuario($id_usuario, $id_persona) {
+        try {
+            $this->conexion->beginTransaction();
 
-    // Pensar si es necesario
-    public function realizarPagoParcial($monto) {
-        if (!$this->isLoggedIn()) {
-            throw new Exception("Debe estar logueado para realizar un pago parcial.");
+            if (empty($id_usuario) || empty($id_persona)) {
+                throw new Exception("El usuario debe estar logueado.");
+            }
+
+            $query = <<<SQL
+                SELECT
+                    u.id, u.username, u.email, u.password, u.estado, u.id_persona,
+                    p.nombre, p.apellido, p.dni, p.telefono
+                FROM
+                    usuarios AS u
+                JOIN
+                    personas AS p ON u.id_persona = p.id_persona
+                WHERE
+                    u.id = :id_usuario AND p.id_persona = :id_persona;
+            SQL;
+
+            $stmt = $this->conexion->prepare($query);
+            $stmt->bindParam(':id_usuario', $id_usuario);
+            $stmt->bindParam(':id_persona', $id_persona);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } catch (Exception $e) {
+            throw $e;
         }
     }
 }
