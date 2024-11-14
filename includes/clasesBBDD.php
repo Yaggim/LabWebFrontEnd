@@ -172,6 +172,76 @@
 		public function __construct(){
 			parent::__construct("productos");
 		}
+
+
+		public function getProdByCategoriaAndMarca($marca, $categoria){
+			$stmt = $this->conexion->prepare(" 
+            SELECT 
+				productos.Id_producto,
+                marcas.nombre AS marca, 
+                modelos.nombre AS modelo,
+                productos.descripcion AS descripcion,
+                imagenes_productos.url AS imagen,
+                productos.precio_usd as precio,
+                categorias.nombre as categoria
+            FROM 
+                marcas
+            INNER JOIN 
+                modelos ON marcas.id_marca = modelos.id_marca
+            INNER JOIN 
+                productos ON modelos.id_modelo = productos.id_modelo
+            INNER JOIN 
+                categorias ON productos.id_categoria = categorias.id_categoria
+            INNER JOIN 
+            	imagenes_productos on productos.id_producto = imagenes_productos.id_producto_fk
+            WHERE 
+                marcas.nombre = :marca AND 
+                categorias.nombre = :categoria");
+	        
+	        $stmt->bindParam(":marca", $marca);
+	        $stmt->bindParam(":categoria", $categoria);
+	        $stmt->execute();
+
+	        //retorna TODOS los registros coincidentes
+	        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
+
+
+
+		public function getProdByCategoria($categoria){
+
+			$stmt = $this->conexion->prepare(" 
+            SELECT 
+ 				productos.Id_producto,
+                marcas.nombre AS marca, 
+                modelos.nombre AS modelo,
+                productos.descripcion AS descripcion,
+                imagenes_productos.url AS imagen,
+                productos.precio_usd as precio,
+                categorias.nombre as categoria
+
+       
+            FROM 
+                marcas
+            INNER JOIN 
+                modelos ON marcas.id_marca = modelos.id_marca
+            INNER JOIN 
+                productos ON modelos.id_modelo = productos.id_modelo
+            INNER JOIN 
+                categorias ON productos.id_categoria = categorias.id_categoria
+            INNER JOIN 
+            	imagenes_productos on productos.id_producto = imagenes_productos.id_producto_fk
+            WHERE 
+                categorias.nombre = :categoria");
+
+		        
+		   
+		    $stmt->bindParam(":categoria", $categoria);
+		    $stmt->execute();
+
+		    //retorna TODOS los registros coincidentes
+		    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
 	}
 
 

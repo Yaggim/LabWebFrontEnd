@@ -118,6 +118,14 @@ p.importe{
     padding: 15px;
 }
 
+    .floating-back-btn {
+      position: fixed;
+      bottom: 200px; /* Ajusta esta distancia según sea necesario */
+      left: 20px;
+      z-index: 1001; /* Asegúrate de que esté por encima del cartel */
+      width: 100px;
+    }
+
 main {
 	min-height: 40vh;
     margin-top: 200px;

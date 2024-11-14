@@ -101,10 +101,5 @@ class Crud {
     }
 
 
-
-    //cerrar conexión
-    public function closeConn(){
-        $this->conexion->closeConn();
-    }
 }
 ?>
