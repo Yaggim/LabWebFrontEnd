@@ -80,11 +80,13 @@
                     <a href="JavaScript:Void(0)" class="me-3 d-lg-none" type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
                         <i class="fa fa-search fs-5"></i>
                     </a>
-                    <a href="JavaScript:Void(0)" type="button" class="me-3 me-md-3 me-lg-4 ms-sm-2 ms-md-2 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"">
+                    <a href="JavaScript:Void(0)" type="button" class="me-3 me-md-3 me-lg-4 ms-sm-2 ms-md-2 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" id="btnFormLogin" >
                         <i class="fa fa-user fs-5"></i>
                     </a>
-                    <form class="dropdown-menu p-4 form-login">
-                        <?php require(RUTA_PROYECTO.'/components/login.php'); ?>
+                    <form method="POST" class="dropdown-menu p-4 form-login" id="btnDropdownLogin" >
+                        <?php if (!$usuario->isLoggedIn()): require RUTA_PROYECTO.'/components/form_login.php'; ?>
+                        <?php else: require RUTA_PROYECTO.'/components/form_logout.php'; ?>
+                        <?php endif; ?>
                     </form>
                     <a href="/<?php echo CARPETA_PROYECTO ?>/carrito" class="me-3 me-md-3 me-lg-4 ms-sm-2">
                         <i class="fa fa-shopping-cart fs-5"></i>

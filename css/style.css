@@ -2,7 +2,7 @@
 
 
 :root {
-    --sb-track-color: rgba(55, 55, 63, 255);
+    --sb-track-color: rgba(55, 55, 63, 255);/*rgba(43, 42, 48, 255)*/
     --sb-thumb-color: #8d8ae1;
     --sb-size: 10px;
     --logo-green-color: #7ac94c;
