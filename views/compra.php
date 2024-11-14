@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/conexion.php';
-session_start();
+session_start(); // NECESITO EL ID_PERSONA 
 
 // SI LLEGA VIA URL, REDIRIGIRLO
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -16,6 +16,7 @@ $variables = [];
 
 // VALIDAR FORMULARIO SI LLEGA POR POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    /*  COMIENZO DE TODAS LAS VALIDACIONES DEL FORMULARIO POR PHP */
     if(isset($_POST['envioTitular'])){
         // Validación del nombre y apellido: 2 Palabras, min 3 max 50 caracteres validos
         if (empty($_POST['envioTitular']) || !preg_match('/^\S+\s+\S+$/', $_POST['envioTitular']) || !preg_match('/^[A-Za-záéíóúÁÉÍÓÚ ]{3,50}$/', $_POST['envioTitular'])) {
@@ -63,23 +64,102 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (empty($_POST['pagoEfectivo']) && (empty($_POST['tarjeta']) || !preg_match('/^\d{12}$/', $_POST['tarjeta']))) {
             $errors['tarjeta'] = true;
         }elseif(!empty($_POST['pagoEfectivo'])){
-            $variables['efectivo'] = 'SI';
+            //$variables['efectivo'] = 'SI';
+            $variables['metodoPago'] = 'EFECTIVO';
         }
         else{
             $variables['tarjeta']  = $_POST['tarjeta'];}
+            $variables['metodoPago'] = 'TARJETA';
     }
+    /*  FIN DE TODAS LAS VALIDACIONES DE FORMULARIO */
 
     // Si no hay errores, se procesa la compra
     if (empty($errors) && !empty($variables)) {
-        echo "Compra exitosa";
-        // Procesar la compra: llamar al stored procedure con bindparam y demás
+        // Procesar la compra: llamar al stored procedure con bindparam y demás puedo re-dirigir a generar_venta.php
         /*
-        CALL procesar_compra(
-                1,  -- ID persona (cliente)
-                'TARJETA',  -- variable TARJETA / EFECTIVO 
-                1500.00,  -- Precio total de la venta
-                "(1,2,500.00),(2,1,500.00)"  -- Cadena con los productos FORMATEAR EN PHP EL ARRAY "(id_producto, cantidad, precio_unitario), (id2, cant2, precio2) , etc"
-);
+        try {
+            // Variables de entrada para el SP:
+            ID_PERSONA -> Viene por la $_SESSION
+            TIPO_PAGO -> $variables['metodoPago'];
+            PRECIO_TOTAL -> Viene por la $_SESSION ????? 
+            PRODUCTOS -> VIENEN POR LOCAL STORAGE
+
+            // Array de productos: id_producto, cantidad, precio_unitario
+            $productos = [
+                [1, 2, 500.00],
+                [2, 1, 500.00]
+            ];
+
+            // Formatear el array de productos como una cadena para el procedimiento almacenado
+            $productos_str = '';
+            foreach ($productos as $producto) {
+                $productos_str .= "({$producto[0]},{$producto[1]},{$producto[2]}),";
+            }
+            // Eliminar la coma extra al final
+            $productos_str = rtrim($productos_str, ',');
+
+            // Preparar la llamada al Stored Procedure
+            $sql = "CALL procesar_compra(:id_persona, :tipo_pago, :precio_total, :productos)";
+
+            // Preparar la declaración
+            $stmt = $conn->prepare($sql);
+
+            // Enlazar los parámetros
+            $stmt->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
+            $stmt->bindParam(':tipo_pago', $tipo_pago, PDO::PARAM_STR);
+            $stmt->bindParam(':precio_total', $precio_total, PDO::PARAM_STR);
+            $stmt->bindParam(':productos', $productos_str, PDO::PARAM_STR);
+
+            // Ejecutar el Stored Procedure
+            $stmt->execute();
+
+            // Comprobar si la ejecución fue exitosa
+            echo "Proceso completado correctamente.\n";
+
+        } catch (PDOException $e) {
+            // Capturar y mostrar errores
+            echo "Error: " . $e->getMessage();
+        }
+        $stmt->execute()
+        $id_venta_cabecera = $conn->lastInsertId();
+
+        // INSERTAR DATOS DE ENVÍO EN LA TABLA 'ENVIOS'
+        if (!isset($_POST['retiroLocal'])) {
+            // Dividir la cadena en un array
+            $nombreApellido = explode(' ', $variables['envioTitular']);
+            $nombre = $nombreApellido[0];   
+            $apellido = $nombreApellido[1];
+
+        try {
+            
+            $sql = "INSERT INTO envios (nombre, apellido, calle, altura, cod_postal, notas, dni, id_venta_cabecera) 
+                    VALUES (:nombre, :apellido, :calle, :altura, :cod_postal, :notas, :dni, :id_venta_cabecera)";
+
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+            $stmt->bindParam(':apellido', $apellido, PDO::PARAM_STR);
+            $stmt->bindParam(':calle', $variables['envioCalle'], PDO::PARAM_STR);
+            $stmt->bindParam(':altura', $variables['envioAltura'], PDO::PARAM_INT);
+            $stmt->bindParam(':cod_postal', $variables['envioPostal'], PDO::PARAM_INT);
+            $stmt->bindParam(':notas', $variables['envioNota'], PDO::PARAM_STR);
+            $stmt->bindParam(':dni', (string)$variables['dni'], PDO::PARAM_STR); // YA QUE ES NUMERICO EN PHP PERO EN LA BASE ES VARCHAR
+            $stmt->bindParam(':id_venta_cabecera', (int)$id_venta_cabecera, PDO::PARAM_INT)
+
+            $stmt->execute();
+        
+            echo "Los datos fueron insertados correctamente en la base de datos.";
+            
+
+
+        } catch (PDOException $e) {
+            echo "Error al insertar los datos: " . $e->getMessage();
+        }
+
+
+        }
+
+
 
         */
         foreach ($variables as $campo => $valor) {
@@ -173,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <h6 class="modal-title fs-5"><i class="bi bi-credit-card-2-back"></i> Concretar el pago</h6>
             <div class="mb-3">
-                <label for="dni" class="col-form-label">Ingrese su número de DNI:</label>
+                <label for="dni" class="col-form-label">Ingrese DNI:</label>
                 <input type="number" value="<?php if (isset($variables['dni'])){echo $_POST['dni'];}?>"
                 class="form-control <?php if (isset($errors['dni'])){echo 'is-invalid';} else{echo '';}; ?>" 
                 name="dni" id="dni" placeholder="Solo números, sin puntos." min="999999" max="99999999" >
