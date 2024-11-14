@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__."../conexion.php");
+require_once(__DIR__ . "/conexion.php");
+
 
 /**
  * Esta clase expone CRUD genéricos
@@ -100,10 +101,5 @@ class Crud {
     }
 
 
-
-    //cerrar conexión
-    public function closeConn(){
-        $this->conexion->closeConn();
-    }
 }
 ?>

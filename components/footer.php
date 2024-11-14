@@ -1,3 +1,9 @@
+<?php
+
+require_once __DIR__ .'/../config/config.php';
+
+?>
+
 <footer class="bg-dark text-white pt-4">
     <div class="bg-dark container-fluid">
         <div class="row justify-content-md-center ">
@@ -18,7 +24,9 @@
                         <li><a href="/<?php echo CARPETA_PROYECTO ?>/home" class="text-white text-decoration-none">Inicio</a></li>
                         <li><a href="/<?php echo CARPETA_PROYECTO ?>/productos" class="text-white text-decoration-none">Productos</a></li>
                         <li><a href="JavaScript:Void(0)" class="text-white text-decoration-none">Novedades</a></li>
-                        <li><a href="JavaScript:Void(0)" class="text-white text-decoration-none">Mi Cuenta</a></li>
+                        <?php if ($usuario->isLoggedIn()): ?>
+                            <li><a href="/<?php echo CARPETA_PROYECTO ?>/perfil" class="text-white text-decoration-none">Mi Perfil</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
                 <div class="col-lg-auto col-md-12 mx-auto footer-info">
