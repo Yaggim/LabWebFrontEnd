@@ -41,8 +41,11 @@ $productosCarrito = $carrito->verCarrito();
                     <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
                     <div class="d-flex flex-column align-items-end mb-3">
                        
-                        <button id="finalizar-compra" class="btn btn-success mt-3">Finalizar compra</button>
-                        <button id="cancelar-compra" type="button" class="btn btn-secondary mt-3">Cancelar</button>
+                    <form action="/<?php echo CARPETA_PROYECTO ?>/views/compra.php" method="POST">
+                        <button id="btnCompra" type="submit" class="btn btn-success m-3">REALIZAR COMPRA <i
+                                class="bi bi-credit-card"></i></button>
+                    </form>
+                        <button id="cancelar-compra" type="button" class="btn btn-secondary m-3">Cancelar</button>
                     </div>
                 </div>
                 
