@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Procesar la compra: llamar al stored procedure con bindparam y demás puedo re-dirigir a generar_venta.php
         
         try {
-            $tipo_pago = 'TARJETA'; 
+            $tipo_pago = $variables['metodoPago'];
 
             
             $sql = "CALL procesar_compra(:id_persona, :tipo_pago, :precio_total, :productos)";
