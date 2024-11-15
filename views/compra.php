@@ -2,20 +2,20 @@
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/conexion.php';
 
-/*if(!isset($_SESSION['usuario'])){
+if(!isset($_SESSION['usuario'])){
     header('Location: home');
-}*/
+}
 
 // user: comprador / admin
 // pass: 123456*a
 
 // SI LLEGA VIA URL, REDIRIGIRLO
-/*
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     require(RUTA_PROYECTO . '/views/error.php');
     exit();
 }
-    */
+
 
 
 // IMPORTANTE: LE SACO LOS REQUIRED DE HTML PARA PROBAR LAS VALIDACIONES DE PHP
@@ -26,55 +26,27 @@ $variables = [];
 
 // VALIDAR FORMULARIO SI LLEGA POR POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    echo "REQUEST METHOD POST!!!!!!!!";
+    
     /*echo "<pre>";
     print_r($_POST);
     echo "</pre>";*/
-
+    
     if (isset($_SESSION['carrito'])) {
-        echo "VARIABLE DE SESSION: CARRITO ALMACENADO: ";
-        $carrito = $_SESSION['carrito'];
-        echo '<pre>';
-        print_r($_SESSION['carrito']);
-        echo '</pre>';
-        $carrito = $_SESSION['carrito'];
-        echo "VARIABLE CARRITO CON LA INFO TOMADA DE LA SESION";
-        echo '<pre>';
-        print_r($carrito);
-        echo '</pre>';
-        $productos_string = ""; // Inicializamos la cadena vacía
+        $carrito = $_SESSION['carrito']['carrito']; 
+        $productos_string = ""; 
+        $precio_total = 0.00;
 
-        // necesitamos que la info del carrito se formatee asi:
-            // "(1,2,500.00),(2,1,500.00)"
-            // id_producto, cantidad, precio_unitario_pesos
 
-        // Recorremos el carrito para formar la cadena
         foreach ($carrito as $producto) {
-        // Concatenamos los valores de cada producto en el formato requerido
-        $productos_string .= "(" . $producto['id'] . ", " . $producto['cantidad'] . ", " . $producto['precioEnPesos'] . "), ";
+        $productos_string .= "(" . $producto['id'] . ", " . $producto['cantidad'] . ", " . number_format((float)$producto['precioEnPesos'], 2, '.', '') . "), ";
+        $precio_total += $producto['cantidad'] * floatval($producto['precioEnPesos']);
         }
 
-        // Eliminamos la última coma y el espacio extra
         $productos_string = rtrim($productos_string, ", ");
 
-        echo "STRING DE PRODUCTOS TRANSFORMADOS: ". $productos_string;
+        $id_persona = intval($_SESSION['usuario']['id_persona']);
 
-        //if (is_array($carrito)) {
-            echo "Carrito recibido:<br>";
-            foreach ($carrito as $producto) {
-                echo "ID Producto: " . $producto['id'] . "<br>";
-                echo "Cantidad: " . $producto['cantidad'] . "<br>";
-                echo "Precio en Pesos: " . $producto['precioEnPesos'] . "<br>";
-                echo "Marca: " . $producto['marca'] . "<br>";
-                echo "Modelo: " . $producto['modelo'] . "<br>";
-                echo "Imagen: " . $producto['imagen'] . "<br><br>";
-            }
-        //} else {
-          //  echo "El carrito tiene un formato inválido.";
-        //}
-    } else {
-        echo "No se recibió el carrito.";
-    }
+        
 
 
     /*  COMIENZO DE TODAS LAS VALIDACIONES DEL FORMULARIO POR PHP */
@@ -136,54 +108,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Si no hay errores, se procesa la compra
     if (empty($errors) && !empty($variables)) {
+        
         // Procesar la compra: llamar al stored procedure con bindparam y demás puedo re-dirigir a generar_venta.php
-        /*
+        
         try {
-            // Variables de entrada para el SP:
-            ID_PERSONA -> Viene por la $_SESSION
-            TIPO_PAGO -> $variables['metodoPago'];
-            PRECIO_TOTAL -> SE CALCULA A PARTIR DEL LOCAL STORAGE
-            PRODUCTOS -> VIENEN POR LOCAL STORAGE
+            $tipo_pago = 'TARJETA'; 
 
-            // Array de productos: id_producto, cantidad, precio_unitario
-            $productos = [
-                [1, 2, 500.00],
-                [2, 1, 500.00]
-            ];
-
-            // Formatear el array de productos como una cadena para el procedimiento almacenado
-            $productos_str = '';
-            foreach ($productos as $producto) {
-                $productos_str .= "({$producto[0]},{$producto[1]},{$producto[2]}),";
-            }
-            // Eliminar la coma extra al final
-            $productos_str = rtrim($productos_str, ',');
-
-            // Preparar la llamada al Stored Procedure
+            
             $sql = "CALL procesar_compra(:id_persona, :tipo_pago, :precio_total, :productos)";
 
-            // Preparar la declaración
-            $stmt = $conn->prepare($sql);
+            
+            $parametros = "CALL procesar_compra(" . $id_persona . ", '" . $tipo_pago . "', " . number_format($precio_total, 2, '.', '') . ", '" . $productos_string . "')";
+    
 
-            // Enlazar los parámetros
+            $conexion = Conexion::getConn();
+
+            $stmt = $conexion->prepare($sql);
+
             $stmt->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
             $stmt->bindParam(':tipo_pago', $tipo_pago, PDO::PARAM_STR);
             $stmt->bindParam(':precio_total', $precio_total, PDO::PARAM_STR);
-            $stmt->bindParam(':productos', $productos_str, PDO::PARAM_STR);
+            $stmt->bindParam(':productos', $productos_string, PDO::PARAM_STR);
 
-            // Ejecutar el Stored Procedure
             $stmt->execute();
 
-            // Comprobar si la ejecución fue exitosa
-            echo "Proceso completado correctamente.\n";
-
         } catch (PDOException $e) {
-            // Capturar y mostrar errores
+
             echo "Error: " . $e->getMessage();
         }
-        $stmt->execute()
-        $id_venta_cabecera = $conn->lastInsertId();
 
+    } else {
+        foreach ($errors as $field => $error) {
+            echo "<p>Error en {$field}: {$error}</p>";
+        }
+    }
+        //$id_venta_cabecera = $conexion->lastInsertId();
+        /*
         // INSERTAR DATOS DE ENVÍO EN LA TABLA 'ENVIOS'
         if (!isset($_POST['retiroLocal'])) {
             // Dividir la cadena en un array
@@ -196,18 +156,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $sql = "INSERT INTO envios (nombre, apellido, calle, altura, cod_postal, notas, dni, id_venta_cabecera) 
                     VALUES (:nombre, :apellido, :calle, :altura, :cod_postal, :notas, :dni, :id_venta_cabecera)";
 
-            $stmt = $conn->prepare($sql);
+            $stmt2 = $conn->prepare($sql);
 
-            $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
-            $stmt->bindParam(':apellido', $apellido, PDO::PARAM_STR);
-            $stmt->bindParam(':calle', $variables['envioCalle'], PDO::PARAM_STR);
-            $stmt->bindParam(':altura', $variables['envioAltura'], PDO::PARAM_INT);
-            $stmt->bindParam(':cod_postal', $variables['envioPostal'], PDO::PARAM_INT);
-            $stmt->bindParam(':notas', $variables['envioNota'], PDO::PARAM_STR);
-            $stmt->bindParam(':dni', (string)$variables['dni'], PDO::PARAM_STR); // YA QUE ES NUMERICO EN PHP PERO EN LA BASE ES VARCHAR
-            $stmt->bindParam(':id_venta_cabecera', (int)$id_venta_cabecera, PDO::PARAM_INT)
+            $stmt2->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+            $stmt2->bindParam(':apellido', $apellido, PDO::PARAM_STR);
+            $stmt2->bindParam(':calle', $variables['envioCalle'], PDO::PARAM_STR);
+            $stmt2->bindParam(':altura', $variables['envioAltura'], PDO::PARAM_INT);
+            $stmt2->bindParam(':cod_postal', $variables['envioPostal'], PDO::PARAM_INT);
+            $stmt2->bindParam(':notas', $variables['envioNota'], PDO::PARAM_STR);
+            $stmt2->bindParam(':dni', (string)$variables['dni'], PDO::PARAM_STR); // YA QUE ES NUMERICO EN PHP PERO EN LA BASE ES VARCHAR
+            $stmt2->bindParam(':id_venta_cabecera', (int)$id_venta_cabecera, PDO::PARAM_INT);
 
-            $stmt->execute();
+            $stmt2->execute();
         
             echo "Los datos fueron insertados correctamente en la base de datos.";
             
@@ -220,9 +180,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         }
 
-
-
-        */
         foreach ($variables as $campo => $valor) {
             echo "<p>Variable {$campo}: {$valor}</p>";
         }
@@ -232,7 +189,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         foreach ($errors as $field => $error) {
             echo "<p>Error en {$field}: {$error}</p>";
         }
+             */
     }
+       
 }
 
 

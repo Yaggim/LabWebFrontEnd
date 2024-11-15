@@ -28,6 +28,7 @@ class Usuario extends Crud {
                     'username' => $user['username'],
                     'email' => $user['email'],
                     'password' => $user['password'],
+                    'id_persona' => $user['id_persona'],
                 ];
 
                 return ['success' => true];
