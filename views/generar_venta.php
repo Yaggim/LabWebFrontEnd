@@ -1,6 +1,6 @@
 <?php
 // Iniciar sesión si es necesario para obtener $id_persona desde la sesión
-session_start();
+
 
 // Conexión a la base de datos
 require_once(__DIR__ . "/../conexion.php");
