@@ -54,6 +54,20 @@ function togglePagoEfectivo() {
     }
 }
 
+// NUEVO: función para el pago en efectivo
+function togglePagoEfectivo() {
+    let esPagoEfectivo = document.getElementById("pagoEfectivo").checked;
+    let campoTarjeta = document.getElementById("tarjeta");
+
+    if (esPagoEfectivo) {
+        document.getElementById("tarjetaContainer").classList.add("d-none");
+        campoTarjeta.required = false;
+    } else {
+        document.getElementById("tarjetaContainer").classList.remove("d-none");
+        campoTarjeta.required = true;
+    }
+}
+
 function confirmarCompra(event) {
     document.getElementById("envioTitular").classList.remove('is-invalid');
     document.getElementById("envioCalle").classList.remove('is-invalid');
