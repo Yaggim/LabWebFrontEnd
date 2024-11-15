@@ -1,13 +1,15 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/conexion.php';
-session_start(); // NECESITO EL ID_PERSONA 
+
 
 // SI LLEGA VIA URL, REDIRIGIRLO
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     require(RUTA_PROYECTO . '/views/error.php');
     exit();
 }
+
+
 
 // IMPORTANTE: LE SACO LOS REQUIRED DE HTML PARA PROBAR LAS VALIDACIONES DE PHP
 

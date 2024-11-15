@@ -30,7 +30,7 @@ async function actualizarPrecioARS() {
         const dolarBlue = await fetchDolarBlue();
         const precioEnPesos = producto.precio_usd * dolarBlue;
         console.log("Valor actual del Dolar Blue: ", dolarBlue);
-        document.getElementById("producto-priceARS").textContent = "Precio: US$" + producto.precio_usd + "  |  $" + precioEnPesos.toFixed(2);
+        document.getElementById("producto-priceARS").textContent = "Precio AR$ " + precioEnPesos.toFixed(2) +".-";
     } catch (error) {
         console.error("Error al obtener el precio en pesos:", error);
     }
@@ -121,9 +121,16 @@ function cargarProductoPorID(idProducto) {
                 productoExistente.cantidad = parseInt(cantidad.value);
             } else {
                 // Si el producto no está en el carrito
+                const precioEnPesos = parseFloat(producto.precio_usd * dolarBlue);
                 const productoConCantidad = {
                     id: producto.id_producto, // ID del producto
-                    cantidad: parseInt(cantidad.value) // Cantidad 
+                    cantidad: parseInt(cantidad.value), // Cantidad 
+                    precioEnPesos: precioEnPesos,
+                    marca: producto.brand_name,
+                    modelo: producto.model_name,
+                    imagen: producto.imagenes[0]
+                    
+
                 };
                 carritoLocalStorage.push(productoConCantidad);
             }
@@ -133,7 +140,8 @@ function cargarProductoPorID(idProducto) {
 
             console.log("Carrito actualizado:");
             carritoLocalStorage.forEach(item => {
-                console.log(`ID: ${item.id}, Cantidad: ${item.cantidad}`);
+                console.log(carritoLocalStorage)
+                console.log(`ID: ${item.id}, Cantidad: ${item.cantidad}, Precio Unitario: ${item.precioEnPesos}`);
             });
 
         }
