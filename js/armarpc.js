@@ -39,8 +39,10 @@ function cargarJsons(index,evento) {
 
         cateActual = categorias[index];
 
+        const basePath = window.location.pathname.split('/')[1];
+
         
-        let url = "../includes/armarPcBBDD.php?categoria="+ cateActual + "&marca=" + marca.name;
+        let url = "/"+ basePath + "/includes/armarPcBBDD.php?categoria="+ cateActual + "&marca=" + marca.name;
         
         console.log(url);
         const xhr = new XMLHttpRequest();
