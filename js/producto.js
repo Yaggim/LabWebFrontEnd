@@ -137,27 +137,6 @@ function cargarProductoPorID(idProducto) {
 
             // Guarda el carrito actualizado en localStorage
             localStorage.setItem('carrito', JSON.stringify(carritoLocalStorage));
-            let jsonCarrito = JSON.stringify(carritoLocalStorage)
-            // 
-            fetch('../../views/compra.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: jsonCarrito
-                
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log("Carrito pasado con éxito.");
-                } else {
-                    console.error("Error al pasar carrito.");
-                }
-            })
-            .catch(error => {
-                console.error("Error de conexión! ", error);
-            });
 
             console.log("Carrito actualizado:");
             carritoLocalStorage.forEach(item => {
@@ -172,14 +151,35 @@ function cargarProductoPorID(idProducto) {
     }
 }
 
+function enviarCarritoAlServidor() {
+    let carritoLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    fetch('../../views/compra.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ carrito: carritoLocalStorage })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Respuesta del servidor:', data);
+    })
+    .catch(error => {
+        console.error('Error al enviar el carrito:', error);
+    });
+}
+
+
 function completarDatosPagina() {
+    const basePath = window.location.pathname.split('/')[1];
 
     document.getElementById("producto-id").textContent = "Código de identificación de producto: " + producto.id_producto;
     document.getElementById("producto-brand-model").textContent = producto.brand_name + " " + producto.model_name;
     document.getElementById("producto-category").textContent = "Categoría: " + producto.category_name;
     actualizarPrecioARS();//Esta función se encarga de calcular y completar el $ARS de acuerdo al precio del "dolar blue" actual
-    document.getElementById("producto-image1").src = "/LabWebFrontEnd/" + producto.imagenes[0];
-    document.getElementById("producto-image2").src = "/LabWebFrontEnd/" + producto.imagenes[1];
+    document.getElementById("producto-image1").src =  `/${basePath}/${producto.imagenes[0]}`;
+    document.getElementById("producto-image2").src = `/${basePath}/${producto.imagenes[1]}`;
     document.getElementById("producto-description").textContent = producto.descripcion;
 }
 
@@ -200,3 +200,57 @@ function completarRecuadroStock() {
         document.getElementById("btnCarrito").disabled = true
     }
 }
+/*
+document.getElementById('btnCompra').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    // Obtener el carrito del localStorage
+    let carritoLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    // Asegurar que el carrito no esté vacío antes de enviar
+    if (carritoLocalStorage.length === 0) {
+        alert('El carrito está vacío. Agrega productos antes de realizar la compra.');
+        return;
+    }
+
+    // Rellenar el campo oculto del formulario
+    let carritoInput = document.getElementById('carritoInput');
+    carritoInput.value = JSON.stringify(carritoLocalStorage);
+
+    // Confirmar en consola lo que se enviará
+    console.log('Carrito enviado:', carritoInput.value);
+
+    // Enviar el formulario
+    document.getElementById('comprar').submit();})
+    */
+    document.getElementById('btnCompra').addEventListener('click', async function (event) {
+        event.preventDefault(); 
+    
+        // Obtener el carrito
+        let carritoLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
+    
+        // Asegurarnos de que el carrito no esté vacío
+        if (carritoLocalStorage.length === 0) {
+            alert('El carrito está vacío. Agrega productos antes de realizar la compra.');
+            // EN ESTE CASO HAY QUE ALMACENAR TODOS LOS DATOS DEL PRODCUTO QUE SE ESTÁ MOSTRANDO POR PANTALLA
+            // AL CARRITO Y MANDARLO, BÁSICAMENTE ES UN CARRITO DE 1 PRODUCTO ESE CASO
+            return;
+        }
+    
+        // Enviar el carrito al servidor para guardarlo en la sesión
+        try {
+            let response = await fetch('../../views/guardar_carrito.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ carrito: carritoLocalStorage }),
+            });
+    
+            if (response.ok) {
+                document.getElementById("comprar").submit();
+            } 
+        } catch (error) {
+            console.error('Error al enviar el carrito:', error);
+        }
+    });

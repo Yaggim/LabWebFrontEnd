@@ -83,13 +83,14 @@
                 </div>
                 <!-- Botón de compra -->
                 <div class="col-12 p-2 text-center rounded">
-                    <form action="/<?php echo CARPETA_PROYECTO ?>/views/compra.php" method="POST">
+                    <form id="comprar" action="/<?php echo CARPETA_PROYECTO ?>/views/compra.php" method="POST">
                         <button id="btnCompra" type="submit" class="btn btn-success btn-lg">REALIZAR COMPRA <i
                                 class="bi bi-credit-card"></i></button>
                     </form>
                 </div>
                 <!-- Carrito -->
                 <div class="col-12 p-2 text-center rounded">
+                    <input type="hidden" id="carritoInput" name="carrito">
                     <button id="btnCarrito" type="button" class="btn btn-primary btn-lg">Agregar al carrito <i
                             class="bi bi-cart-plus"></i></button>
                 </div>

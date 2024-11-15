@@ -10,10 +10,12 @@ require_once __DIR__ . '/../includes/conexion.php';
 // pass: 123456*a
 
 // SI LLEGA VIA URL, REDIRIGIRLO
+/*
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     require(RUTA_PROYECTO . '/views/error.php');
     exit();
 }
+    */
 
 
 // IMPORTANTE: LE SACO LOS REQUIRED DE HTML PARA PROBAR LAS VALIDACIONES DE PHP
@@ -22,13 +24,59 @@ $errors = [];
 $variables = []; 
 
 
-
 // VALIDAR FORMULARIO SI LLEGA POR POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $datos = json_decode(file_get_contents('php://input'), true);
-// Obtener el carrito enviado desde js
-    
-    var_dump($datos);
+    echo "REQUEST METHOD POST!!!!!!!!";
+    /*echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";*/
+
+    if (isset($_SESSION['carrito'])) {
+        echo "VARIABLE DE SESSION: CARRITO ALMACENADO: ";
+        $carrito = $_SESSION['carrito'];
+        echo '<pre>';
+        print_r($_SESSION['carrito']);
+        echo '</pre>';
+        $carrito = $_SESSION['carrito'];
+        echo "VARIABLE CARRITO CON LA INFO TOMADA DE LA SESION";
+        echo '<pre>';
+        print_r($carrito);
+        echo '</pre>';
+        $productos_string = ""; // Inicializamos la cadena vacía
+
+        // necesitamos que la info del carrito se formatee asi:
+            // "(1,2,500.00),(2,1,500.00)"
+            // id_producto, cantidad, precio_unitario_pesos
+
+        // Recorremos el carrito para formar la cadena
+        foreach ($carrito as $producto) {
+        // Concatenamos los valores de cada producto en el formato requerido
+        $productos_string .= "(" . $producto['id'] . ", " . $producto['cantidad'] . ", " . $producto['precioEnPesos'] . "), ";
+        }
+
+        // Eliminamos la última coma y el espacio extra
+        $productos_string = rtrim($productos_string, ", ");
+
+        echo "STRING DE PRODUCTOS TRANSFORMADOS: ". $productos_string;
+
+        //if (is_array($carrito)) {
+            echo "Carrito recibido:<br>";
+            foreach ($carrito as $producto) {
+                echo "ID Producto: " . $producto['id'] . "<br>";
+                echo "Cantidad: " . $producto['cantidad'] . "<br>";
+                echo "Precio en Pesos: " . $producto['precioEnPesos'] . "<br>";
+                echo "Marca: " . $producto['marca'] . "<br>";
+                echo "Modelo: " . $producto['modelo'] . "<br>";
+                echo "Imagen: " . $producto['imagen'] . "<br><br>";
+            }
+        //} else {
+          //  echo "El carrito tiene un formato inválido.";
+        //}
+    } else {
+        echo "No se recibió el carrito.";
+    }
+
+
     /*  COMIENZO DE TODAS LAS VALIDACIONES DEL FORMULARIO POR PHP */
     if(isset($_POST['envioTitular'])){
         // Validación del nombre y apellido: 2 Palabras, min 3 max 50 caracteres validos
