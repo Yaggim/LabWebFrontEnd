@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -25,7 +23,7 @@ $productosCarrito = $carrito->verCarrito();
 <head>
     <title>HardTech - Carrito</title>
 
-    <?php require(RUTA_PROYECTO . '/components/head.php') ?>
+    <?php require(RUTA_PROYECTO.'/components/head.php') ?>
 
     <link rel="stylesheet" type="text/css" href="/<?php echo CARPETA_PROYECTO ?>/css/carrito.css">
     <script type="text/javascript" src="/<?php echo CARPETA_PROYECTO ?>/js/carrito.js" defer></script>
@@ -33,16 +31,26 @@ $productosCarrito = $carrito->verCarrito();
 </head>
 
 <body>
-    <?php require(RUTA_PROYECTO . '/components/header.php'); ?>
+    <?php require(RUTA_PROYECTO.'/components/header.php'); ?>
 
     <div class="container-carrito">
         <div class="row">
-            <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
-            <div id="carrito" class="bg-light p-3"></div>
+             <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
+             <div id="carrito" class="bg-light p-3"></div>
+                
+                    <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
+                    <div class="d-flex flex-column align-items-end mb-3">
+                       
+                        <button id="finalizar-compra" class="btn btn-success mt-3">Finalizar compra</button>
+                        <button id="cancelar-compra" type="button" class="btn btn-secondary mt-3">Cancelar</button>
+                    </div>
+                </div>
+                
+            
         </div>
     </div>
 
-    <!-- Modal "Compra exitosa" -->
+    <!--Modal "Compra exitosa"-->
     <div class="modal fade" id="modalFinCompra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -53,7 +61,7 @@ $productosCarrito = $carrito->verCarrito();
                 </div>
                 <!-- Body -->
                 <div class="modal-body">
-                    El número de pedido es #<span id="numeroPedido"></span>
+                    El número de pedido es #123456
                 </div>
                 <!-- Footer -->
                 <div class="modal-footer">
@@ -66,13 +74,13 @@ $productosCarrito = $carrito->verCarrito();
     </div>
     <!--Fin Modal "Compra exitosa"-->
 
-    <?php require(RUTA_PROYECTO . '/components/footer.php'); ?>
-
+    <?php require(RUTA_PROYECTO.'/components/footer.php'); ?>
     <script>
         // Pasar la información de la sesión a JavaScript
         var compraExitosa = <?php echo isset($_SESSION['compra_exitosa']) ? json_encode($_SESSION['compra_exitosa']) : 'null'; ?>;
         <?php unset($_SESSION['compra_exitosa']); ?>
     </script>
+
 </body>
 
 </html>

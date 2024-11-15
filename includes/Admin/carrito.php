@@ -13,11 +13,11 @@ class Carrito {
             $carrito[$productoId]['cantidad'] += $cantidad;
         } else {
             $producto = $this->obtenerProductoDesdeLocalStorage($productoId);
-
             if ($producto) {
                 $carrito[$productoId] = [
                     'nombre' => $producto['descripcion'],
-                    'precio' => $producto['precio_usd'],
+                    'precio' => $producto['valor'],
+                    'imagen' => $producto['ruta_imagen'],
                     'cantidad' => $cantidad
                 ];
             } else {
@@ -43,7 +43,6 @@ class Carrito {
 
     public function realizarCompra() {
         $carrito = $this->verCarrito();
-
         if (empty($carrito)) {
             throw new Exception("El carrito está vacío.");
         }
@@ -62,6 +61,15 @@ class Carrito {
         }
 
         $message .= "Gracias por comprar con nosotros.\n\nSaludos,\nEquipo de HardTech";
+
+        $headers = "From: no-reply@hardtech.com";
+        if (!mail($userEmail, $subject, $message, $headers)) {
+            throw new Exception("Error al enviar el correo electrónico de confirmación.");
+        }
+
+        $logFile = __DIR__ . '/compras.log';
+        $logMessage = date('Y-m-d H:i:s') . " - Compra realizada por $userName ($userEmail):\n" . $message . "\n";
+        file_put_contents($logFile, $logMessage, FILE_APPEND);
 
         $this->vaciarCarrito();
     }
@@ -83,7 +91,13 @@ class Carrito {
             $this->productosCache = $productos;
         }
 
-        return isset($this->productosCache[$productoId]) ? $this->productosCache[$productoId] : null;
+        foreach ($this->productosCache as $producto) {
+            if ($producto['id'] == $productoId) {
+                return $producto;
+            }
+        }
+
+        return null;
     }
 
     private function obtenerCarritoDesdeLocalStorage() {
@@ -102,17 +116,17 @@ class Carrito {
 
     private function guardarCarritoEnLocalStorage($carrito) {
         $carritoJson = json_encode($carrito);
-    
+
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new Exception("Error al codificar el carrito a JSON: " . json_last_error_msg());
         }
-    
+
         setcookie('carrito', $carritoJson, time() + (86400 * 30), "/");
     }
 
     private function vaciarCarrito() {
         setcookie('carrito', '', time() - 3600, "/");
-    
+
         if (isset($_COOKIE['carrito'])) {
             unset($_COOKIE['carrito']);
         }

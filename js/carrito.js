@@ -1,4 +1,4 @@
-var productos = [];
+/* var productos = [];
 
 async function fetchProducts(id = null) {
     const url = `../../includes/admin/producto.php?id_producto=${id}`;
@@ -172,10 +172,130 @@ document.addEventListener('DOMContentLoaded', function () {
     // *************** FIN NUEVO CODIGO  ***************
     
 
-    finalizarCompraButton.addEventListener('click', finalizarCompra);
+   /* finalizarCompraButton.addEventListener('click', finalizarCompra);
 
     // Cancelar regresa a la página anterior
     cancelarButton.addEventListener('click', function () {
         window.history.back();
+    });
+}); */
+
+document.addEventListener('DOMContentLoaded', function() {
+    function verificarUsuarioLogueado() {
+        return $.ajax({
+            url: '../../includes/usuario.php',
+            method: 'GET',
+            success: function(data) {
+                const response = JSON.parse(data);
+                return response.logueado;
+            },
+            error: function(error) {
+                console.error('Error al verificar el estado del usuario:', error);
+                return false;
+            }
+        });
+    }
+
+    function cargarCarrito() {
+        const username = "admin";
+        const password = "admin";
+        $.ajax({
+            url: '../../includes/Admin/obtener_carrito.php',
+            method: 'GET',
+            data: JSON.stringify({ username: username, password: password }),
+            success: function(data) {
+                const carrito = JSON.parse(data);
+                renderizarCarrito(carrito);
+            },
+            error: function(error) {
+                console.error('Error al cargar el carrito:', error);
+            }
+        });
+    }
+
+    function renderizarCarrito(carrito) {
+        const carritoDiv = document.getElementById('carrito');
+        carritoDiv.innerHTML = '';
+
+        const finalizarCompraBtn = document.getElementById('finalizar-compra');
+        if (Object.keys(carrito).length === 0) {
+            carritoDiv.innerHTML = '<p>El carrito está vacío.</p>';
+            finalizarCompraBtn.style.display = 'none';
+        } else {
+            finalizarCompraBtn.style.display = 'block';
+            const table = document.createElement('table');
+            table.classList.add('table');
+            const thead = document.createElement('thead');
+            thead.innerHTML = '<tr><th>Imagen</th><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Total</th><th>Acciones</th></tr>';
+            const tbody = document.createElement('tbody');
+
+            for (const productoId in carrito) {
+                const item = carrito[productoId];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${item.imagen}" alt="${item.nombre}" width="50"></td>
+                    <td>${item.nombre}</td>
+                    <td>${item.precio}</td>
+                    <td>${item.cantidad}</td>
+                    <td>${item.precio * item.cantidad}</td>
+                    <td><button class="btn btn-danger eliminar" data-id="${productoId}">Eliminar</button></td>
+                `;
+                tbody.appendChild(row);
+            }
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            carritoDiv.appendChild(table);
+        }
+    }
+
+   // Añadir event listeners a los botones de eliminación
+   const eliminarBtns = document.querySelectorAll('.eliminar');
+   eliminarBtns.forEach(function(btn) {
+       btn.addEventListener('click', function() {
+           const productoId = this.getAttribute('data-id');
+           const username = 'admin'; // Reemplaza con el nombre de usuario real
+           const password = 'password'; // Reemplaza con la contraseña real
+           $.ajax({
+               url: '/mi-proyecto/eliminar_del_carrito.php',
+               method: 'POST',
+               contentType: 'application/json',
+               data: JSON.stringify({ producto_id: productoId, username: username, password: password }),
+               success: function(data) {
+                   const response = JSON.parse(data);
+                   if (response.success) {
+                       cargarCarrito();
+                   } else {
+                       console.error('Error al eliminar el producto del carrito:', response.message);
+                   }
+               },
+               error: function(xhr, status, error) {
+                   console.error('Error al eliminar el producto del carrito:', error);
+               }
+           });
+       });
+   });
+
+
+    verificarUsuarioLogueado().then(function(logueado) {
+        if (logueado) {
+            cargarCarrito();
+        } else {
+            document.getElementById('carrito').innerHTML = '<p>Debe iniciar sesión para realizar compras.</p>';
+        }
+    });
+
+    // Manejar el botón de finalizar compra
+    document.getElementById('finalizar-compra').addEventListener('click', function() {
+        // Aquí puedes agregar la lógica para finalizar la compra
+        // Por ejemplo, enviar una solicitud AJAX para procesar la compra
+        alert('Compra finalizada');
+    });
+
+    // Manejar el botón de cancelar compra
+    document.getElementById('cancelar-compra').addEventListener('click', function() {
+        // Aquí puedes agregar la lógica para cancelar la compra
+        // Por ejemplo, vaciar el carrito
+        alert('Compra cancelada');
     });
 });
