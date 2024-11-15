@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p class="card-text">${descripcionTruncada}</p>
                             <p class="card-text">Precio: $${(product.precio_usd * dolarBlue).toFixed(2)}</p>
                             <p class="card-text">Stock: ${product.stock}</p>
-                            <a href="${product.category_name}/${productNombre}/${product.id_producto}" class="btn btn-primary">Seleccionar</a>
+                            <a href="${product.category_name.toLowerCase()}/${productNombre}/${product.id_producto}" class="btn btn-primary">Seleccionar</a>
                         </div>
                     </div>
                 `;
