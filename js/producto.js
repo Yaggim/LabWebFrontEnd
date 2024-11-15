@@ -137,6 +137,27 @@ function cargarProductoPorID(idProducto) {
 
             // Guarda el carrito actualizado en localStorage
             localStorage.setItem('carrito', JSON.stringify(carritoLocalStorage));
+            let jsonCarrito = JSON.stringify(carritoLocalStorage)
+            // 
+            fetch('../../views/compra.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonCarrito
+                
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log("Carrito pasado con éxito.");
+                } else {
+                    console.error("Error al pasar carrito.");
+                }
+            })
+            .catch(error => {
+                console.error("Error de conexión! ", error);
+            });
 
             console.log("Carrito actualizado:");
             carritoLocalStorage.forEach(item => {

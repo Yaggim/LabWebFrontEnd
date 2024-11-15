@@ -2,6 +2,12 @@
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/conexion.php';
 
+/*if(!isset($_SESSION['usuario'])){
+    header('Location: home');
+}*/
+
+// user: comprador / admin
+// pass: 123456*a
 
 // SI LLEGA VIA URL, REDIRIGIRLO
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -10,14 +16,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 
-
 // IMPORTANTE: LE SACO LOS REQUIRED DE HTML PARA PROBAR LAS VALIDACIONES DE PHP
 
 $errors = [];
 $variables = []; 
 
+
+
 // VALIDAR FORMULARIO SI LLEGA POR POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $datos = json_decode(file_get_contents('php://input'), true);
+// Obtener el carrito enviado desde js
+    
+    var_dump($datos);
     /*  COMIENZO DE TODAS LAS VALIDACIONES DEL FORMULARIO POR PHP */
     if(isset($_POST['envioTitular'])){
         // Validación del nombre y apellido: 2 Palabras, min 3 max 50 caracteres validos
@@ -83,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Variables de entrada para el SP:
             ID_PERSONA -> Viene por la $_SESSION
             TIPO_PAGO -> $variables['metodoPago'];
-            PRECIO_TOTAL -> Viene por la $_SESSION ????? 
+            PRECIO_TOTAL -> SE CALCULA A PARTIR DEL LOCAL STORAGE
             PRODUCTOS -> VIENEN POR LOCAL STORAGE
 
             // Array de productos: id_producto, cantidad, precio_unitario
