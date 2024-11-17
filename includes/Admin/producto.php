@@ -3,13 +3,15 @@ require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/../conexion.php");
 require_once(__DIR__ . "/../Crud.php");
 
+$userId = $_SESSION['usuario']['id'];
+
 class ProductoBBDD extends Crud {
     public function __construct() {
         parent::__construct("productos");
     }
 
     public function getMovementTypes() {
-        $stmt = $this->conexion->prepare("SELECT id_movimientos_stock_tipo, detalle FROM movimientos_stock_tipo");
+        $stmt = $this->conexion->prepare("SELECT id_movimientos_stock_tipo, detalle, tipo_movimimiento FROM movimientos_stock_tipo");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -70,7 +72,7 @@ class ProductoBBDD extends Crud {
         return $result;
     }
 
-    public function updateStock($id, $quantity, $action, $movementType) {
+    public function updateStock($id, $quantity, $action, $movementType, $userId) {
         $stmt = $this->conexion->prepare("SELECT stock FROM productos WHERE id_producto = :id");
         $stmt->bindParam(":id", $id);
         $stmt->execute();
@@ -98,7 +100,7 @@ class ProductoBBDD extends Crud {
     ");
 
 
-        $userId = 1; 
+
         $comboId = null;
 
         $stmt->bindParam(":cantidad", $quantity);
@@ -287,7 +289,7 @@ break;
             }
     
             try {
-                $result = $productoBBDD->updateStock($data['id_producto'], $data['cantidad'], $data['accion'], $data['id_movimiento_stock_tipo']);
+                $result = $productoBBDD->updateStock($data['id_producto'], $data['cantidad'], $data['accion'], $data['id_movimiento_stock_tipo'], $userId);
                 echo json_encode($result ? ['result' => $result] : ['error' => 'Error al actualizar el stock']);
             } catch (Exception $e) {
                 echo json_encode(['error' => $e->getMessage()]);
