@@ -23,7 +23,7 @@ async function loadMovementTypes() {
         movementTypes.forEach(type => {
             const option = document.createElement('option');
             option.value = type.id_movimientos_stock_tipo;
-            option.textContent = type.detalle;
+            option.textContent = type.detalle + ' - ' + type.tipo_movimimiento;
             reasonSelect.appendChild(option);
         });
     } catch (error) {
