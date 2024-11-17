@@ -115,8 +115,8 @@
                 <!-- Botón de compra -->
                 <div class="col-12 p-2 text-center rounded">
                     <form id="comprar" action="/<?php echo CARPETA_PROYECTO ?>/views/compra.php" method="POST">
-                        <button id="btnCompra" type="submit" class="btn btn-success btn-lg">REALIZAR COMPRA <i
-                                class="bi bi-credit-card"></i></button>
+                        <button id="btnCompra" type="submit" class="btn btn-success btn-lg">Ver carrito 
+                            <i class="bi bi-eye"></i></i></button>
                     </form>
                 </div>
                 <!-- Carrito -->

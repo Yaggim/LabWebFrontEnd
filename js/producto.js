@@ -362,32 +362,7 @@ document.getElementById('btnCompra').addEventListener('click', function (event) 
     */
     document.getElementById('btnCompra').addEventListener('click', async function (event) {
         event.preventDefault(); 
-    
-        // Obtener el carrito
-        let carritoLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
-    
-        // Asegurarnos de que el carrito no esté vacío
-        if (carritoLocalStorage.length === 0) {
-            alert('El carrito está vacío. Agrega productos antes de realizar la compra.');
-            // EN ESTE CASO HAY QUE ALMACENAR TODOS LOS DATOS DEL PRODCUTO QUE SE ESTÁ MOSTRANDO POR PANTALLA
-            // AL CARRITO Y MANDARLO, BÁSICAMENTE ES UN CARRITO DE 1 PRODUCTO ESE CASO
-            return;
-        }
-    
-        // Enviar el carrito al servidor para guardarlo en la sesión
-        try {
-            let response = await fetch('../../views/guardar_carrito.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ carrito: carritoLocalStorage }),
-            });
-    
-            if (response.ok) {
-                document.getElementById("comprar").submit();
-            } 
-        } catch (error) {
-            console.error('Error al enviar el carrito:', error);
-        }
+        const basePath = window.location.pathname.split('/')[1];
+        window.location.href = `/${basePath}/views/carrito.php`;
+        
     });
