@@ -39,8 +39,10 @@ function cargarJsons(index,evento) {
 
         cateActual = categorias[index];
 
+        const basePath = window.location.pathname.split('/')[1];
+
         
-        let url = "../includes/armarPcBBDD.php?categoria="+ cateActual + "&marca=" + marca.name;
+        let url = "/"+ basePath + "/includes/armarPcBBDD.php?categoria="+ cateActual + "&marca=" + marca.name;
         
         console.log(url);
         const xhr = new XMLHttpRequest();
@@ -285,6 +287,8 @@ async function crearInforme() {
     btnComprar.className = 'btn btn-success w-25';
     btnComprar.textContent = "Comprar";
     btnComprar.addEventListener('click', () => {
+	const armarPc = JSON.stringify(prodSelecc);
+	localStorage.setItem('armarPcJson', armarPc);    
         window.location.href = 'finalizar-compra';
     });
 
@@ -334,9 +338,9 @@ window.onload = () => {
     
 	let cpu1 = document.getElementById("cpu1");
 	let cpu2 = document.getElementById("cpu2");
-    let atrasBtn = document.getElementById("backBtn");
+    	let atrasBtn = document.getElementById("backBtn");
 
-    atrasBtn.style.display = "none";
+    	atrasBtn.style.display = "none";
 
 	cpu1.addEventListener("click", (evento)=>{
 		cargarJsons(index,evento);
