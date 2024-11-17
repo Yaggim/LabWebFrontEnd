@@ -1,4 +1,21 @@
-<?php require_once(__DIR__ .'/../config/config.php'); ?>
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+require_once __DIR__ . '/../config/config.php';
+require_once(__DIR__ . '/../includes/Admin/carrito.php');
+
+$userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+$carrito = new Carrito($userId);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['producto_id'])) {
+    $productoId = $_POST['producto_id'];
+    $cantidad = isset($_POST['cantidad']) ? $_POST['cantidad'] : 1;
+    $carrito->agregarAlCarrito($productoId, $cantidad);
+}
+
+$productosCarrito = $carrito->verCarrito();
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -24,8 +41,11 @@
                     <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
                     <div class="d-flex flex-column align-items-end mb-3">
                        
-                        <button id="finalizar-compra" class="btn btn-success mt-3">Finalizar compra</button>
-                        <button id="cancelar-compra" type="button" class="btn btn-secondary mt-3">Cancelar</button>
+                    <form action="/<?php echo CARPETA_PROYECTO ?>/views/compra.php" method="POST">
+                        <button id="btnCompra" type="submit" class="btn btn-success m-3">REALIZAR COMPRA <i
+                                class="bi bi-credit-card"></i></button>
+                    </form>
+                        <button id="cancelar-compra" type="button" class="btn btn-secondary m-3">Cancelar</button>
                     </div>
                 </div>
                 
@@ -58,6 +78,12 @@
     <!--Fin Modal "Compra exitosa"-->
 
     <?php require(RUTA_PROYECTO.'/components/footer.php'); ?>
+    <script>
+        // Pasar la información de la sesión a JavaScript
+        var compraExitosa = <?php echo isset($_SESSION['compra_exitosa']) ? json_encode($_SESSION['compra_exitosa']) : 'null'; ?>;
+        <?php unset($_SESSION['compra_exitosa']); ?>
+    </script>
+
 </body>
 
 </html>

@@ -88,7 +88,7 @@
                         <?php else: require RUTA_PROYECTO.'/components/form_logout.php'; ?>
                         <?php endif; ?>
                     </form>
-                    <a href="/<?php echo CARPETA_PROYECTO ?>/carrito" class="me-3 me-md-3 me-lg-4 ms-sm-2">
+                    <a href="/<?php echo CARPETA_PROYECTO ?>/views/carrito.php" class="me-3 me-md-3 me-lg-4 ms-sm-2">
                         <i class="fa fa-shopping-cart fs-5"></i>
                     </a>
                 </div>

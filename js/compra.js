@@ -54,7 +54,22 @@ function togglePagoEfectivo() {
     }
 }
 
+// NUEVO: función para el pago en efectivo
+function togglePagoEfectivo() {
+    let esPagoEfectivo = document.getElementById("pagoEfectivo").checked;
+    let campoTarjeta = document.getElementById("tarjeta");
+
+    if (esPagoEfectivo) {
+        document.getElementById("tarjetaContainer").classList.add("d-none");
+        campoTarjeta.required = false;
+    } else {
+        document.getElementById("tarjetaContainer").classList.remove("d-none");
+        campoTarjeta.required = true;
+    }
+}
+
 function confirmarCompra(event) {
+    event.preventDefault();
     document.getElementById("envioTitular").classList.remove('is-invalid');
     document.getElementById("envioCalle").classList.remove('is-invalid');
     document.getElementById("envioAltura").classList.remove('is-invalid');
@@ -62,11 +77,27 @@ function confirmarCompra(event) {
     document.getElementById("envioNota").classList.remove('is-invalid');
     document.getElementById("dni").classList.remove('is-invalid');
     document.getElementById("tarjeta").classList.remove('is-invalid');
-    event.preventDefault();
+
     if (validarDatos()) {
-        let finCompraModal = new bootstrap.Modal(document.getElementById("modalFinCompra"));
-        finCompraModal.show();
-        formCompra.reset();
+        let formCompra = document.getElementById("formCompra");
+        let formData = new FormData(formCompra);
+
+        fetch('compra.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            
+                let finCompraModal = new bootstrap.Modal(document.getElementById("modalFinCompra"));
+                finCompraModal.show();
+                formCompra.reset();
+            
+        })
+        .catch(error => {
+            console.error('Error al realizar la compra:', error);
+            alert('Error al realizar la compra: ' + error);
+        });
     }
 }
 
