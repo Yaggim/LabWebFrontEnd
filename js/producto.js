@@ -199,20 +199,29 @@ function cargarProductoPorID(idProducto) {
     }
 }
 
-function cargarCombosPorID(idCombo) {
+async function cargarCombosPorID(idCombo) {
     console.log("COMBO CARGADO:", combo);
     if (combo) {
-        completarDatosCombo()
-        completarRecuadroStockCombo()
+        completarDatosCombo();
+        completarRecuadroStockCombo();
+
+        // Calcular el precio total del combo en pesos
+        const dolarBlue = await fetchDolarBlue();
+        const precioTotalUSD = combo.productos.reduce((total, producto) => total + (producto.precio_usd * producto.cantidad), 0);
+        const precioConDescuentoUSD = precioTotalUSD * (1 - combo.descuento / 100);
+        const precioEnPesos = precioConDescuentoUSD * dolarBlue;
+
+        // Mostrar el precio en pesos del combo
+        document.getElementById("combo-priceARS").textContent = "Precio AR$ " + precioEnPesos.toFixed(2) + ".-";
 
         // Agregar al carrito
         document.getElementById("btnCarrito").addEventListener("click", agregarComboAlCarrito);
 
         function agregarComboAlCarrito() {
             let carritoModal = new bootstrap.Modal(document.getElementById("modalCarrito"));
-            let carrito = document.getElementById("modalCarrito")
-            carrito.querySelector(".modal-body").innerHTML = "Se ha añadido al carrito exitosamente: <br>" + combo.nombre
-            carrito.querySelector("div.cantidadCarrito").textContent = "Cantidad: 1"
+            let carrito = document.getElementById("modalCarrito");
+            carrito.querySelector(".modal-body").innerHTML = "Se ha añadido al carrito exitosamente: <br>" + combo.nombre;
+            carrito.querySelector("div.cantidadCarrito").textContent = "Cantidad: 1";
             carritoModal.show();
 
             // Obtener el carrito de localStorage o iniciar un carrito vacío
@@ -232,7 +241,8 @@ function cargarCombosPorID(idCombo) {
                     nombre: combo.nombre,
                     descuento: combo.descuento,
                     imagen: combo.imagenes[0],
-                    productos: combo.productos
+                    productos: combo.productos,
+                    precioEnPesos: precioEnPesos
                 };
                 carritoLocalStorage.push(comboConCantidad);
             }
@@ -242,8 +252,8 @@ function cargarCombosPorID(idCombo) {
 
             console.log("Carrito actualizado:");
             carritoLocalStorage.forEach(item => {
-                console.log(carritoLocalStorage)
-                console.log(`ID: ${item.id}, Cantidad: ${item.cantidad}, Nombre: ${item.nombre}`);
+                console.log(carritoLocalStorage);
+                console.log(`ID: ${item.id}, Cantidad: ${item.cantidad}, Nombre: ${item.nombre}, Precio en Pesos: ${item.precioEnPesos}`);
             });
         }
 

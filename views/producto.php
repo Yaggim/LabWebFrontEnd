@@ -93,6 +93,7 @@
                         <h1 id="combo-nombre">Nombre del combo {nombre}</h1>
                         <h6 id="combo-descuento">Descuento {descuento}%</h6>
                         <div id="combo-description"></div>
+                        <h2 id="combo-priceARS">Precio AR$ {price}</h2> 
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center">

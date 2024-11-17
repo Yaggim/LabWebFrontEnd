@@ -13,44 +13,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // Para cada producto en el carrito
-    for (let producto of carrito) {
-        console.log("Producto ID: " + producto.id);
-        // Crea un nuevo div para el producto
-        let productoDiv = document.createElement('div');
-        productoDiv.className = 'producto';
+    // Para cada elemento en el carrito
+    for (let item of carrito) {
+        console.log("Elemento ID: " + item.id);
+        // Crea un nuevo div para el elemento
+        let itemDiv = document.createElement('div');
+        itemDiv.className = 'producto';
 
-        // Comprueba que producto.brand y producto.model existen antes de intentar acceder a sus propiedades
-        let brandName = producto.marca;
-        let modelName = producto.modelo;
+        // Comprueba si es un combo o un producto normal
+        if (item.productos) {
+            // Es un combo
+            let nombreCombo = item.nombre;
+            let srcImageCombo = '../' + item.imagen;
 
-        // Establece el contenido del div del producto
-        let srcImageOriginal = '../' + producto.imagen ;
-                
-        productoDiv.innerHTML = `<img src="${srcImageOriginal}" alt="${brandName} ${modelName}" class="imagenProducto"> 
-                <div>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
-                | Precio unitario: $${producto.precioEnPesos} </div>  `;
+            itemDiv.innerHTML = `<img src="${srcImageCombo}" alt="${nombreCombo}" class="imagenProducto"> 
+                <div>${nombreCombo} | Cantidad: ${item.cantidad || 1}  
+                | Descuento: ${item.descuento}% | Precio: $${item.precioEnPesos.toFixed(2)}</div>`;
+        } else {
+            // Es un producto normal
+            let brandName = item.marca;
+            let modelName = item.modelo;
+            let srcImageProducto = '../' + item.imagen;
 
-        // Agrega el div del producto al div del carrito
-        carritoDiv.appendChild(productoDiv);
+            itemDiv.innerHTML = `<img src="${srcImageProducto}" alt="${brandName} ${modelName}" class="imagenProducto"> 
+                <div>${brandName} ${modelName} | Cantidad: ${item.cantidad || 1}  
+                | Precio unitario: $${item.precioEnPesos.toFixed(2)}</div>`;
+        }
 
-        // Si hay un producto en el carrito, agrega el botón de eliminar
+        // Agrega el div del elemento al div del carrito
+        carritoDiv.appendChild(itemDiv);
+
+        // Si hay un elemento en el carrito, agrega el botón de eliminar
         if (carrito.length > 0) {
             console.log("Contenido del carrito:", carrito);
-            // Establece el contenido del div del producto
-            productoDiv.innerHTML = `<img src="${srcImageOriginal}" alt="${brandName} ${modelName}" class="imagenProducto"> 
-                            <div>${brandName} ${modelName} | Cantidad: ${producto.cantidad || 1}  
-                            | Precio unitario: $${producto.precioEnPesos} </div>  `;
-            // Agrega el div del producto al div del carrito
-            carritoDiv.appendChild(productoDiv);
             let eliminarButton = document.createElement('button');
             eliminarButton.className = 'eliminar mx-3';
-            eliminarButton.id = 'eliminar-' + producto.id;
+            eliminarButton.id = 'eliminar-' + item.id;
             eliminarButton.textContent = 'Eliminar';
-            productoDiv.appendChild(eliminarButton);
+            itemDiv.appendChild(eliminarButton);
 
             eliminarButton.addEventListener('click', function () {
-                eliminarElementoDelCarrito(producto.id);
+                eliminarElementoDelCarrito(item.id);
             });
         }
     }
@@ -117,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
         // Enviar el carrito al servidor para guardarlo en la sesión
         try {
-            let response = await fetch('../../views/guardar_carrito.php', {
+            let response = await fetch('guardar_carrito.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
