@@ -27,12 +27,10 @@ $variables = [];
 // VALIDAR FORMULARIO SI LLEGA POR POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
-    /*echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";*/
-    
     if (isset($_SESSION['carrito'])) {
         $carrito = $_SESSION['carrito']['carrito']; 
+
+
         $productos_string = ""; 
         $precio_total = 0.00;
 
@@ -105,7 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $variables['metodoPago'] = 'TARJETA';
     }
     /*  FIN DE TODAS LAS VALIDACIONES DE FORMULARIO */
-
+    
+    
     // Si no hay errores, se procesa la compra
     if (empty($errors) && !empty($variables)) {
         
@@ -118,8 +117,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $sql = "CALL procesar_compra(:id_persona, :tipo_pago, :precio_total, :productos)";
 
             
-            $parametros = "CALL procesar_compra(" . $id_persona . ", '" . $tipo_pago . "', " . number_format($precio_total, 2, '.', '') . ", '" . $productos_string . "')";
-    
+            $parametros = "CALL procesar_compra(" . $id_persona . ", '" . $tipo_pago . "', " . number_format($precio_total, 2, '.', '') . ",'" . $productos_string . "')";
+            
+            $precio_total = number_format($precio_total, 2, '.', '');
 
             $conexion = Conexion::getConn();
 

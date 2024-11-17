@@ -30,6 +30,11 @@
                 <a class="nav-link text-white" href="/<?php echo CARPETA_PROYECTO ?>/ofertaSemana"><i class="fas fa-percent me-2"></i>Oferta de la semana</a>
             </li>
             <?php endif; ?>  
+            <?php if (Permisos::tienePermiso('Gestionar ventas', $_SESSION['usuario']['id']) ): ?>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/<?php echo CARPETA_PROYECTO ?>/ventas"><i class="fas fa-percent me-2"></i>Ventas</a>
+            </li>
+            <?php endif; ?>  
             <li class="nav-item">
                 <a class="nav-link text-white" class="col-6 btn btn-custom mb-3 mx-auto" href="/<?php echo CARPETA_PROYECTO ?>/home">Volver a Hardtech</a>
             </li>
