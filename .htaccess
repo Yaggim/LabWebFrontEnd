@@ -24,3 +24,4 @@ RewriteRule ^categoria$                                 /LabWebFrontEnd/pages/ad
 RewriteRule ^stock$                                     /LabWebFrontEnd/pages/admin/stock.php
 RewriteRule ^ofertaSemana$                              /LabWebFrontEnd/pages/admin/ofertaSemana.php
 RewriteRule ^combos$                                    /LabWebFrontEnd/pages/admin/combos.php
+RewriteRule ^ventas$                                    /LabWebFrontEnd/pages/admin/ventas.php
