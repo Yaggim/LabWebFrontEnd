@@ -177,7 +177,9 @@
 		public function getProdByCategoriaAndMarca($marca, $categoria){
 			$stmt = $this->conexion->prepare(" 
             SELECT 
-				productos.Id_producto,
+				productos.Id_producto AS id,
+				productos.habilitado AS habilitado,
+				productos.stock AS stock,
                 marcas.nombre AS marca, 
                 modelos.nombre AS modelo,
                 productos.descripcion AS descripcion,
@@ -212,15 +214,15 @@
 
 			$stmt = $this->conexion->prepare(" 
             SELECT 
- 				productos.Id_producto,
+ 				productos.Id_producto AS id,
+				productos.habilitado AS habilitado,
+				productos.stock AS stock,
                 marcas.nombre AS marca, 
                 modelos.nombre AS modelo,
                 productos.descripcion AS descripcion,
                 imagenes_productos.url AS imagen,
                 productos.precio_usd as precio,
                 categorias.nombre as categoria
-
-       
             FROM 
                 marcas
             INNER JOIN 

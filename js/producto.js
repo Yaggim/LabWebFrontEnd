@@ -376,6 +376,7 @@ document.getElementById('btnCompra').addEventListener('click', function (event) 
     */
     document.getElementById('btnCompra').addEventListener('click', async function (event) {
         event.preventDefault(); 
+        
         const basePath = window.location.pathname.split('/')[1];
         window.location.href = `/${basePath}/views/carrito.php`;
         

@@ -105,6 +105,23 @@
           </div>
         </div>
 
+        <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalErrorLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalErrorLabel">Error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modalErrorMensaje"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="modalErrorCerrar">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <?php require(RUTA_PROYECTO.'/components/footer.php'); ?>
