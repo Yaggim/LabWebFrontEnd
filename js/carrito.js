@@ -113,8 +113,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Asegurarnos de que el carrito no esté vacío
         if (carritoLocalStorage.length === 0) {
             alert('El carrito está vacío. Agrega productos antes de realizar la compra.');
-            // EN ESTE CASO HAY QUE ALMACENAR TODOS LOS DATOS DEL PRODCUTO QUE SE ESTÁ MOSTRANDO POR PANTALLA
-            // AL CARRITO Y MANDARLO, BÁSICAMENTE ES UN CARRITO DE 1 PRODUCTO ESE CASO
             return;
         }
     

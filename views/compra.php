@@ -6,17 +6,12 @@ if(!isset($_SESSION['usuario'])){
     header('Location: home');
 }
 
-// user: comprador / admin
-// pass: 123456*a
-
 // SI LLEGA VIA URL, REDIRIGIRLO
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     require(RUTA_PROYECTO . '/views/error.php');
     exit();
 }
-
-
 
 // IMPORTANTE: LE SACO LOS REQUIRED DE HTML PARA PROBAR LAS VALIDACIONES DE PHP
 
@@ -25,8 +20,7 @@ $variables = [];
 
 
 // VALIDAR FORMULARIO SI LLEGA POR POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {  
     if (isset($_SESSION['carrito'])) {
         $carrito = $_SESSION['carrito']['carrito']; 
 
@@ -48,13 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $precio_total_productos += $producto['cantidad'] * floatval($producto['precioEnPesos']);
             }
         }
-
         $productos_string = rtrim($productos_string, ", ");
         $combos_string = rtrim($combos_string, ", ");
 
         $id_persona = intval($_SESSION['usuario']['id_persona']);
-
-        
 
 
     /*  COMIENZO DE TODAS LAS VALIDACIONES DEL FORMULARIO POR PHP */
@@ -100,6 +91,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }else{
             $variables['dni']  = $_POST['dni'];}
     }
+    // Validación del método de pago
+    if (isset($_POST['pagoEfectivo']) && !empty($_POST['pagoEfectivo'])) {
+        // El usuario seleccionó pagar en efectivo
+        $variables['metodoPago'] = 'EFECTIVO';
+    } else {
+        // El usuario no seleccionó pago en efectivo, debe pagar con tarjeta
+        if (isset($_POST['tarjeta']) && preg_match('/^\d{12}$/', $_POST['tarjeta'])) {
+            // La tarjeta es válida
+            $variables['tarjeta'] = $_POST['tarjeta'];
+            $variables['metodoPago'] = 'TARJETA';
+        } else {
+            // Error: tarjeta no válida
+            $errors['tarjeta'] = true;
+        }
+    }
+    /*
     if(isset($_POST['tarjeta'])){
         // Validación de la tarjeta de crédito (si no se elige pago en efectivo)
         if (empty($_POST['pagoEfectivo']) && (empty($_POST['tarjeta']) || !preg_match('/^\d{12}$/', $_POST['tarjeta']))) {
@@ -112,6 +119,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $variables['tarjeta']  = $_POST['tarjeta'];}
             $variables['metodoPago'] = 'TARJETA';
     }
+            */
+
+
     /*  FIN DE TODAS LAS VALIDACIONES DE FORMULARIO */
     
     

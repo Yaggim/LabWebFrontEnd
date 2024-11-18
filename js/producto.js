@@ -66,8 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const segmentosPath = urlPath.split('/');
     const id = parseInt(segmentosPath[segmentosPath.length - 1]);
     const tipo = segmentosPath[segmentosPath.length - 3]; // El segmento que precede al nombre del producto/combo
-
     if (tipo === 'combos') {
+        
         if (productoContainer) productoContainer.style.display = 'none';
         if (comboContainer) comboContainer.style.display = 'block';
         if (productoCarousel) productoCarousel.style.display = 'none';
