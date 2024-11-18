@@ -51,10 +51,10 @@ async function validarLogin(e){
         } else {
             // Mostrar mensaje de error del backend
             if (result.error === "Usuario incorrecto") {
-                errorLoginUsername.textContent = "Nombre de usuario incorrecto.";
+                errorLoginUsername.textContent = "Nombre de usuario o contraseña incorrecta.";
                 document.getElementById("nombreUsuario").classList.add("is-invalid");
             } else if (result.error === "Contraseña incorrecta") {
-                errorLoginPassword.textContent = "Contraseña incorrecta.";
+                errorLoginPassword.textContent = "Nombre de usuario o contraseña incorrecta.";
                 document.getElementById("passwordSesion").classList.add("is-invalid");
             } else {
                 mostrarModal("Error", [`Error inesperado: ${result.error}`, "Inténtalo de nuevo."], "Aceptar");
