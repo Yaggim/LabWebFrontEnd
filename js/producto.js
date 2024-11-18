@@ -211,6 +211,10 @@ async function cargarCombosPorID(idCombo) {
         const precioConDescuentoUSD = precioTotalUSD * (1 - combo.descuento / 100);
         const precioEnPesos = precioConDescuentoUSD * dolarBlue;
 
+        combo.productos.forEach(producto => {
+            producto.precioEnPesos = producto.precio_usd * dolarBlue;
+        });
+
         // Mostrar el precio en pesos del combo
         document.getElementById("combo-priceARS").textContent = "Precio AR$ " + precioEnPesos.toFixed(2) + ".-";
 

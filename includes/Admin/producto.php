@@ -3,7 +3,7 @@ require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/../conexion.php");
 require_once(__DIR__ . "/../Crud.php");
 
-$userId = $_SESSION['usuario']['id'];
+
 
 class ProductoBBDD extends Crud {
     public function __construct() {
@@ -289,6 +289,7 @@ break;
             }
     
             try {
+                $userId = $_SESSION['usuario']['id'];
                 $result = $productoBBDD->updateStock($data['id_producto'], $data['cantidad'], $data['accion'], $data['id_movimiento_stock_tipo'], $userId);
                 echo json_encode($result ? ['result' => $result] : ['error' => 'Error al actualizar el stock']);
             } catch (Exception $e) {

@@ -3,7 +3,7 @@ require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/../conexion.php");
 require_once(__DIR__ . "/../Crud.php");
 
-$userId = $_SESSION['usuario']['id'];
+
 
 class ComboBBDD extends Crud {
     public function __construct() {
@@ -236,6 +236,7 @@ class ComboBBDD extends Crud {
         $this->conexion->beginTransaction();
     
         try {
+            $userId = $_SESSION['usuario']['id'];
             // Obtener los productos del combo antes de eliminar
             $stmt = $this->conexion->prepare("SELECT id_producto, cantidad FROM productos_combo WHERE id_combo = :id");
             $stmt->bindParam(":id", $id);
@@ -336,6 +337,7 @@ switch ($method) {
                 break;
             }
             try {
+                $userId = $_SESSION['usuario']['id'];
                 $result = $comboBBDD->createCombo($data, $userId);
                 echo json_encode(['result' => $result]);
             } catch (Exception $e) {
@@ -350,6 +352,7 @@ switch ($method) {
                 break;
             }
             try {
+                $userId = $_SESSION['usuario']['id'];
                 $result = $comboBBDD->updateCombo($data['id_combo'], $data, $userId);
                 echo json_encode(['result' => $result]);
             } catch (Exception $e) {
@@ -364,6 +367,7 @@ switch ($method) {
             break;
         }
         try {
+            
             $result = $comboBBDD->deleteCombo($data['id_combo']);
             echo json_encode(['result' => $result]);
         } catch (Exception $e) {
