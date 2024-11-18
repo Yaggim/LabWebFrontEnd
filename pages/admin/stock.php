@@ -1,11 +1,11 @@
 <?php
     require_once(__DIR__ . "/../../config/config.php"); 
-    //session_start();
+
     if(!isset($_SESSION['usuario'])){
         header('Location: home');
     }
 
-    if (!Permisos::tienePermiso("Crear producto", $_SESSION['usuario']['id'])) {
+    if (!Permisos::tienePermiso("Modificar stock", $_SESSION['usuario']['id'])) {
         header("Location: home");
         die;
     }
@@ -89,6 +89,17 @@
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="errorToastMessage">
+                    <!-- Mensaje de error -->
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>

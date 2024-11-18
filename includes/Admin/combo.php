@@ -3,6 +3,8 @@ require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/../conexion.php");
 require_once(__DIR__ . "/../Crud.php");
 
+
+
 class ComboBBDD extends Crud {
     public function __construct() {
         parent::__construct("combos");
@@ -105,7 +107,7 @@ class ComboBBDD extends Crud {
     }
 
 
-    public function createCombo($data) {
+    public function createCombo($data, $userId) {
         $this->conexion->beginTransaction();
     
         try {
@@ -135,7 +137,7 @@ class ComboBBDD extends Crud {
                     $stmt->execute();
     
                     // Descontar stock y registrar movimiento
-                    $this->updateStockAndRegisterMovement($producto['id_producto'], $producto['cantidad'], $comboId, 4);
+                    $this->updateStockAndRegisterMovement($producto['id_producto'], $producto['cantidad'], $comboId, 4, $userId);
                 }
             }
     
@@ -147,7 +149,7 @@ class ComboBBDD extends Crud {
         }
     }
 
-    public function updateCombo($id, $data) {
+    public function updateCombo($id, $data, $userId) {
         $this->conexion->beginTransaction();
     
         try {
@@ -189,7 +191,7 @@ class ComboBBDD extends Crud {
             // Devolver el stock de los productos que ya no están en el combo
             foreach ($productosActuales as $producto) {
                 if (!in_array($producto['id_producto'], $nuevosProductosIds)) {
-                    $this->updateStockAndRegisterMovement($producto['id_producto'], -$producto['cantidad'], $id, 6);
+                    $this->updateStockAndRegisterMovement($producto['id_producto'], -$producto['cantidad'], $id, 6, $userId);
                 }
             }
 
@@ -210,14 +212,14 @@ class ComboBBDD extends Crud {
                         $cantidadActual = $productosActualesMap[$producto['id_producto']];
                         if ($producto['cantidad'] > $cantidadActual) {
                             // Si la nueva cantidad es mayor, restar la diferencia del stock
-                            $this->updateStockAndRegisterMovement($producto['id_producto'], $cantidadActual + $producto['cantidad'], $id, 7);
+                            $this->updateStockAndRegisterMovement($producto['id_producto'], $cantidadActual + $producto['cantidad'], $id, 7, $userId);
                         } elseif ($producto['cantidad'] < $cantidadActual) {
                             // Si la nueva cantidad es menor, sumar la diferencia al stock
-                            $this->updateStockAndRegisterMovement($producto['id_producto'], $producto['cantidad'] - $cantidadActual, $id, 6);
+                            $this->updateStockAndRegisterMovement($producto['id_producto'], $producto['cantidad'] - $cantidadActual, $id, 6, $userId);
                         }
                     } else {
                         // Si el producto no estaba en el combo antes, se considera como nuevo
-                        $this->updateStockAndRegisterMovement($producto['id_producto'], $producto['cantidad'], $id, 7);
+                        $this->updateStockAndRegisterMovement($producto['id_producto'], $producto['cantidad'], $id, 7, $userId);
                     }
                 }
             }
@@ -234,6 +236,7 @@ class ComboBBDD extends Crud {
         $this->conexion->beginTransaction();
     
         try {
+            $userId = $_SESSION['usuario']['id'];
             // Obtener los productos del combo antes de eliminar
             $stmt = $this->conexion->prepare("SELECT id_producto, cantidad FROM productos_combo WHERE id_combo = :id");
             $stmt->bindParam(":id", $id);
@@ -242,7 +245,7 @@ class ComboBBDD extends Crud {
     
             // Devolver el stock de los productos
             foreach ($productos as $producto) {
-                $this->updateStockAndRegisterMovement($producto['id_producto'], -$producto['cantidad'], $id, 5);
+                $this->updateStockAndRegisterMovement($producto['id_producto'], -$producto['cantidad'], $id, 5, $userId);
             }
     
             // Eliminar movimientos de stock relacionados con el combo (Esto se tuvo que hacer para no tener problemas con la FK)
@@ -270,7 +273,8 @@ class ComboBBDD extends Crud {
         }
     }
 
-    private function updateStockAndRegisterMovement($productId, $quantity, $comboId, $movementType) {
+    private function updateStockAndRegisterMovement($productId, $quantity, $comboId, $movementType, $userId) {
+
         // Descontar stock
         $stmt = $this->conexion->prepare("UPDATE productos SET stock = stock - :cantidad WHERE id_producto = :id_producto");
         $stmt->bindParam(":cantidad", $quantity);
@@ -295,7 +299,7 @@ class ComboBBDD extends Crud {
         $stmt = $this->conexion->prepare("INSERT INTO movimientos_stock (cantidad, id_movimiento_tipo, fecha, id_usuario, id_producto, id_combo) VALUES (:cantidad, :id_movimiento_tipo, NOW(), :id_usuario, :id_producto, :id_combo)");
         $stmt->bindParam(":cantidad", $quantity);
         $stmt->bindParam(":id_movimiento_tipo", $movementType);
-        $stmt->bindParam(":id_usuario", $_SESSION['id_usuario']); 
+        $stmt->bindParam(":id_usuario", $userId); 
         $stmt->bindParam(":id_producto", $productId);
         $stmt->bindParam(":id_combo", $comboId);
         $stmt->execute();
@@ -333,7 +337,8 @@ switch ($method) {
                 break;
             }
             try {
-                $result = $comboBBDD->createCombo($data);
+                $userId = $_SESSION['usuario']['id'];
+                $result = $comboBBDD->createCombo($data, $userId);
                 echo json_encode(['result' => $result]);
             } catch (Exception $e) {
                 echo json_encode(['error' => $e->getMessage()]);
@@ -347,7 +352,8 @@ switch ($method) {
                 break;
             }
             try {
-                $result = $comboBBDD->updateCombo($data['id_combo'], $data);
+                $userId = $_SESSION['usuario']['id'];
+                $result = $comboBBDD->updateCombo($data['id_combo'], $data, $userId);
                 echo json_encode(['result' => $result]);
             } catch (Exception $e) {
                 echo json_encode(['error' => $e->getMessage()]);
@@ -361,6 +367,7 @@ switch ($method) {
             break;
         }
         try {
+            
             $result = $comboBBDD->deleteCombo($data['id_combo']);
             echo json_encode(['result' => $result]);
         } catch (Exception $e) {

@@ -27,22 +27,30 @@ $variables = [];
 // VALIDAR FORMULARIO SI LLEGA POR POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
-    /*echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";*/
-    
     if (isset($_SESSION['carrito'])) {
         $carrito = $_SESSION['carrito']['carrito']; 
-        $productos_string = ""; 
-        $precio_total = 0.00;
 
+        $productos_string = ""; 
+        $combos_string = ""; 
+        $precio_total_productos = 0.00;
+        $precio_total_combos = 0.00;
 
         foreach ($carrito as $producto) {
-        $productos_string .= "(" . $producto['id'] . ", " . $producto['cantidad'] . ", " . number_format((float)$producto['precioEnPesos'], 2, '.', '') . "), ";
-        $precio_total += $producto['cantidad'] * floatval($producto['precioEnPesos']);
+            if (isset($producto['productos'])) {
+                // Es un combo
+                foreach ($producto['productos'] as $prod) {
+                    $combos_string .= "(" . $producto['id'] . ", " . $prod['id_producto'] . ", " . $prod['cantidad'] . ", " . number_format((float)$prod['precioEnPesos'], 2, '.', '') . "), ";
+                }
+                $precio_total_combos += $producto['precioEnPesos'];
+            } else {
+                // Es un producto normal
+                $productos_string .= "(" . $producto['id'] . ", " . $producto['cantidad'] . ", " . number_format((float)$producto['precioEnPesos'], 2, '.', '') . "), ";
+                $precio_total_productos += $producto['cantidad'] * floatval($producto['precioEnPesos']);
+            }
         }
 
         $productos_string = rtrim($productos_string, ", ");
+        $combos_string = rtrim($combos_string, ", ");
 
         $id_persona = intval($_SESSION['usuario']['id_persona']);
 
@@ -105,7 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $variables['metodoPago'] = 'TARJETA';
     }
     /*  FIN DE TODAS LAS VALIDACIONES DE FORMULARIO */
-
+    
+    
     // Si no hay errores, se procesa la compra
     if (empty($errors) && !empty($variables)) {
         
@@ -114,23 +123,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             $tipo_pago = $variables['metodoPago'];
 
-            
-            $sql = "CALL procesar_compra(:id_persona, :tipo_pago, :precio_total, :productos)";
+                $conexion = Conexion::getConn();
 
-            
-            $parametros = "CALL procesar_compra(" . $id_persona . ", '" . $tipo_pago . "', " . number_format($precio_total, 2, '.', '') . ", '" . $productos_string . "')";
-    
+                if (!empty($productos_string)) {
+                    $sql_productos = "CALL procesar_compra(:id_persona, :tipo_pago, :precio_total, :productos)";
+                    $stmt_productos = $conexion->prepare($sql_productos);
+                    $stmt_productos->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
+                    $stmt_productos->bindParam(':tipo_pago', $tipo_pago, PDO::PARAM_STR);
+                    $stmt_productos->bindParam(':precio_total', $precio_total_productos, PDO::PARAM_STR);
+                    $stmt_productos->bindParam(':productos', $productos_string, PDO::PARAM_STR);
+                    $stmt_productos->execute();
+                }
 
-            $conexion = Conexion::getConn();
-
-            $stmt = $conexion->prepare($sql);
-
-            $stmt->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
-            $stmt->bindParam(':tipo_pago', $tipo_pago, PDO::PARAM_STR);
-            $stmt->bindParam(':precio_total', $precio_total, PDO::PARAM_STR);
-            $stmt->bindParam(':productos', $productos_string, PDO::PARAM_STR);
-
-            $stmt->execute();
+                if (!empty($combos_string)) {
+                    $sql_combos = "CALL procesar_compra_combo(:id_persona, :tipo_pago, :precio_total, :combos)";
+                    $stmt_combos = $conexion->prepare($sql_combos);
+                    $stmt_combos->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
+                    $stmt_combos->bindParam(':tipo_pago', $tipo_pago, PDO::PARAM_STR);
+                    $stmt_combos->bindParam(':precio_total', $precio_total_combos, PDO::PARAM_STR);
+                    $stmt_combos->bindParam(':combos', $combos_string, PDO::PARAM_STR);
+                    $stmt_combos->execute();
+                }
 
         } catch (PDOException $e) {
 

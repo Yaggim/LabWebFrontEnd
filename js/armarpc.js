@@ -69,8 +69,10 @@ async function RenderProducto(productos) {
 
     let fila;
 
-    for (let index = 0; index < productos.length; index++) {
-        const producto = productos[index];
+    const productosFiltrados = productos.filter(producto => producto.habilitado === 1 && producto.stock > 0);
+
+    for (let index = 0; index < productosFiltrados.length; index++) {
+        const producto = productosFiltrados[index];
         const precioEnPesos = await actualizarPrecioARS(parseFloat(producto.precio));
 
         
@@ -121,7 +123,7 @@ async function RenderProducto(productos) {
             cantidadInput.type = "number";
             cantidadInput.className = "form-control";
             cantidadInput.min = 1;
-            cantidadInput.max = 6;
+            cantidadInput.max = producto.stock;
             cantidadInput.step = 1;
             cantidadInput.value = 1; 
 
@@ -141,11 +143,16 @@ async function RenderProducto(productos) {
             
             const totalProducto = precioEnPesos * cantidad;
 
+            if (cantidad > producto.stock) {
+                mostrarModalError(`La cantidad no puede superar el stock disponible (${producto.stock}).`);
+                return;
+            }
             
             for (let i = 0; i < cantidad; i++) {
                 prodSelecc.push({
                     ...producto,
-                    cantidad: 1 
+                    cantidad: 1, 
+                    precioEnPesos: precioEnPesos
                 });
             }
 
@@ -172,9 +179,16 @@ async function RenderProducto(productos) {
 }
 
 
+function mostrarModalError(mensaje) {
+    const modalError = new bootstrap.Modal(document.getElementById('modalError'));
+    document.getElementById('modalErrorMensaje').textContent = mensaje;
+    modalError.show();
 
-
-
+    
+    document.getElementById('modalErrorCerrar').addEventListener('click', () => {
+        modalError.hide();
+    });
+}
 
 
 function siguienteProducto(){
@@ -285,11 +299,12 @@ async function crearInforme() {
 
     let btnComprar = document.createElement('button');
     btnComprar.className = 'btn btn-success w-25';
-    btnComprar.textContent = "Comprar";
+    btnComprar.textContent = "Ver en carrito";
     btnComprar.addEventListener('click', () => {
 	const armarPc = JSON.stringify(prodSelecc);
-	localStorage.setItem('armarPcJson', armarPc);    
-        window.location.href = 'finalizar-compra';
+	localStorage.setItem('carrito', armarPc);    
+        const basePath = window.location.pathname.split('/')[1];
+        window.location.href = `/${basePath}/views/carrito.php`;
     });
 
     btnContainer.appendChild(btnComprar); 

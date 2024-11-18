@@ -22,35 +22,58 @@
         <div class="row">
             <!--DIV mitad izquierda-->
             <div class="col-6 h-100 p-2">
-                <!--Carrusel-->
-                <div id="demo" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-                    </div>
-
-                    <div class="carousel-inner rounded">
-                        <div class="carousel-item active">
-                            <img id="producto-image1" src="/<?php echo CARPETA_PROYECTO ?>/" alt="Imagen 1 producto "
-                                class="d-block w-100 h-100 object-fit-cover">
-                        </div>
-                        <div class="carousel-item">
-                            <img id="producto-image2" src="/<?php echo CARPETA_PROYECTO ?>/" alt="Imagen 2 producto"
-                                class="d-block w-100 h-100 object-fit-cover">
-                        </div>
-                    </div>
-
-                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
+                <!-- Carrusel para productos -->
+            <div id="producto-carousel" class="carousel slide" data-bs-ride="carousel" style="display: none;">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#producto-carousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#producto-carousel" data-bs-slide-to="1"></button>
                 </div>
-                <!--Fin carrusel-->
+
+                <div class="carousel-inner rounded">
+                    <div class="carousel-item active" id="producto-image1-container">
+                        <img id="producto-image1" src="/<?php echo CARPETA_PROYECTO ?>/" alt="Imagen 1 producto"
+                            class="d-block w-100 h-100 object-fit-cover">
+                    </div>
+                    <div class="carousel-item" id="producto-image2-container">
+                        <img id="producto-image2" src="/<?php echo CARPETA_PROYECTO ?>/" alt="Imagen 2 producto"
+                            class="d-block w-100 h-100 object-fit-cover">
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#producto-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#producto-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+            <!-- Fin carrusel para productos -->
+
+            <!-- Carrusel para combos -->
+            <div id="combo-carousel" class="carousel slide" data-bs-ride="carousel" style="display: none;">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#combo-carousel" data-bs-slide-to="0" class="active"></button>
+                </div>
+
+                <div class="carousel-inner rounded">
+                    <div class="carousel-item active" id="combo-image1-container">
+                        <img id="combo-image1" src="/<?php echo CARPETA_PROYECTO ?>/" alt="Imagen 1 combo"
+                            class="d-block w-100 h-100 object-fit-cover">
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#combo-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#combo-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+            <!-- Fin carrusel para combos -->
                 <div id="divDescripcion" class="p-2 my-2 border rounded">
-                    <h3>Descripción del producto</h3>
+                    <h3 id="descripcion-titulo">Descripción del producto</h3>
                     <p id="producto-description">{description}</p>
+                    <div id="combo-description"></div>
                 </div>
             </div>
             <!--Fin DIV mitad izquierda-->
@@ -58,11 +81,20 @@
             <!--DIV mitad derecha-->
             <div class="col-6 h-100 p-2">
                 <div id="divData" class="p-2 rounded">
-                    <p id="producto-id" class="idProducto">Código de identificación de producto: {id}
-                    <p>
+                <div id="producto-container" style="display: none;">
+                    <p id="producto-id" class="idProducto">Código de identificación de producto: {id}</p>
                     <h1 id="producto-brand-model">Marca producto {brand} + modelo {model}</h1>
                     <h6 id="producto-category">Categoría {category}</h6>
                     <h2 id="producto-priceARS">$Precio {price ars}</h2>
+                </div>
+                    <!-- Contenedor para los detalles del combo -->
+                    <div id="combo-container" style="display: none;">
+                        <p id="combo-id" class="idCombo">Código de identificación de combo: {id}</p>
+                        <h1 id="combo-nombre">Nombre del combo {nombre}</h1>
+                        <h6 id="combo-descuento">Descuento {descuento}%</h6>
+                        <div id="combo-description"></div>
+                        <h2 id="combo-priceARS">Precio AR$ {price}</h2> 
+                    </div>
                 </div>
                 <div class="row d-flex justify-content-center">
                     <div id="divStock" class="col-4 p-2 my-3 mx-1 border text-center rounded">
@@ -84,8 +116,8 @@
                 <!-- Botón de compra -->
                 <div class="col-12 p-2 text-center rounded">
                     <form id="comprar" action="/<?php echo CARPETA_PROYECTO ?>/views/compra.php" method="POST">
-                        <button id="btnCompra" type="submit" class="btn btn-success btn-lg">REALIZAR COMPRA <i
-                                class="bi bi-credit-card"></i></button>
+                        <button id="btnCompra" type="submit" class="btn btn-success btn-lg">Ver carrito 
+                            <i class="bi bi-eye"></i></i></button>
                     </form>
                 </div>
                 <!-- Carrito -->
@@ -112,7 +144,7 @@
             <div class="modal-content">
                 <!-- Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Producto agregado!</h4>
+                    <h4 class="modal-title">Producto/Combo agregado!</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Body -->

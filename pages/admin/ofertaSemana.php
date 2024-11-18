@@ -1,11 +1,11 @@
 <?php
     require_once(__DIR__ . "/../../config/config.php"); 
-    //session_start();
+
     if(!isset($_SESSION['usuario'])){
         header('Location: home');
     }
 
-    if (!Permisos::tienePermiso("Crear producto", $_SESSION['usuario']['id'])) {
+    if (!Permisos::tienePermiso("Crear oferta semanal", $_SESSION['usuario']['id'])) {
         header("Location: home");
         die;
     }
