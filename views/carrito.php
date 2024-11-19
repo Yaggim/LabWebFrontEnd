@@ -33,19 +33,17 @@ $productosCarrito = $carrito->verCarrito();
 <body>
     <?php require(RUTA_PROYECTO.'/components/header.php'); ?>
 
-    <div class="container-carrito">
+    <div class="container mt-3 mb-3">
+        <h1 class="text-light">Tus productos seleccionados:</h1>
         <div class="row">
-             <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
-             <div id="carrito" class="bg-light p-3"></div>
-                
-                    <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
-                    <div class="d-flex flex-column align-items-end mb-3">
-                       
+            <!-- Aquí se agregarán los elementos del carrito dinámicamente -->
+             <div id="carrito" class="border mt-3 mb-3 p-3"></div>
+                <div class="d-flex flex-column align-items-end mb-3">   
                     <form id="comprar" action="/<?php echo CARPETA_PROYECTO ?>/views/compra.php" method="POST">
-                        <button id="btnCompra" type="submit" class="btn btn-success m-3">REALIZAR COMPRA <i
+                        <button id="btnCompra" type="submit" class="btn btn-success btn-lg mt-1">Realizar compra <i
                                 class="bi bi-credit-card"></i></button>
                     </form>
-                        <button id="cancelar-compra" type="button" class="btn btn-secondary m-3">Cancelar</button>
+                        <button id="cancelar-compra" type="button" class="btn btn-secondary mt-1 mb-3 ">Cancelar</button>
                     </div>
                 </div>
                 

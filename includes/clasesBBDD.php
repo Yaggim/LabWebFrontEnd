@@ -313,10 +313,6 @@
 		}
 	}
 
-
-
-
-
 	class VentaDetalleBBDD extends Crud {
 
 		public function __construct(){
