@@ -3,10 +3,9 @@ require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/conexion.php';
 
 if(!isset($_SESSION['usuario'])){
-    header('Location: home');
+    header('Location: ../home');
+    exit();
 }
-
-// SI LLEGA VIA URL, REDIRIGIRLO
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     require(RUTA_PROYECTO . '/views/error.php');
@@ -18,72 +17,75 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $errors = [];
 $variables = []; 
 
-
 // VALIDAR FORMULARIO SI LLEGA POR POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {  
-    if (isset($_SESSION['carrito'])) {
-        $carrito = $_SESSION['carrito']['carrito']; 
+    $carrito = $_SESSION['carrito']['carrito']; 
+    $productos_string = ""; 
+    $combos_string = ""; 
+    $precio_total_productos = 0.00;
+    $precio_total_combos = 0.00;
 
-        $productos_string = ""; 
-        $combos_string = ""; 
-        $precio_total_productos = 0.00;
-        $precio_total_combos = 0.00;
-
-        foreach ($carrito as $producto) {
-            if (isset($producto['productos'])) {
-                // Es un combo
-                foreach ($producto['productos'] as $prod) {
-                    $combos_string .= "(" . $producto['id'] . ", " . $prod['id_producto'] . ", " . $prod['cantidad'] . ", " . number_format((float)$prod['precioEnPesos'], 2, '.', '') . "), ";
-                }
-                $precio_total_combos += $producto['precioEnPesos'];
-            } else {
-                // Es un producto normal
-                $productos_string .= "(" . $producto['id'] . ", " . $producto['cantidad'] . ", " . number_format((float)$producto['precioEnPesos'], 2, '.', '') . "), ";
-                $precio_total_productos += $producto['cantidad'] * floatval($producto['precioEnPesos']);
+    foreach ($carrito as $producto) {
+        if (isset($producto['productos'])) {
+            // Es un combo
+            foreach ($producto['productos'] as $prod) {
+                $combos_string .= "(" . $producto['id'] . ", " . $prod['id_producto'] . ", " . $prod['cantidad'] . ", " . number_format((float)$prod['precioEnPesos'], 2, '.', '') . "), ";
             }
+            $precio_total_combos += $producto['precioEnPesos'];
+        } else {
+            // Es un producto normal
+            $productos_string .= "(" . $producto['id'] . ", " . $producto['cantidad'] . ", " . number_format((float)$producto['precioEnPesos'], 2, '.', '') . "), ";
+            $precio_total_productos += $producto['cantidad'] * floatval($producto['precioEnPesos']);
         }
-        $productos_string = rtrim($productos_string, ", ");
-        $combos_string = rtrim($combos_string, ", ");
+    }
+    $productos_string = rtrim($productos_string, ", ");
+    $combos_string = rtrim($combos_string, ", ");
+    $id_persona = intval($_SESSION['usuario']['id_persona']);
+    $id_usuario = intval($_SESSION['usuario']['id']);
 
-        $id_persona = intval($_SESSION['usuario']['id_persona']);
+    $esRetiroLocal = isset($_POST['retiroLocal']) && $_POST['retiroLocal'] === 'on';
+    if(!$esRetiroLocal){
+        if(isset($_POST['envioTitular'])){
+            // Validación del nombre y apellido: 2 Palabras, min 3 max 50 caracteres validos
+            if (empty($_POST['envioTitular']) || !preg_match('/^\S+\s+\S+$/', $_POST['envioTitular']) || !preg_match('/^[A-Za-záéíóúÁÉÍÓÚ ]{3,50}$/', $_POST['envioTitular'])) {
+                $errors['envioTitular'] = true;
+            }else{
+                $variables['envioTitular'] = $_POST['envioTitular'];}
+        }
 
+        if(isset($_POST['envioCalle'])){
+            // Validación de la calle: Caracteres validos, min 3 mas 30
+            if (empty($_POST['envioCalle']) || !preg_match('/^[A-Za-z0-9.áéíóúÁÉÍÓÚ ]{3,30}$/', $_POST['envioCalle'])) {
+                $errors['envioCalle'] = true;
+            }else{
+                $variables['envioCalle']  = $_POST['envioCalle'];}
+        }
 
-    /*  COMIENZO DE TODAS LAS VALIDACIONES DEL FORMULARIO POR PHP */
-    if(isset($_POST['envioTitular'])){
-        // Validación del nombre y apellido: 2 Palabras, min 3 max 50 caracteres validos
-        if (empty($_POST['envioTitular']) || !preg_match('/^\S+\s+\S+$/', $_POST['envioTitular']) || !preg_match('/^[A-Za-záéíóúÁÉÍÓÚ ]{3,50}$/', $_POST['envioTitular'])) {
-            $errors['envioTitular'] = true;
-        }else{
-            $variables['envioTitular'] = $_POST['envioTitular'];}
+        if(isset($_POST['envioAltura'])){
+            // Validación de la altura: 1-99999
+            if (empty($_POST['envioAltura']) || !filter_var($_POST['envioAltura'], FILTER_VALIDATE_INT, ["options" => ["min_range" => 1, "max_range" => 99999]])) {
+                $errors['envioAltura'] = true;
+            }else{
+                $variables['envioAltura']  = $_POST['envioAltura'];}
+        }
+
+        if(isset($_POST['envioPostal'])){
+            // Validación del código postal: 4 digitos
+            if (empty($_POST['envioPostal']) || !preg_match('/^\d{4}$/', $_POST['envioPostal'])) {
+                $errors['envioPostal'] = true;
+            }else{
+                $variables['envioPostal']  = $_POST['envioPostal'];} 
+        }
+
+        if(isset($_POST['envioNota'])){
+            // Validación de notas adicionales (CAMPO NO OBLIGATORIO)
+            if (!empty($_POST['envioNota']) && strlen($_POST['envioNota']) > 200) {
+                $errors['envioNota'] = true;
+            }else{
+                $variables['envioNota']  = $_POST['envioNota'];}
+        }
     }
-    if(isset($_POST['envioCalle'])){
-        // Validación de la calle: Caracteres validos, min 3 mas 30
-        if (empty($_POST['envioCalle']) || !preg_match('/^[A-Za-z0-9.áéíóúÁÉÍÓÚ ]{3,30}$/', $_POST['envioCalle'])) {
-            $errors['envioCalle'] = true;
-        }else{
-            $variables['envioCalle']  = $_POST['envioCalle'];}
-    }
-    if(isset($_POST['envioAltura'])){
-        // Validación de la altura: 1-99999
-        if (empty($_POST['envioAltura']) || !filter_var($_POST['envioAltura'], FILTER_VALIDATE_INT, ["options" => ["min_range" => 1, "max_range" => 99999]])) {
-            $errors['envioAltura'] = true;
-        }else{
-            $variables['envioAltura']  = $_POST['envioAltura'];}
-    }
-    if(isset($_POST['envioPostal'])){
-        // Validación del código postal: 4 digitos
-        if (empty($_POST['envioPostal']) || !preg_match('/^\d{4}$/', $_POST['envioPostal'])) {
-            $errors['envioPostal'] = true;
-        }else{
-            $variables['envioPostal']  = $_POST['envioPostal'];} 
-    }
-    if(isset($_POST['envioNota'])){
-        // Validación de notas adicionales (CAMPO NO OBLIGATORIO)
-        if (!empty($_POST['envioNota']) && strlen($_POST['envioNota']) > 200) {
-            $errors['envioNota'] = true;
-        }else{
-            $variables['envioNota']  = $_POST['envioNota'];}
-    }
+
     if(isset($_POST['dni'])){
         // Validación del DNI
         if (empty($_POST['dni']) || !filter_var($_POST['dni'], FILTER_VALIDATE_INT, ["options" => ["min_range" => 999999, "max_range" => 99999999]])) {
@@ -91,132 +93,109 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }else{
             $variables['dni']  = $_POST['dni'];}
     }
-    // Validación del método de pago
-    if (isset($_POST['pagoEfectivo']) && !empty($_POST['pagoEfectivo'])) {
+
+    $esPagoEfectivo = isset($_POST['pagoEfectivo']) && $_POST['pagoEfectivo'] === 'on';
+    if ($esPagoEfectivo) {
         // El usuario seleccionó pagar en efectivo
         $variables['metodoPago'] = 'EFECTIVO';
     } else {
         // El usuario no seleccionó pago en efectivo, debe pagar con tarjeta
-        if (isset($_POST['tarjeta']) && preg_match('/^\d{12}$/', $_POST['tarjeta'])) {
-            // La tarjeta es válida
-            $variables['tarjeta'] = $_POST['tarjeta'];
-            $variables['metodoPago'] = 'TARJETA';
-        } else {
-            // Error: tarjeta no válida
-            $errors['tarjeta'] = true;
+        if (isset($_POST['tarjeta'])){
+             if(!empty($_POST['tarjeta']) && preg_match('/^\d{12}$/', $_POST['tarjeta'])) {
+                // La tarjeta es válida
+                $variables['tarjeta'] = $_POST['tarjeta'];
+                $variables['metodoPago'] = 'TARJETA';
+            } else {
+                // Error: tarjeta no válida
+                $errors['tarjeta'] = true;
+            }
         }
     }
-    /*
-    if(isset($_POST['tarjeta'])){
-        // Validación de la tarjeta de crédito (si no se elige pago en efectivo)
-        if (empty($_POST['pagoEfectivo']) && (empty($_POST['tarjeta']) || !preg_match('/^\d{12}$/', $_POST['tarjeta']))) {
-            $errors['tarjeta'] = true;
-        }elseif(!empty($_POST['pagoEfectivo'])){
-            //$variables['efectivo'] = 'SI';
-            $variables['metodoPago'] = 'EFECTIVO';
-        }
-        else{
-            $variables['tarjeta']  = $_POST['tarjeta'];}
-            $variables['metodoPago'] = 'TARJETA';
-    }
-            */
-
-
-    /*  FIN DE TODAS LAS VALIDACIONES DE FORMULARIO */
     
-    
-    // Si no hay errores, se procesa la compra
-    if (empty($errors) && !empty($variables)) {
-        
-        // Procesar la compra: llamar al stored procedure con bindparam y demás puedo re-dirigir a generar_venta.php
-        
+    if (empty($errors) && !empty($variables)) {      
         try {
             $tipo_pago = $variables['metodoPago'];
-
-                $conexion = Conexion::getConn();
-
-                if (!empty($productos_string)) {
-                    $sql_productos = "CALL procesar_compra(:id_persona, :tipo_pago, :precio_total, :productos)";
-                    $stmt_productos = $conexion->prepare($sql_productos);
-                    $stmt_productos->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
-                    $stmt_productos->bindParam(':tipo_pago', $tipo_pago, PDO::PARAM_STR);
-                    $stmt_productos->bindParam(':precio_total', $precio_total_productos, PDO::PARAM_STR);
-                    $stmt_productos->bindParam(':productos', $productos_string, PDO::PARAM_STR);
-                    $stmt_productos->execute();
-                }
-
-                if (!empty($combos_string)) {
-                    $sql_combos = "CALL procesar_compra_combo(:id_persona, :tipo_pago, :precio_total, :combos)";
-                    $stmt_combos = $conexion->prepare($sql_combos);
-                    $stmt_combos->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
-                    $stmt_combos->bindParam(':tipo_pago', $tipo_pago, PDO::PARAM_STR);
-                    $stmt_combos->bindParam(':precio_total', $precio_total_combos, PDO::PARAM_STR);
-                    $stmt_combos->bindParam(':combos', $combos_string, PDO::PARAM_STR);
-                    $stmt_combos->execute();
-                }
-
+            $conexion = Conexion::getConn();
+    
+            if (!empty($productos_string)) {
+                // Llamar al SP
+                $sql_productos = "CALL procesar_compra(:id_persona, :tipo_pago, :precio_total, :productos, :id_usuario, @id_venta_cabecera)";
+                $stmt_productos = $conexion->prepare($sql_productos);
+                $stmt_productos->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
+                $stmt_productos->bindParam(':tipo_pago', $tipo_pago, PDO::PARAM_STR);
+                $stmt_productos->bindParam(':precio_total', $precio_total_productos, PDO::PARAM_STR);
+                $stmt_productos->bindParam(':productos', $productos_string, PDO::PARAM_STR);
+                $stmt_productos->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+                $stmt_productos->execute();
+    
+                // Obtener el último ID de la venta_cabecera insertada (es el parámetro de salida)
+                $sql_last_id = "SELECT @id_venta_cabecera AS id_venta_cabecera";
+                $result = $conexion->query($sql_last_id)->fetch(PDO::FETCH_ASSOC);
+                $id_venta_cabecera = $result['id_venta_cabecera'];
+            }
+    
+            if (!empty($combos_string)) {
+                // Llamar al procedimiento para combos
+                $sql_combos = "CALL procesar_compra_combo(:id_persona, :tipo_pago, :precio_total, :combos, :id_usuario, @id_venta_cabecera)";
+                $stmt_combos = $conexion->prepare($sql_combos);
+                $stmt_combos->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
+                $stmt_combos->bindParam(':tipo_pago', $tipo_pago, PDO::PARAM_STR);
+                $stmt_combos->bindParam(':precio_total', $precio_total_combos, PDO::PARAM_STR);
+                $stmt_combos->bindParam(':combos', $combos_string, PDO::PARAM_STR);
+                $stmt_combos->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+                $stmt_combos->execute();
+    
+                // Obtener el último ID de la venta_cabecera insertada (es el parámetro de salida)
+                $sql_last_id = "SELECT @id_venta_cabecera AS id_venta_cabecera";
+                $result = $conexion->query($sql_last_id)->fetch(PDO::FETCH_ASSOC);
+                $id_venta_cabecera = $result['id_venta_cabecera'];
+            }
+    
         } catch (PDOException $e) {
-
             echo "Error: " . $e->getMessage();
         }
-
-    } else {
-        foreach ($errors as $field => $error) {
-            echo "<p>Error en {$field}: {$error}</p>";
-        }
-    }
-        //$id_venta_cabecera = $conexion->lastInsertId();
-        /*
+    
         // INSERTAR DATOS DE ENVÍO EN LA TABLA 'ENVIOS'
-        if (!isset($_POST['retiroLocal'])) {
+        if (!empty($variables['envioTitular']) && !empty($variables['envioCalle']) && !empty($variables['envioAltura']) && !empty($variables['envioPostal']) && !empty($variables['dni']) && !$esRetiroLocal) {
             // Dividir la cadena en un array
             $nombreApellido = explode(' ', $variables['envioTitular']);
             $nombre = $nombreApellido[0];   
             $apellido = $nombreApellido[1];
-
-        try {
+            $variables['envioNota'] = !empty($variables['envioNota']) ? $variables['envioNota'] : 'Sin nota';
+            $dni_str = (string)$variables['dni'];
+            $id_venta_cabecera = (int)$id_venta_cabecera;
+    
+            try {
+                $sql = "INSERT INTO envios (nombre, apellido, calle, altura, cod_postal, notas, dni, id_venta_cabecera) 
+                        VALUES (:nombre, :apellido, :calle, :altura, :cod_postal, :notas, :dni, :id_venta_cabecera)";
+    
+                $stmt = $conexion->prepare($sql);
+    
+                $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+                $stmt->bindParam(':apellido', $apellido, PDO::PARAM_STR);
+                $stmt->bindParam(':calle', $variables['envioCalle'], PDO::PARAM_STR);
+                $stmt->bindParam(':altura', $variables['envioAltura'], PDO::PARAM_INT);
+                $stmt->bindParam(':cod_postal', $variables['envioPostal'], PDO::PARAM_INT);
+                $stmt->bindParam(':notas', $variables['envioNota'], PDO::PARAM_STR);
+                $stmt->bindParam(':dni', $dni_str, PDO::PARAM_STR); // YA QUE ES NUMERICO EN PHP PERO EN LA BASE ES VARCHAR
+                $stmt->bindParam(':id_venta_cabecera', $id_venta_cabecera, PDO::PARAM_INT);
+    
+                $stmt->execute();
             
-            $sql = "INSERT INTO envios (nombre, apellido, calle, altura, cod_postal, notas, dni, id_venta_cabecera) 
-                    VALUES (:nombre, :apellido, :calle, :altura, :cod_postal, :notas, :dni, :id_venta_cabecera)";
-
-            $stmt2 = $conn->prepare($sql);
-
-            $stmt2->bindParam(':nombre', $nombre, PDO::PARAM_STR);
-            $stmt2->bindParam(':apellido', $apellido, PDO::PARAM_STR);
-            $stmt2->bindParam(':calle', $variables['envioCalle'], PDO::PARAM_STR);
-            $stmt2->bindParam(':altura', $variables['envioAltura'], PDO::PARAM_INT);
-            $stmt2->bindParam(':cod_postal', $variables['envioPostal'], PDO::PARAM_INT);
-            $stmt2->bindParam(':notas', $variables['envioNota'], PDO::PARAM_STR);
-            $stmt2->bindParam(':dni', (string)$variables['dni'], PDO::PARAM_STR); // YA QUE ES NUMERICO EN PHP PERO EN LA BASE ES VARCHAR
-            $stmt2->bindParam(':id_venta_cabecera', (int)$id_venta_cabecera, PDO::PARAM_INT);
-
-            $stmt2->execute();
-        
-            echo "Los datos fueron insertados correctamente en la base de datos.";
-            
-
-
-        } catch (PDOException $e) {
-            echo "Error al insertar los datos: " . $e->getMessage();
+            } catch (PDOException $e) {
+                echo "Error al insertar los datos: " . $e->getMessage();
+            }  
         }
-
-
-        }
-
-        foreach ($variables as $campo => $valor) {
-            echo "<p>Variable {$campo}: {$valor}</p>";
-        }
-        
-    } else {
-        // Mostrar errores PROVISORIAMENTE luego sacar
+        //VACIAR EL CARRITO CUANDO SE HAYA EFECTUADO LA COMPRA. TAMBIEN HAY QUE HACERLO VIA JAVASCRIPT 
+        $_SESSION['carrito'] = [];
+    }
+     else {
         foreach ($errors as $field => $error) {
             echo "<p>Error en {$field}: {$error}</p>";
         }
-             */
     }
-       
+        
 }
-
 
 ?>
 
@@ -336,9 +315,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Body -->
-                <div class="modal-body">
-                    El número de pedido es #123456
+                <div class="modal-body" id="modalBody" data-id-venta="<?php echo isset($id_venta_cabecera) ? htmlspecialchars($id_venta_cabecera, ENT_QUOTES, 'UTF-8') : ''; ?>">
+                    El número de pedido es #<span id="numeroPedido">No disponible</span>
                 </div>
+
                 <!-- Footer -->
                 <div class="modal-footer">
                     <div class="cantidadCarrito"></div>

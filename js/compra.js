@@ -54,20 +54,6 @@ function togglePagoEfectivo() {
     }
 }
 
-// NUEVO: función para el pago en efectivo
-function togglePagoEfectivo() {
-    let esPagoEfectivo = document.getElementById("pagoEfectivo").checked;
-    let campoTarjeta = document.getElementById("tarjeta");
-
-    if (esPagoEfectivo) {
-        document.getElementById("tarjetaContainer").classList.add("d-none");
-        campoTarjeta.required = false;
-    } else {
-        document.getElementById("tarjetaContainer").classList.remove("d-none");
-        campoTarjeta.required = true;
-    }
-}
-
 function confirmarCompra(event) {
     event.preventDefault();
     document.getElementById("envioTitular").classList.remove('is-invalid');
@@ -79,6 +65,11 @@ function confirmarCompra(event) {
     document.getElementById("tarjeta").classList.remove('is-invalid');
 
     if (validarDatos()) {
+        const modalBody = document.getElementById('modalBody');
+        const idVenta = modalBody.getAttribute('data-id-venta');
+            if (idVenta) {
+                document.getElementById('numeroPedido').textContent = `#${idVenta}`;
+            }
         let formCompra = document.getElementById("formCompra");
         let formData = new FormData(formCompra);
 
@@ -92,6 +83,8 @@ function confirmarCompra(event) {
                 let finCompraModal = new bootstrap.Modal(document.getElementById("modalFinCompra"));
                 finCompraModal.show();
                 formCompra.reset();
+                localStorage.removeItem('carrito');
+
             
         })
         .catch(error => {
