@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <div class="input-group me-3">
                                 <input type="text" class="form-control search-bar" placeholder="Buscar Producto" aria-label="Search">
-                                <button class="btn btn-custom-search" type="submit">
+                                <button class="btn btn-custom-search boton-Busqueda" type="submit">
                                     <span class="input-group-addon">
                                         <i class="fa fa-search"></i>
                                     </span>
