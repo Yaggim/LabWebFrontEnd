@@ -101,6 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const descripcionTruncada = product.descripcion.length > 100 ? product.descripcion.substring(0, 100) + '...' : product.descripcion;
 
                 const nombreMarcaModelo = product.brand_name + ' ' + product.model_name;
+                const categoryName = product.category_name
+                        .normalize('NFD')                         
+                        .replace(/[\u0300-\u036f]/g, '')            
+                        .toLowerCase()                              
+                        .replace(/[^a-z0-9]/g, ''); 
+              
                 const productNombre = nombreMarcaModelo.trim().toLowerCase().replaceAll(' ', '-');
 
                 productCard.innerHTML = `
@@ -111,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p class="card-text">${descripcionTruncada}</p>
                             <p class="card-text">Precio: $${(product.precio_usd * dolarBlue).toFixed(2)}</p>
                             <p class="card-text">Stock: ${product.stock}</p>
-                            <a href="${product.category_name.toLowerCase()}/${productNombre}/${product.id_producto}" class="btn btn-primary">Seleccionar</a>
+                            <a href="${categoryName}/${productNombre}/${product.id_producto}" class="btn btn-primary">Seleccionar</a>
                         </div>
                     </div>
                 `;
