@@ -45,14 +45,14 @@ async function validarFormulario(){
     //VALIDAR NUM TELEFÓNICO
     let validacion = true;
     let tel = document.getElementById("telefono").value;
-    const telRegex = /^\d{2}-\d{4}-\d{4}$/;
+    const telRegex = /^\d{2}-?\d{4}-?\d{4}$/;
     let errorTel = document.getElementById("errorTel");
 
     if (tel === "" || !telRegex.test(tel)){
         if (tel === "") {
             errorTel.textContent = "Debe completar el campo teléfono.";
         } else {
-            errorTel.textContent = "El formato debe ser 11-1111-1111 y solo dígitos.";
+            errorTel.textContent = "El formato debe ser 11-1111-1111 y solo diez (10) dígitos.";
         }
         errorTel.classList.add("text-danger-emphasis", "bg-danger-subtle", "border", "border-danger-subtle", "rounded-3");
         document.getElementById("telefono").classList.add('is-invalid');
@@ -61,7 +61,7 @@ async function validarFormulario(){
 
     //VALIDAR EMAIL
     let email = document.getElementById("email").value;
-    let exRegular = /^[A-Za-z0-9@._-]+$/;
+    let exRegular = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     let errorEmail = document.getElementById("errorEmail");
     if (email === "" || !exRegular.test(email)) {
         errorEmail.textContent = "Formato de email inválido.";
@@ -76,9 +76,9 @@ async function validarFormulario(){
     let errorPassword = document.getElementById("errorPassword");
     if(newPass === "" || newPass.length < 8 || newPass.length > 15 || !passRegex.test(newPass)){
         if (!passRegex.test(newPass)) {
-            errorPassword.textContent = "La contraseña debe contener letras, números y al menos un símbolo.";
+            errorPassword.textContent = "La contraseña debe contener letras, números y al menos un símbolo (@$!%*?&).";
         } else {
-            errorPassword.textContent = "La contraseña debe tener entre 8 y 15 caracteres";
+            errorPassword.textContent = "La contraseña debe tener entre 8 y 15 caracteres.";
         }
         errorPassword.classList.add("text-danger-emphasis", "bg-danger-subtle", "border", "border-danger-subtle", "rounded-3");
         document.getElementById("password").classList.add('is-invalid');
