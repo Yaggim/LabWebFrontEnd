@@ -30,11 +30,7 @@
                                     Categorías
                                 </a>
                                 <ul class="list-unstyled collapse" aria-labelledby="navbarDropdown" id="cat-burger">
-                                    <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/productos">Combos</a></li>
-                                    <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/resultado-busqueda?query=monitores">Monitores</a></li>
-                                    <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/resultado-busqueda?query=procesadores">Procesadores</a></li>
-                                    <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/resultado-busqueda?query=memorias">Memorias</a></li>
-                                    <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/resultado-busqueda?query=discos">Discos</a></li>
+
                                 </ul>
                             </li>
                             <li class="nav-item">
@@ -115,11 +111,7 @@
                         Categorías
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark " aria-labelledby="navbarDropdown" id="cat-navbar" >
-                        <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/productos">Combos</a></li>
-                        <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/resultado-busqueda?query=monitores">Monitores</a></li>
-                        <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/resultado-busqueda?query=procesadores">Procesadores</a></li>
-                        <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/resultado-busqueda?query=memorias">Memorias</a></li>
-                        <li><a class="dropdown-item" href="/<?php echo CARPETA_PROYECTO ?>/resultado-busqueda?query=discos">Discos</a></li>
+
                     </ul>
                 </li>
                 <li class="nav-item">
