@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/conexion.php';
 
 if(!isset($_SESSION['usuario'])){
-    header('Location: ../home');
+    header('Location: ../views/compra_login.php');
     exit();
 }
 
