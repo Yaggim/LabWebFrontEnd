@@ -36,7 +36,6 @@ class ProductoBBDD extends Crud {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($result as &$row) {
-        // Convierte la cadena separada por comas en un array.
         $row['imagenes'] = $row['imagenes'] ? explode(',', $row['imagenes']) : [];
     }
 
@@ -64,7 +63,6 @@ class ProductoBBDD extends Crud {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
-        // Convierte la cadena separada por comas en un array.
         if ($result) {
             $result['imagenes'] = $result['imagenes'] ? explode(',', $result['imagenes']) : [];
         }
