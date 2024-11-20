@@ -23,7 +23,7 @@
                                 <a class="nav-link py-3 px-5" aria-current="page" href="/<?php echo CARPETA_PROYECTO ?>/productos">Productos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link py-3 px-5" href="/<?php echo CARPETA_PROYECTO ?>/productos">Ofertas</a>
+                                <a class="nav-link py-3 px-5" href="/<?php echo CARPETA_PROYECTO ?>/ofertas_semana">Ofertas</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link py-3 px-5 dropdown-toggle" href="JavaScript:Void(0)" id="navbarDropdown" role="button" data-bs-toggle="collapse" data-bs-target="#cat-burger" aria-expanded="false">
@@ -108,7 +108,7 @@
                     <a class="nav-link" aria-current="page" href="/<?php echo CARPETA_PROYECTO ?>/productos">Productos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/<?php echo CARPETA_PROYECTO ?>/productos">Ofertas</a>
+                    <a class="nav-link" href="/<?php echo CARPETA_PROYECTO ?>/ofertas_semana">Ofertas</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="JavaScrip:Void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#cat-navbar" >
