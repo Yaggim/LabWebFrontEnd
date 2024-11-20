@@ -2,21 +2,24 @@
 RewriteEngine On
 
 RewriteRule ^home$                                      index.php
+RewriteRule ^error$                                     /LabWebFrontEnd/views/error.php
+RewriteRule ^perfil$                                    /LabWebFrontEnd/views/info_cuenta.php
 RewriteRule ^carrito$                                   /LabWebFrontEnd/views/carrito.php
 RewriteRule ^registro$                                  /LabWebFrontEnd/views/register.php
 RewriteRule ^producto$                                  /LabWebFrontEnd/views/producto.php
 RewriteRule ^productos$                                 /LabWebFrontEnd/views/productos.php
-RewriteRule ^ofertas_semana                             /LabWebFrontEnd/views/ofertas_semana.php
 RewriteRule ^arma-tu-pc$                                /LabWebFrontEnd/views/armar_pc.php
+RewriteRule ^ofertas_semana                             /LabWebFrontEnd/views/ofertas_semana.php
 RewriteRule ^editar-perfil$                             /LabWebFrontEnd/views/actualizar_perfil.php
 RewriteRule ^finalizar-compra$                          /LabWebFrontEnd/views/compra.php
 RewriteRule ^resultado-busqueda$                        /LabWebFrontEnd/views/search.php
 RewriteRule ^([a-z]+)/[a-z\d]+(-[a-z\d]+)+/(\d+)$       /LabWebFrontEnd/views/producto.php?id=$3
-RewriteRule ^validar-password$                          /LabWebFrontEnd/includes/verificar_contrasena.php
+
 RewriteRule ^procesar-login$                            /LabWebFrontEnd/includes/procesar_login.php
+RewriteRule ^validar-password$                          /LabWebFrontEnd/includes/verificar_contrasena.php
 RewriteRule ^procesar-registro$                         /LabWebFrontEnd/includes/procesar_registro.php
 RewriteRule ^procesar-editar-perfil$                    /LabWebFrontEnd/includes/procesar_editar_perfil.php
-RewriteRule ^perfil$                                    /LabWebFrontEnd/views/info_cuenta.php
+
 RewriteRule ^admin$                                     /LabWebFrontEnd/pages/admin/admin.php
 RewriteRule ^marca$                                     /LabWebFrontEnd/pages/admin/marca.php
 RewriteRule ^modelo$                                    /LabWebFrontEnd/pages/admin/modelo.php
