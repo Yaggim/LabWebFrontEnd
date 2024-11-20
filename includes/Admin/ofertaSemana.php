@@ -14,9 +14,17 @@ class OfertaSemanaBBDD extends Crud {
                 ofertas_semana.*, 
                 productos.descripcion AS producto_descripcion,
                 productos.precio_usd AS producto_precio_usd,
-                productos.stock AS producto_stock
+                productos.stock AS producto_stock,
+                COALESCE(
+                    (SELECT GROUP_CONCAT(url SEPARATOR ',') FROM imagenes_productos WHERE id_producto_fk = productos.id_producto),
+                    ''
+                ) AS imagenes,
+                marcas.nombre AS producto_marca,
+                modelos.nombre AS producto_modelo
             FROM ofertas_semana
             LEFT JOIN productos ON ofertas_semana.id_producto = productos.id_producto
+            LEFT JOIN modelos ON productos.id_modelo = modelos.id_modelo
+            LEFT JOIN marcas ON modelos.id_marca = marcas.id_marca
         ");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -28,14 +36,26 @@ class OfertaSemanaBBDD extends Crud {
                 ofertas_semana.*, 
                 productos.descripcion AS producto_descripcion,
                 productos.precio_usd AS producto_precio_usd,
-                productos.stock AS producto_stock
+                productos.stock AS producto_stock,
+                COALESCE(
+                    (SELECT GROUP_CONCAT(url SEPARATOR ',') FROM imagenes_productos WHERE id_producto_fk = productos.id_producto),
+                    ''
+                ) AS imagenes,
+                marcas.nombre AS producto_marca,
+                modelos.nombre AS producto_modelo
             FROM ofertas_semana
             LEFT JOIN productos ON ofertas_semana.id_producto = productos.id_producto
+            LEFT JOIN modelos ON productos.id_modelo = modelos.id_modelo
+            LEFT JOIN marcas ON modelos.id_marca = marcas.id_marca
             WHERE ofertas_semana.id_oferta_semana = :id
         ");
         $stmt->bindParam(":id", $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        foreach ($result as &$row) {
+            $row['imagenes'] = stripslashes($row['imagenes']);
+        }
     }
 
     public function createOfertaSemana($data) {

@@ -6,6 +6,7 @@ RewriteRule ^carrito$                                   /LabWebFrontEnd/views/ca
 RewriteRule ^registro$                                  /LabWebFrontEnd/views/register.php
 RewriteRule ^producto$                                  /LabWebFrontEnd/views/producto.php
 RewriteRule ^productos$                                 /LabWebFrontEnd/views/productos.php
+RewriteRule ^ofertas_semana                             /LabWebFrontEnd/views/ofertas_semana.php
 RewriteRule ^arma-tu-pc$                                /LabWebFrontEnd/views/armar_pc.php
 RewriteRule ^editar-perfil$                             /LabWebFrontEnd/views/actualizar_perfil.php
 RewriteRule ^finalizar-compra$                          /LabWebFrontEnd/views/compra.php
