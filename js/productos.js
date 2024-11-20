@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             categorias = await fetchCategories();
             combos = await fetchCombos();
             displayCategories(categorias);
-
+            console.log(selectedCategoryId);
             if (selectedCategoryId) {
                 const filteredProducts = filterProductsById(productos, selectedCategoryId);
                 displayProducts(filteredProducts, []);
@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         categoryList.addEventListener('click', (event) => {
             if (event.target.tagName === 'A') {
                 const categoryId = event.target.dataset.categoryId;
+                console.log(categoryId);
                 if (categoryId === 'combos') {
                     displayProducts([], combos);
                     categoriaTitle.innerText = categoriaTitle.innerText;
@@ -85,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-
+        
         clearFiltersButton.addEventListener('click', () => {
             searchInput.value = '';
             displayProducts(productos, combos);
@@ -155,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Mostrar combos
-        if (combos.length > 0) {
+        if (combos.length > 0 && products.length == 0) {
             productContainer.innerHTML = '';
             productContainer.className = 'row';
         }
