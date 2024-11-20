@@ -140,14 +140,14 @@ function validarDni() {
 
 function validarTelefono() {
     const campoTel = String(document.getElementById("telefono").value);
-    const telRegex = /^\d{2}-\d{4}-\d{4}$/;
+    const telRegex = /^\d{2}-?\d{4}-?\d{4}$/;
 
     if (campoTel == "") {
         return "Debe completar el campo teléfono.";
     }
 
     if (!telRegex.test(campoTel)) {
-        return "El formato debe ser 11-1111-1111 y solo dígitos.";
+        return "El formato debe ser 11-1111-1111 y solo diez (10) dígitos.";
     }
 
     return null;
@@ -165,7 +165,7 @@ function validarUser() {
         return "El nombre de usuario debe tener entre 8 y 15 caracteres.";
     }
     if (!userRegex.test(campoUser)) {
-        return "El nombre de usuario debe contener letras, números y al menos un símbolo.";
+        return "El nombre de usuario debe contener letras, números y al menos un símbolo (@$!%*?&).";
     }
 
     return null;
@@ -174,14 +174,14 @@ function validarUser() {
 
 function validarEmail() {
     const campoEmail = String(document.getElementById("email").value);
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
     if (campoEmail == "") {
         return "Debe completar el campo email.";
     }
 
     if (!emailRegex.test(campoEmail)) {
-        return "El email debe ser de la forma holamundo@abc.com.";
+        return "El email debe ser de la forma example@email.com.";
     }
 
     return null;
@@ -201,7 +201,7 @@ function validarPass() {
     }
 
     if (!passRegex.test(campoPass)) {
-        return "La contraseña debe contener letras, números y al menos un símbolo.";
+        return "La contraseña debe contener letras, números y al menos un símbolo (@$!%*?&).";
     }
 
     pass = campoPass;
