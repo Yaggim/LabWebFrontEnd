@@ -186,6 +186,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "Error al insertar los datos: " . $e->getMessage();
             }  
         }
+        if($esRetiroLocal){
+            $tipoEntrega = 'Retira por el local';
+        } else {
+            $tipoEntrega = 'Envío a domicilio';
+        }
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        // ALMACENO EN UNA VARIABLE DE SESION TODOS LOS DATOS DE LA COMPRA PARA MOSTRAR EN LA SIGUIENTE PANTALLA
+        $_SESSION['compraRegistrada'] = [
+            'id' => $id_venta_cabecera,
+            'productos' => $carrito,
+            //'productos' => $productos_string,
+            //'combos' => $combos_string,
+            'metodoPago' => $variables['metodoPago'],
+            'tipoEntrega' => $tipoEntrega,
+            'total' => $precio_total_productos + $precio_total_combos,
+            'fecha' => date('d-m-Y H:i:s')
+            
+        ];
+
         //VACIAR EL CARRITO CUANDO SE HAYA EFECTUADO LA COMPRA. TAMBIEN HAY QUE HACERLO VIA JAVASCRIPT 
         $_SESSION['carrito'] = [];
     }
@@ -311,17 +330,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="modal-content">
                 <!-- Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Compra exitosa!</h4>
+                    <h4 class="modal-title">Compra registrada!</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Body -->
-                <div class="modal-body" id="modalBody" data-id-venta="<?php echo isset($id_venta_cabecera) ? htmlspecialchars($id_venta_cabecera, ENT_QUOTES, 'UTF-8') : ''; ?>">
-                    El número de pedido es #<span id="numeroPedido">No disponible</span>
+                <div class="modal-body" id="modalBody">
+                    Gracias por comprar en HardTech.
                 </div>
 
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <div class="cantidadCarrito"></div>
+                    Redirigiendo a su detalle de compra... 
                     <button type="button" id="botonModal" class="btn btn-warning"
                         data-bs-dismiss="modal">Cerrar</button>
                 </div>
