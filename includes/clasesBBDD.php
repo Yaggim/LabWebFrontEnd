@@ -198,7 +198,9 @@
             	imagenes_productos on productos.id_producto = imagenes_productos.id_producto_fk
             WHERE 
                 marcas.nombre = :marca AND 
-                categorias.nombre = :categoria");
+                categorias.nombre = :categoria AND 
+				productos.habilitado = 1 AND
+			    productos.stock > 0");
 	        
 	        $stmt->bindParam(":marca", $marca);
 	        $stmt->bindParam(":categoria", $categoria);
@@ -234,7 +236,9 @@
             INNER JOIN 
             	imagenes_productos on productos.id_producto = imagenes_productos.id_producto_fk
             WHERE 
-                categorias.nombre = :categoria");
+                categorias.nombre = :categoria AND
+				productos.habilitado = 1 AND
+			    productos.stock > 0");
 
 		        
 		   
