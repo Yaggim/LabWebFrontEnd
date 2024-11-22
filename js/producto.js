@@ -47,7 +47,7 @@ async function actualizarPrecioARS() {
         const dolarBlue = await fetchDolarBlue();
         const precioEnPesos = producto.precio_usd * dolarBlue;
         console.log("Valor actual del Dolar Blue: ", dolarBlue);
-        document.getElementById("producto-priceARS").textContent = "Precio AR$ " + precioEnPesos.toFixed(2) +".-";
+        document.getElementById("producto-priceARS").textContent = "Precio AR $" + precioEnPesos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     } catch (error) {
         console.error("Error al obtener el precio en pesos:", error);
     }
@@ -216,7 +216,7 @@ async function cargarCombosPorID(idCombo) {
         });
 
         // Mostrar el precio en pesos del combo
-        document.getElementById("combo-priceARS").textContent = "Precio AR$ " + precioEnPesos.toFixed(2) + ".-";
+        document.getElementById("combo-priceARS").textContent = "Precio AR $" + precioEnPesos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
         // Agregar al carrito
         document.getElementById("btnCarrito").addEventListener("click", agregarComboAlCarrito);
