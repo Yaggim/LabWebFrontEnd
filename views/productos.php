@@ -37,7 +37,7 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <header class="my-4">
-                    <h1 class="text-center">Productos</h1>
+                    <h1 class="text-center title-products">Productos</h1>
                 </header>
                 <div id="product-container" class="row"></div>
             </main>

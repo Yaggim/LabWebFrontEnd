@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     let resultadosBusqueda, botonBusqueda, buscador;
+    const basePath = window.location.pathname.split('/')[1];
 
     function seleccionarElementoVisible(elementos) {
         let elementoVisible = null;
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function agregarEventoBotonBusqueda() {
-        const botonesBusqueda = document.querySelectorAll('.boton-Busqueda');
+        const botonesBusqueda = document.querySelectorAll('.btn-custom-search');
         botonBusqueda = seleccionarElementoVisible(botonesBusqueda);
 
         if (botonBusqueda) {
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        fetch(`/LabWebFrontEnd/includes/Admin/busquedaProducto.php?termino=${encodeURIComponent(valorBusqueda)}`, {
+        fetch(`/${basePath}/includes/Admin/busquedaProducto.php?termino=${encodeURIComponent(valorBusqueda)}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 div.classList.add('d-flex', 'align-items-center', 'bg-light', 'text-dark', 'p-3');
 
                 const img = document.createElement('img');
-                img.src = `/LabWebFrontEnd/${producto.imagen}`;
+                img.src = `/${basePath}/${producto.imagen}`;
                 img.alt = producto.marca + ' ' + producto.modelo;
                 img.classList.add('mr-3');
                 img.style.height = '20px';
@@ -87,12 +88,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 div.appendChild(span);
 
                 div.addEventListener('click', function() {
-                     const categoria = producto.categoria.toLowerCase().replace(/\s+/g, '-');
-                     const marca = producto.marca.toLowerCase().replace(/\s+/g, '-');
-                     const modelo = producto.modelo.toLowerCase().replace(/\s+/g, '-');
-                     const url = `/LabWebFrontEnd/${categoria}/${marca}-${modelo}/${producto.id_producto}`;
-                     console.log('Generated URL:', url);
-                     window.location.href = url;
+
+                    const procesarNombre = (nombre) => nombre.toLowerCase().replace(/\s+/g, '-').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+                    const categoria = procesarNombre(producto.categoria);
+                    const marca = procesarNombre(producto.marca);
+                    const modelo = procesarNombre(producto.modelo);
+                    const url = `/${basePath}/${categoria}/${marca}-${modelo}/${producto.id_producto}`;
+                    console.log('Generated URL:', url);
+                    window.location.href = url;
                 });
 
                 resultadosBusqueda.appendChild(div);
@@ -101,6 +105,16 @@ document.addEventListener('DOMContentLoaded', function() {
             resultadosBusqueda.innerHTML = '<li>No se encontraron productos.</li>';
         }
     }
+
+    const modal = document.getElementById('searchModal');
+    modal.addEventListener('shown.bs.modal', function () {
+        agregarEventoBusqueda();
+        agregarEventoBotonBusqueda();
+    });
+
+    modal.addEventListener('hidden.bs.modal', function () {
+        agregarEventoBotonBusqueda();
+    });
 
     agregarEventoBusqueda();
     agregarEventoBotonBusqueda();
