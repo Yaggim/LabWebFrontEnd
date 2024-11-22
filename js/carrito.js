@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             itemDiv.innerHTML = `<img src="${srcImageProducto}" alt="${brandName} ${modelName}" class="imagenProducto"> 
                 <div>${brandName} ${modelName} | Cantidad: ${item.cantidad || 1}  
-                | Precio unitario: $${item.precioEnPesos.toFixed(2)}</div>`;
+                | Precio unitario: $${item.precioEnPesos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>`;
         }
 
         // Agrega el div del elemento al div del carrito
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         total += producto.precioEnPesos * (producto.cantidad || 1);
     }
 
-    totalDiv.textContent = `Total: $${total}`;
+    totalDiv.textContent = `Total: $${total.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     carritoDiv.appendChild(totalDiv);
 

@@ -85,6 +85,17 @@ function confirmarCompra(event) {
                 formCompra.reset();
                 localStorage.removeItem('carrito');
 
+                // Esperar mostrando el modal y luego POST
+                setTimeout(() => {
+                // Crear un formulario de redirección
+                let nuevoFormulario = document.createElement('form');
+                nuevoFormulario.method = 'POST';
+                nuevoFormulario.action = 'compra_exitosa.php';
+                // Añadir el formulario al doc y enviarlo
+                document.body.appendChild(nuevoFormulario);
+                nuevoFormulario.submit();
+            }, 4000);  // 4 segundos de espera
+
             
         })
         .catch(error => {
