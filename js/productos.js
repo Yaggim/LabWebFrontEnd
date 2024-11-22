@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search');
     const categoryList = document.getElementById('category-list');
     const clearFiltersButton = document.getElementById('clear-filters');
+    const categoriaTitle = document.querySelector(".title-products");
+    const titleTag = document.getElementsByTagName("title");
+
+    const basePath = window.location.pathname.split('/')[1];
+
+    let selectedCategoryId = localStorage.getItem('selectedCategoryId');
 
     let productos = [];
     let categorias = [];
@@ -16,17 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     async function fetchProducts() {
-        const response = await fetch('./includes/admin/producto.php');
+        const response = await fetch(`/${basePath}/includes/admin/producto.php`);
         return response.json();
     }
 
     async function fetchCategories() {
-        const response = await fetch('./includes/admin/categoria.php');
+        const response = await fetch(`/${basePath}/includes/admin/categoria.php`);
         return response.json();
     }
 
     async function fetchCombos() {
-        const response = await fetch('/LabWebFrontEnd/includes/admin/combo.php');
+        const response = await fetch(`/${basePath}/includes/admin/combo.php`);
         return response.json();
     }
     
@@ -37,7 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
             categorias = await fetchCategories();
             combos = await fetchCombos();
             displayCategories(categorias);
-            displayProducts(productos, combos);
+            console.log(selectedCategoryId);
+            if (selectedCategoryId) {
+                const filteredProducts = filterProductsById(productos, selectedCategoryId);
+                displayProducts(filteredProducts, []);
+                categoriaTitle.innerText = categorias[selectedCategoryId - 1].nombre;
+                titleTag[0].innerText = `HardTech - ${categorias[selectedCategoryId - 1].nombre}`;
+                localStorage.removeItem('selectedCategoryId');
+            } else {
+                displayProducts(productos, combos);
+            }
         } catch (error) {
             console.error('Error cargando productos y categorías:', error);
         }
@@ -50,23 +65,33 @@ document.addEventListener('DOMContentLoaded', () => {
             const filteredProducts = filterProducts(productos, searchInput.value);
             const filteredCombos = filterCombos(combos, searchInput.value);
             displayProducts(filteredProducts, filteredCombos);
+            categoriaTitle.innerText = 'Productos';
+            titleTag[0].innerText = `HardTech - Productos`;
         });
 
         categoryList.addEventListener('click', (event) => {
             if (event.target.tagName === 'A') {
                 const categoryId = event.target.dataset.categoryId;
+                console.log(categoryId);
                 if (categoryId === 'combos') {
                     displayProducts([], combos);
+                    categoriaTitle.innerText = categoriaTitle.innerText;
+                    categoriaTitle.innerText = event.target.innerText;
+                    titleTag[0].innerText = `HardTech - ${event.target.innerText}`;
                 } else {
                     const filteredProducts = filterProductsById(productos, categoryId);
                     displayProducts(filteredProducts, []);
+                    categoriaTitle.innerText = event.target.innerText;
+                    titleTag[0].innerText = `HardTech - ${event.target.innerText}`;
                 }
             }
         });
-
+        
         clearFiltersButton.addEventListener('click', () => {
             searchInput.value = '';
             displayProducts(productos, combos);
+            categoriaTitle.innerText = 'Productos';
+            titleTag[0].innerText = `HardTech - Productos`;
         });
     }
 
@@ -92,8 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayProducts(products, combos) {
         productContainer.innerHTML = '';
+        productContainer.className = 'row';
 
         // Mostrar productos
+        if (products.length == 0) {
+            productContainer.innerHTML = '<p>No se encontraron productos.</p>';
+            productContainer.className = 'alert alert-danger text-center';
+        }
         products.forEach(product => {
             if (product.habilitado) {
                 const productCard = document.createElement('div');
@@ -126,6 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Mostrar combos
+        if (combos.length > 0 && products.length == 0) {
+            productContainer.innerHTML = '';
+            productContainer.className = 'row';
+        }
         combos.forEach(combo => {
             if (combo.habilitado) {
                 const comboCard = document.createElement('div');
