@@ -4,9 +4,9 @@
 
 
 let categorias = ['CPUs', 'Coolers','Mothers','Memorias',
-                'Placas De Video'];/*,'Discos',
+                'Placas De Video','Discos',
                 'Fuentes','Gabinetes',
-                'Monitores'];*/
+                'Monitores'];
 
 
 
@@ -40,7 +40,7 @@ function cargarJsons(index,evento) {
         cateActual = categorias[index];
 
         const basePath = window.location.pathname.split('/')[1];
-
+        
         
         let url = "/"+ basePath + "/includes/armarPcBBDD.php?categoria="+ cateActual + "&marca=" + marca.name;
         
@@ -53,7 +53,7 @@ function cargarJsons(index,evento) {
         if(xhr.status === 200){
             const productos = JSON.parse(xhr.responseText);
             
-            console.log(productos);
+            //console.log(productos);
             RenderProducto(productos);
         }
     }
@@ -69,12 +69,11 @@ async function RenderProducto(productos) {
 
     let fila;
 
-    const productosFiltrados = productos.filter(producto => producto.habilitado === 1 && producto.stock > 0);
-
-    for (let index = 0; index < productosFiltrados.length; index++) {
-        const producto = productosFiltrados[index];
+   
+    for (let index = 0; index < productos.length; index++) {
+        const producto = productos[index];
         const precioEnPesos = await actualizarPrecioARS(parseFloat(producto.precio));
-
+        
         
         if (index % 4 === 0) {
             fila = document.createElement("div");
@@ -92,6 +91,7 @@ async function RenderProducto(productos) {
         let imagen = document.createElement("img");
         imagen.className = "card-img-top";
         imagen.src = producto.imagen; 
+       
 
         let card_body = document.createElement("div");
         card_body.className = "card-body";
