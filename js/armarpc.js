@@ -215,13 +215,14 @@ async function crearInforme() {
     let actualizar = document.getElementById("actualizar");
     actualizar.innerHTML = ""; 
 
-    actualizar.className += 'container mt-4';
+    actualizar.className += ' justify-content-center';
 
-    let titulo = document.createElement('h3');
+    let titulo = document.createElement('h2');
     titulo.textContent = "Presupuesto";
+    titulo.className += "text-center";
     actualizar.appendChild(titulo);
 
-    // Contenedor para centrar la tabla
+    
     let tablaContainer = document.createElement('div');
     tablaContainer.className = 'd-flex justify-content-center'; 
 
@@ -265,7 +266,7 @@ async function crearInforme() {
         tdDescripcion.textContent = producto.descripcion;
         fila.appendChild(tdDescripcion);
 
-        // Espera a que se resuelva la promesa de actualizarPrecioARS
+        
         let precioEnPesos = await actualizarPrecioARS(parseFloat(producto.precio));
         let tdValor = document.createElement('td');
         tdValor.textContent = '$' + precioEnPesos.toFixed(2);
@@ -293,7 +294,7 @@ async function crearInforme() {
     tablaContainer.appendChild(tabla); 
     actualizar.appendChild(tablaContainer); 
 
-    // Contenedor para centrar el botón de compra
+    
     let btnContainer = document.createElement('div');
     btnContainer.className = 'd-flex justify-content-center mt-3'; 
 
@@ -355,7 +356,7 @@ window.onload = () => {
 	let cpu2 = document.getElementById("cpu2");
     	let atrasBtn = document.getElementById("backBtn");
 
-    	atrasBtn.style.display = "none";
+    
 
 	cpu1.addEventListener("click", (evento)=>{
 		cargarJsons(index,evento);

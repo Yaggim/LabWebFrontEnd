@@ -43,9 +43,10 @@
 
 <!----------------------------Contactos------------------------------------------------>
 <div>
-	<div class="container text-center g-info">
+
+	<div class="container justify-content-center g-info">
   		<div class="row">
-    		<div class="col">
+    		<div class="col-lg-4 col-md-6 col-sm-12 mb-3">
       			<div class="card card-fondo" style="width: 18rem;">
   						<img src="" class="card-img-top" alt="">
  						 	<div class="card-body">
@@ -60,7 +61,7 @@
   						</div>
 						</div>
     		</div>
-    		<div class="col">
+    		<div class="col-lg-4 col-md-6 col-sm-12 mb-3">
       			<div class="card card-fondo" style="width: 18rem;">
   						<img src="" class="card-img-top" alt="">
  						 	<div class="card-body">
@@ -76,7 +77,7 @@
   						</div>
 						</div>
     		</div>
-    		<div class="col">
+    		<div class="col-lg-4 col-md-6 col-sm-12 mb-3">
       			<div class="card card-fondo" style="width: 18rem;">
   						<img src="" class="card-img-top" alt="">
  						 	<div class="card-body">
@@ -96,50 +97,51 @@
 
 
 <!----------------------------Grid para los cards-------------------------------------->
-	<div class="container-fluid g-info">
+<div class="container-fluid g-info">
   	<div class="row">
-    	<div class="col-md-3 col-lg-3 col-sm-6 col-xm-6">
+    	<div class="col-lg-3 col-md-6 col-sm-12 mb-3">
       	<div class="card">
   				<img src="images/card01.jpg" class="card-img-top card-img-top" alt="...">
   			<div class="card-body">
-    			<h5 class="card-title"> <a href="#" class="btn btn-primary">Armá tu PC</a></h5>
+    			<h5 class="card-title"> <a href="arma-tu-pc" class="btn btn-primary">Armá tu PC</a></h5>
 				</div>
 			</div>
   	</div>
-    <div class="col-md-3 col-lg-3 col-sm-6 col-xm-6">
-       	<div class="card" >
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+       	<div class="card">
   				<img src="images/card02.jpg" class="card-img-top card-img-top" alt="...">
   			<div class="card-body">
-    			<h5 class="card-title"> <a href="#" class="btn btn-primary">PC Oficina</a></h5>
+    			<h5 class="card-title"> <a href="arma-tu-pc" class="btn btn-primary">PC Oficina</a></h5>
 				</div>
 			</div>
   	</div>    
-    <div class="col-md-3 col-lg-3 col-sm-6 col-xm-6">
+    <div class="col-lg-3 col-md-6 col-sm-12 mxb-3">
       	<div class="card">
   				<img src="images/card3.jpg" class="card-img-top card-img-top" alt="...">
   			<div class="card-body">
-    			<h5 class="card-title"> <a href="#" class="btn btn-primary">PC Gamer</a></h5>
+    			<h5 class="card-title"> <a href="arma-tu-pc" class="btn btn-primary">PC Gamer</a></h5>
 				</div>
 			</div>
   	</div>
-    <div class="col-md-3 col-lg-3 col-sm-6 col-xm-6">
-  <div class="card" >
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+  		<div class="card">
   				<img src="images/card04.jpg" class="card-img-top card-img-top" alt="...">
   			<div class="card-body">
-    			<h5 class="card-title"> <a href="#" class="btn btn-primary">PC Gamer Extreme</a></h5>
+    			<h5 class="card-title"> <a href="arma-tu-pc" class="btn btn-primary">PC Gamer Extreme</a></h5>
 				</div>
 			</div>
-  	</div>
-   </div>
+  		</div>
+   	</div>
   </div>
 </div>
 
+
 <!----------------------------Fin Grid para los cards---------------------------------->
-<
+
 <!-------------------------------Destacados-------------------------------------------->
 <!-----------------------Título--------------------->
-<div id="destacados">
-	<h2>Productos Destacados</h2>
+<div class="d-flex justify-content-center flex-wrap">
+	<h2>Encontrá tu producto</h2>
 </div>
 
 <!-----------------------Carrusel de destacados--------------------------------------->
@@ -153,8 +155,8 @@
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/sw74epduIVIGGURcCgih/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                            <a href="#" class="btn btn-primary">Ver</a>
+						<a href="productos" class="btn btn-primary">Ver</a>
+                         
                         </div>
                     </div>
                 </div>
@@ -162,8 +164,7 @@
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/BmfhqzK84PSpXbjn6a3s/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                           <a href="#" class="btn btn-primary">Ver</a>
+						<a href="productos" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>
@@ -171,8 +172,7 @@
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/fVYiapxtEJpnvCzZ6BNu/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                           <a href="#" class="btn btn-primary">Ver</a>
+						<a href="productos" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>
@@ -184,8 +184,7 @@
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/fVYiapxtEJpnvCzZ6BNu/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                            <a href="#" class="btn btn-primary">Ver</a>
+						<a href="productos" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>
@@ -193,8 +192,7 @@
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/gegAiCMDQgyTe7vzvdc4/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                            <a href="#" class="btn btn-primary">Ver</a>
+							<a href="productos" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>
@@ -202,8 +200,7 @@
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/QpedN0h0axYamiITGwes/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Detalle del producto</h5>
-                            <a href="#" class="btn btn-primary">Ver</a>
+							<a href="productos" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>
@@ -220,25 +217,8 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-<!------------------------------Recibí un email---------------------------------------->
 
-<div class="container-fluid email">
-	<div class="row">
-			<div class="col-md-12 col-lg-12">
-					<div class="nv-ht">
-						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-envelope-check-fill" viewBox="0 0 16 16">
-  					<path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 4.697v4.974A4.5 4.5 0 0 0 12.5 8a4.5 4.5 0 0 0-1.965.45l-.338-.207z"/>
-  					<path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686"/>
-					</svg> Recibí las mejores ofertas por correo!
-						<input type="email" name=""  placeholder="Tu Email">
-						<button class="btn btn-outline-success">Suscribirme</button>
-					</div>
-			</div>
-
-	</div>
-</div>
-<!---------------------------------Fin recibi email----------------------------------->	
-	</main>
+</main>
 
     <?php require('components/footer.php'); ?>
 </body>
