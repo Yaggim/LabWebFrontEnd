@@ -134,14 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    /*
-    // Función para finalizar la compra
-    function finalizarCompra() {
-        window.location.href = 'finalizar-compra';
-    }
 
-    finalizarCompraButton.addEventListener('submit', finalizarCompra);
-    */
 
     // Cancelar regresa a la página anterior
     cancelarButton.addEventListener('click', function () {
