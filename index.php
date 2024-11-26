@@ -151,7 +151,7 @@
     <div class="carousel-inner">
         <div class="carousel-item active">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3">
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/sw74epduIVIGGURcCgih/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3">
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/BmfhqzK84PSpXbjn6a3s/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
@@ -168,7 +168,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3">
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/fVYiapxtEJpnvCzZ6BNu/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
@@ -180,7 +180,7 @@
         </div>
         <div class="carousel-item">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3">
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/fVYiapxtEJpnvCzZ6BNu/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3">
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/gegAiCMDQgyTe7vzvdc4/imagen" class="card-img-top" alt="...">
                         <div class="card-body">
@@ -196,7 +196,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3">
                     <div class="card">
                         <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/QpedN0h0axYamiITGwes/imagen" class="card-img-top" alt="...">
                         <div class="card-body">

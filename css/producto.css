@@ -23,11 +23,11 @@ div.container{
 }
 
 #divData {
-    color: #dfe7ef
+    color: #dfe7ef;
 }
 
 .cantidad {
-    color: #dfe7ef
+    color: #dfe7ef;
 }
 
 div.p-2.my-2.border.rounded {
@@ -36,12 +36,7 @@ div.p-2.my-2.border.rounded {
 }
 
 #divStock {
-    background-color: #7ac94c
-    /*
-    stock bajo #e72c2c
-    stock intermedio #eeee1e
-    stock alto #7ac94c
-    */
+    background-color: #7ac94c;
 }
 
 .carousel-inner {
