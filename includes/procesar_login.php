@@ -11,7 +11,7 @@ $password = trim($data['password'] ?? '');
 function generarRespuesta($result, $archivoForm) {
     if ($result['success']) {
         ob_start();
-        include RUTA_PROYECTO . "/components/$archivoForm";
+        include RUTA_PROYECTO . "/app/views/components/$archivoForm";
         $result['html'] = ob_get_clean();
     }
     echo json_encode($result);
