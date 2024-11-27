@@ -121,43 +121,18 @@ function cargarProductoPorID(idProducto) {
         });
 
 
-        // ESTA FUNCION HAY QUE MODIFICARLE LA LOGICA PARA QUE AGREGUE EL PRODUCTO QUE MUESTRA LA PAG AL CARRITO
+     
         // Agregar al carrito
         document.getElementById("btnCarrito").addEventListener("click", agregarAlCarrito);
 
-        // COMIENZO DE VIEJA FUNCION AGREGAR AL CARRITO
+       
         function agregarAlCarrito() {
             let carritoModal = new bootstrap.Modal(document.getElementById("modalCarrito"));
             let carrito = document.getElementById("modalCarrito")
             carrito.querySelector(".modal-body").innerHTML = "Se ha añadido al carrito exitosamente: <br>" + producto.brand_name + " " + producto.model_name
             carrito.querySelector("div.cantidadCarrito").textContent = "Cantidad: " + cantidad.value
             carritoModal.show();
-            //HASTA ACÁ FUNCIONA OK
-
-            /* VIEJO CODIGO --------------------------------------------------------------------
-            // Almaceno la cantidad que seleccionó a una clave "cantidad:"
-            localStorage.setItem('cantidad', cantidad.value);
             
-
-            // Obtener el carrito de localStorage
-            let productoACarrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-            // Crear un objeto que incluya el producto y la cantidad
-            const productoConCantidad = {
-                ...producto, // Copia todas las propiedades del objeto producto
-                cantidad: parseInt(cantidad.value) // Agrega la cantidad seleccionada
-            };
-
-            // Agregar el producto con la cantidad al carrito
-            productoACarrito.push(productoConCantidad);
-
-            // Guardar el carrito en localStorage
-            localStorage.setItem('carrito', JSON.stringify(productoACarrito));
-            VIEJO CODIGO ---------------------------------------------------------------------
-            */
-
-
-            // NUEVO CÓDIGO DE CARRITO DONDE SOLAMENTE ALMACENO EL ID Y LA CANTIDAD SELECCIONADA
             // Obtener el carrito de localStorage o iniciar un carrito vacío
             let carritoLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -351,29 +326,6 @@ function completarRecuadroStockCombo() {
     }
 }
 
-/*
-document.getElementById('btnCompra').addEventListener('click', function (event) {
-    event.preventDefault();
-
-    // Obtener el carrito del localStorage
-    let carritoLocalStorage = JSON.parse(localStorage.getItem('carrito')) || [];
-
-    // Asegurar que el carrito no esté vacío antes de enviar
-    if (carritoLocalStorage.length === 0) {
-        alert('El carrito está vacío. Agrega productos antes de realizar la compra.');
-        return;
-    }
-
-    // Rellenar el campo oculto del formulario
-    let carritoInput = document.getElementById('carritoInput');
-    carritoInput.value = JSON.stringify(carritoLocalStorage);
-
-    // Confirmar en consola lo que se enviará
-    console.log('Carrito enviado:', carritoInput.value);
-
-    // Enviar el formulario
-    document.getElementById('comprar').submit();})
-    */
     document.getElementById('btnCompra').addEventListener('click', async function (event) {
         event.preventDefault(); 
         
