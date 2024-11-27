@@ -1,7 +1,6 @@
 
 
-
-
+//categorías en orden para amar tu Pc
 
 let categorias = ['CPUs', 'Coolers','Mothers','Memorias',
                 'Placas De Video','Discos',
@@ -63,8 +62,12 @@ function cargarJsons(index,evento) {
 
 
 
+//render dinámico de productos
+
 async function RenderProducto(productos) {
     let actualizar = document.getElementById("actualizar");
+    
+    //borra la zona a actualizar
     actualizar.innerHTML = ""; 
 
     let fila;
@@ -74,13 +77,14 @@ async function RenderProducto(productos) {
         const producto = productos[index];
         const precioEnPesos = await actualizarPrecioARS(parseFloat(producto.precio));
         
-        
+        //4 productos por filas
         if (index % 4 === 0) {
             fila = document.createElement("div");
             fila.className = "row"; 
             actualizar.appendChild(fila);
         }
 
+        //creación de tags
         let col = document.createElement("div");
         col.className = "col-12 col-sm-6 col-md-6 col-lg-3 mb-4"; 
         
@@ -115,8 +119,9 @@ async function RenderProducto(productos) {
         
         let cantidadInput;
 
-        console.log(producto);
+        //console.log(producto);
 
+        //más de un mismo producto si ...
         if (producto.categoria === "Memorias" || producto.categoria === "Discos" ||
             producto.categoria === "Monitores") {
             cantidadInput = document.createElement("input");
@@ -133,6 +138,8 @@ async function RenderProducto(productos) {
         let btn_aniadir = document.createElement("button");
         btn_aniadir.className = "btn btn-primary w-100 mt-2";
         btn_aniadir.textContent = "Añadir";
+
+        //pasaje a pesos
         btn_aniadir.dataset.valor = precioEnPesos.toFixed(2);
 
        
@@ -143,11 +150,14 @@ async function RenderProducto(productos) {
             
             const totalProducto = precioEnPesos * cantidad;
 
+            //llama a modal si cantidad seleccionada excede el stock
             if (cantidad > producto.stock) {
                 mostrarModalError(`La cantidad no puede superar el stock disponible (${producto.stock}).`);
                 return;
             }
             
+
+            //guardado de producto seleccionado
             for (let i = 0; i < cantidad; i++) {
                 prodSelecc.push({
                     ...producto,
@@ -156,7 +166,7 @@ async function RenderProducto(productos) {
                 });
             }
 
-            
+            //actualiza el parcial de compra
             parcial += totalProducto;
             document.getElementById("cart-total").textContent = parcial.toFixed(2);
             siguienteProducto();
@@ -175,10 +185,10 @@ async function RenderProducto(productos) {
     }
 
     
-    console.log(prodSelecc);
+    //console.log(prodSelecc);
 }
 
-
+//modal error cantidad
 function mostrarModalError(mensaje) {
     const modalError = new bootstrap.Modal(document.getElementById('modalError'));
     document.getElementById('modalErrorMensaje').textContent = mensaje;
@@ -191,9 +201,10 @@ function mostrarModalError(mensaje) {
 }
 
 
+//funcion para recorrer las categorias 
 function siguienteProducto(){
 	
-   console.log(categorias.length);
+  // console.log(categorias.length);
 
 	if (index < categorias.length) {
          index++;
@@ -208,20 +219,22 @@ function siguienteProducto(){
 
 
 
-
+//funcion para crear el informe de compra
 
 async function crearInforme() {
 
     let actualizar = document.getElementById("actualizar");
     actualizar.innerHTML = ""; 
 
-    actualizar.className += 'container mt-4';
+    actualizar.className += ' justify-content-center';
 
-    let titulo = document.createElement('h3');
+    //creación de tags
+    let titulo = document.createElement('h2');
     titulo.textContent = "Presupuesto";
+    titulo.className += "text-center";
     actualizar.appendChild(titulo);
 
-    // Contenedor para centrar la tabla
+    
     let tablaContainer = document.createElement('div');
     tablaContainer.className = 'd-flex justify-content-center'; 
 
@@ -249,6 +262,7 @@ async function crearInforme() {
 
     let tbody = document.createElement('tbody');
 
+    //creación de tabla y agregado de tds
     
     for (let producto of prodSelecc) {
         let fila = document.createElement('tr');
@@ -265,7 +279,7 @@ async function crearInforme() {
         tdDescripcion.textContent = producto.descripcion;
         fila.appendChild(tdDescripcion);
 
-        // Espera a que se resuelva la promesa de actualizarPrecioARS
+        
         let precioEnPesos = await actualizarPrecioARS(parseFloat(producto.precio));
         let tdValor = document.createElement('td');
         tdValor.textContent = '$' + precioEnPesos.toFixed(2);
@@ -293,13 +307,15 @@ async function crearInforme() {
     tablaContainer.appendChild(tabla); 
     actualizar.appendChild(tablaContainer); 
 
-    // Contenedor para centrar el botón de compra
+    
     let btnContainer = document.createElement('div');
     btnContainer.className = 'd-flex justify-content-center mt-3'; 
 
     let btnComprar = document.createElement('button');
     btnComprar.className = 'btn btn-success w-25';
     btnComprar.textContent = "Ver en carrito";
+   
+    //si compra guarda los items en el ls
     btnComprar.addEventListener('click', () => {
 	const armarPc = JSON.stringify(prodSelecc);
 	localStorage.setItem('carrito', armarPc);    
@@ -323,12 +339,14 @@ function borrarCart(){
 }
 
 
+//muestra paso actual
 function actualizarPaso(){
     let pasoEle = document.getElementById("paso-actual");
     pasoEle.innerHTML = pasos;
 }
 
 
+//api dolor blue
 async function fetchDolarBlue() {
     const response = await fetch("https://dolarapi.com/v1/dolares/blue");
     const data = await response.json();
@@ -336,6 +354,8 @@ async function fetchDolarBlue() {
     return parseFloat(dolarBlue);
 }
 
+
+//a pesos
 async function actualizarPrecioARS(precio) {
     try {
         const dolarBlue = await fetchDolarBlue();
@@ -353,9 +373,9 @@ window.onload = () => {
     
 	let cpu1 = document.getElementById("cpu1");
 	let cpu2 = document.getElementById("cpu2");
-    	let atrasBtn = document.getElementById("backBtn");
+    	
 
-    	atrasBtn.style.display = "none";
+    
 
 	cpu1.addEventListener("click", (evento)=>{
 		cargarJsons(index,evento);

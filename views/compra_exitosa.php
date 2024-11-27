@@ -29,7 +29,7 @@ $productos = $_SESSION['compraRegistrada']['productos'];
             <div class="col-lg-12 p-3 text-light rounded">
                 <h3>Código de identificación de compra: #<?php echo $_SESSION['compraRegistrada']['id']; ?></h3>
                 <h3>Tus productos:</h3>
-                <h4>
+                <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
@@ -53,7 +53,8 @@ $productos = $_SESSION['compraRegistrada']['productos'];
                             }?>
                         </tbody>
                     </table>
-                </h4>
+                    </div>
+                
             </div>
 
         </div>
