@@ -21,7 +21,7 @@
     <div class="container p-2 my-2 rounded">
         <div class="row">
             <!--DIV mitad izquierda-->
-            <div class="col-6 h-100 p-2">
+            <div class="col-12 col-md-6 h-100 p-2">
                 <!-- Carrusel para productos -->
             <div id="producto-carousel" class="carousel slide" data-bs-ride="carousel" style="display: none;">
                 <div class="carousel-indicators">
@@ -79,7 +79,7 @@
             <!--Fin DIV mitad izquierda-->
 
             <!--DIV mitad derecha-->
-            <div class="col-6 h-100 p-2">
+            <div class="col-12 col-md-6 h-100 p-2">
                 <div id="divData" class="p-2 rounded">
                 <div id="producto-container" style="display: none;">
                     <p id="producto-id" class="idProducto">Código de identificación de producto: {id}</p>
@@ -101,7 +101,7 @@
                         <h5>Stock actual en la web:</h5>
                         <h2>ALTO O BAJO {stock}</h2>
                     </div>
-                    <div class="col-4 p-2 my-3 mx-1 border text-center rounded">
+                    <div class="col-6 col-md-6 col-lg-4 p-2 my-3 mx-1 border text-center rounded">
                         <p class="cantidad">Seleccione la cantidad</p>
                         <div class="d-flex align-items-center justify-content-center rounded">
                             <!-- Botón para disminuir la cantidad -->
