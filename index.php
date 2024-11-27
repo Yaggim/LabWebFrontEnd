@@ -5,11 +5,11 @@
 
 <head>
     <title>HardTech</title>
-    <?php require('components/head.php') ?>
+    <?php require('app/views/components/head.php') ?>
 </head>
 
 <body>
-    <?php require('components/header.php'); ?>
+    <?php require('app/views/components/header.php'); ?>
 
 	<main>
 	<!---------------------Inicio Carrusel----------------------------------------------->
@@ -17,16 +17,16 @@
 		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
 		  <div class="carousel-inner">
 		    <div class="carousel-item active">
-		      <img src="images/banner_car01.jpg" class="d-block w-100" alt="...">
+		      <img src="public/images/banner_car01.jpg" class="d-block w-100" alt="...">
 		    </div>
 		    <div class="carousel-item">
-		      <img src="images/banner_car02.jpg" class="d-block w-100" alt="...">
+		      <img src="public/images/banner_car02.jpg" class="d-block w-100" alt="...">
 		    </div>
 		    <div class="carousel-item">
-		      <img src="images/banner_car03.jpg" class="d-block w-100" alt="...">
+		      <img src="public/images/banner_car03.jpg" class="d-block w-100" alt="...">
 		    </div>
 		    <div class="carousel-item">
-		      <img src="images/banner_car04.jpg" class="d-block w-100" alt="...">
+		      <img src="public/images/banner_car04.jpg" class="d-block w-100" alt="...">
 		    </div>
 		  </div>
 		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -101,7 +101,7 @@
   	<div class="row">
     	<div class="col-lg-3 col-md-6 col-sm-12 mb-3">
       	<div class="card">
-  				<img src="images/card01.jpg" class="card-img-top card-img-top" alt="...">
+  				<img src="public/images/card01.jpg" class="card-img-top card-img-top" alt="...">
   			<div class="card-body">
     			<h5 class="card-title"> <a href="arma-tu-pc" class="btn btn-primary">Armá tu PC</a></h5>
 				</div>
@@ -109,7 +109,7 @@
   	</div>
     <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
        	<div class="card">
-  				<img src="images/card02.jpg" class="card-img-top card-img-top" alt="...">
+  				<img src="public/images/card02.jpg" class="card-img-top card-img-top" alt="...">
   			<div class="card-body">
     			<h5 class="card-title"> <a href="arma-tu-pc" class="btn btn-primary">PC Oficina</a></h5>
 				</div>
@@ -117,7 +117,7 @@
   	</div>    
     <div class="col-lg-3 col-md-6 col-sm-12 mxb-3">
       	<div class="card">
-  				<img src="images/card3.jpg" class="card-img-top card-img-top" alt="...">
+  				<img src="public/images/card3.jpg" class="card-img-top card-img-top" alt="...">
   			<div class="card-body">
     			<h5 class="card-title"> <a href="arma-tu-pc" class="btn btn-primary">PC Gamer</a></h5>
 				</div>
@@ -125,7 +125,7 @@
   	</div>
     <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
   		<div class="card">
-  				<img src="images/card04.jpg" class="card-img-top card-img-top" alt="...">
+  				<img src="public/images/card04.jpg" class="card-img-top card-img-top" alt="...">
   			<div class="card-body">
     			<h5 class="card-title"> <a href="arma-tu-pc" class="btn btn-primary">PC Gamer Extreme</a></h5>
 				</div>
@@ -220,6 +220,6 @@
 
 </main>
 
-    <?php require('components/footer.php'); ?>
+    <?php require('app/views/components/footer.php'); ?>
 </body>
 </html>
