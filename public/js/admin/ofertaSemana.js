@@ -95,8 +95,8 @@ document.getElementById('createOfertaSemanaForm').addEventListener('submit', asy
     const descripcion = document.getElementById('ofertaDescripcion').value.trim();
     const descuento = parseInt(document.getElementById('ofertaDescuento').value, 10);
     const id_producto = parseInt(document.getElementById('ofertaProducto').value, 10);
-    const fecha_inicio = document.getElementById('ofertaFechaInicio').value;
-    const fecha_fin = document.getElementById('ofertaFechaFin').value;
+    const fecha_inicio = document.getElementById('ofertaFechaInicio').value + ' 00:00:00';;
+    const fecha_fin = document.getElementById('ofertaFechaFin').value + ' 23:59:59';
 
     const newOferta = {
         descripcion,
@@ -131,8 +131,8 @@ document.getElementById('editOfertaSemanaForm').addEventListener('submit', async
     const descripcion = document.getElementById('editOfertaDescripcion').value.trim();
     const descuento = parseInt(document.getElementById('editOfertaDescuento').value, 10);
     const id_producto = parseInt(document.getElementById('editOfertaProducto').value, 10);
-    const fecha_inicio = document.getElementById('editOfertaFechaInicio').value;
-    const fecha_fin = document.getElementById('editOfertaFechaFin').value;
+    const fecha_inicio = document.getElementById('editOfertaFechaInicio').value + ' 00:00:00';
+    const fecha_fin = document.getElementById('editOfertaFechaFin').value + ' 23:59:59';
 
     const updatedOferta = {
         id_oferta_semana: currentOfertaId,
@@ -173,8 +173,12 @@ async function loadOfertaForEdit(id) {
     document.getElementById('editOfertaDescripcion').value = oferta.descripcion;
     document.getElementById('editOfertaDescuento').value = oferta.descuento;
     document.getElementById('editOfertaProducto').value = oferta.id_producto;
-    document.getElementById('editOfertaFechaInicio').value = oferta.fecha_inicio;
-    document.getElementById('editOfertaFechaFin').value = oferta.fecha_fin;
+
+    const fechaInicio = new Date(oferta.fecha_inicio).toISOString().split('T')[0];
+    const fechaFin = new Date(oferta.fecha_fin).toISOString().split('T')[0];
+
+    document.getElementById('editOfertaFechaInicio').value = fechaInicio;
+    document.getElementById('editOfertaFechaFin').value = fechaFin;
 }
 
 async function deleteOferta(id) {

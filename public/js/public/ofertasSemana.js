@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 imagenes.forEach((imagen, index) => {
                     imagenesHTML += `
                         <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                            <img src="${imagen}" alt="${oferta.producto_modelo}" class="d-block w-100">
+                            <img src="public/${imagen}" alt="${oferta.producto_modelo}" class="d-block w-100">
                         </div>
                     `;
                 });

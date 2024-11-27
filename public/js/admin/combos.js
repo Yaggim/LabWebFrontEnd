@@ -289,8 +289,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
     
             document.getElementById('editCombosForm').reset();
-            updateCombosTable();
+            
             bootstrap.Modal.getInstance(document.getElementById('editCombosModal')).hide();
+
+            await loadCombos();
         } catch (error) {
             showToastError(error.message);
         }
