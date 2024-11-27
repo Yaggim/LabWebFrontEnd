@@ -21,9 +21,10 @@ function loadEnv($path = __DIR__.'/../.env') {
     }
 }
 
+
 loadEnv();
 
-// require_once RUTA_PROYECTO.'/includes/conexion_db.php';
+
 require_once RUTA_PROYECTO.'/includes/conexion.php';
 
 require_once RUTA_PROYECTO.'/includes/usuario.php';
